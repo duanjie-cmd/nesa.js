@@ -1,8 +1,13 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../../helpers";
-export const protobufPackage = "nesaorg.nesachain.agent.module.v1";
+export const protobufPackage = "nesaorg.nesachain.dht.module.v1";
+/** Module is the config object for the module. */
 export interface Module {
+  /**
+   * authority defines the custom module authority. If not set, defaults to the
+   * governance module.
+   */
   authority: string;
 }
 function createBaseModule(): Module {
@@ -11,7 +16,7 @@ function createBaseModule(): Module {
   };
 }
 export const Module = {
-  typeUrl: "/nesaorg.nesachain.agent.module.v1.Module",
+  typeUrl: "/nesaorg.nesachain.dht.module.v1.Module",
   encode(message: Module, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
