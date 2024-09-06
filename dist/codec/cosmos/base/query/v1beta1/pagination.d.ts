@@ -1,5 +1,6 @@
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+/// <reference types="long" />
+import { Long } from "../../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "cosmos.base.query.v1beta1";
 /**
  * PageRequest is to be embedded in gRPC request messages for efficient
@@ -35,11 +36,7 @@ export interface PageRequest {
      * is set.
      */
     countTotal: boolean;
-    /**
-     * reverse is set to true if results are to be returned in the descending order.
-     *
-     * Since: cosmos-sdk 0.43
-     */
+    /** reverse is set to true if results are to be returned in the descending order. */
     reverse: boolean;
 }
 /**
@@ -65,6 +62,7 @@ export interface PageResponse {
     total: Long;
 }
 export declare const PageRequest: {
+    typeUrl: string;
     encode(message: PageRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): PageRequest;
     fromJSON(object: any): PageRequest;
@@ -134,7 +132,7 @@ export declare const PageRequest: {
             toString: (radix?: number | undefined) => string;
             toUnsigned: () => Long.Long;
             xor: (other: string | number | Long.Long) => Long.Long;
-        } & { [K in Exclude<keyof I["offset"], keyof Long.Long>]: never; }) | undefined;
+        } & Record<Exclude<keyof I["offset"], keyof Long.Long>, never>) | undefined;
         limit?: string | number | (Long.Long & {
             high: number;
             low: number;
@@ -192,12 +190,13 @@ export declare const PageRequest: {
             toString: (radix?: number | undefined) => string;
             toUnsigned: () => Long.Long;
             xor: (other: string | number | Long.Long) => Long.Long;
-        } & { [K_1 in Exclude<keyof I["limit"], keyof Long.Long>]: never; }) | undefined;
+        } & Record<Exclude<keyof I["limit"], keyof Long.Long>, never>) | undefined;
         countTotal?: boolean | undefined;
         reverse?: boolean | undefined;
-    } & { [K_2 in Exclude<keyof I, keyof PageRequest>]: never; }>(object: I): PageRequest;
+    } & Record<Exclude<keyof I, keyof PageRequest>, never>>(object: I): PageRequest;
 };
 export declare const PageResponse: {
+    typeUrl: string;
     encode(message: PageResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): PageResponse;
     fromJSON(object: any): PageResponse;
@@ -264,17 +263,6 @@ export declare const PageResponse: {
             toString: (radix?: number | undefined) => string;
             toUnsigned: () => Long.Long;
             xor: (other: string | number | Long.Long) => Long.Long;
-        } & { [K in Exclude<keyof I["total"], keyof Long.Long>]: never; }) | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof PageResponse>]: never; }>(object: I): PageResponse;
+        } & Record<Exclude<keyof I["total"], keyof Long.Long>, never>) | undefined;
+    } & Record<Exclude<keyof I, keyof PageResponse>, never>>(object: I): PageResponse;
 };
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
-export type DeepPartial<T> = T extends Builtin ? T : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {
-    [K in keyof T]?: DeepPartial<T[K]>;
-} : Partial<T>;
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & {
-    [K in keyof P]: Exact<P[K], I[K]>;
-} & {
-    [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-};
-export {};

@@ -24,7 +24,7 @@ import {
 } from './codec/agent/v1/tx';
 import { Payment, Params, SessionStatus } from "./codec/agent/v1/agent";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
-import { AgentExtension, setupAgentExtension } from './queries';
+import { AgentExtension, setupAgentExtension, setupSendExtension } from './queries';
 import {
   // QueryModelAllResponse,
   // QueryModelResponse,
@@ -39,6 +39,8 @@ import { StdFee } from "@cosmjs/amino";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { sha256 } from '@cosmjs/crypto'
 import { toHex } from "@cosmjs/encoding";
+import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
+import { QueryAllBalancesResponse } from "./codec/cosmos/bank/v1beta1/query";
 
 export type NesaClientOptions = SigningStargateClientOptions & {
   logger?: Logger;
@@ -56,6 +58,7 @@ function nesaRegistry(): Registry {
     ['/agent.v1.MsgRegisterSession', MsgRegisterSession],
     ['/agent.v1.MsgSubmitPayment', MsgSubmitPayment],
     ['/agent.v1.VRF', VRF],
+    ['/cosmos.bank.v1beta1.MsgSend', MsgSend],
   ])
 }
 
@@ -76,7 +79,7 @@ export class NesaClient {
   public readonly gasPrice: GasPrice;
   public readonly sign: SigningStargateClient;
   public readonly query: QueryClient &
-    AgentExtension;
+    AgentExtension & ReturnType<typeof setupSendExtension>;
   public readonly tm: CometClient;
   public readonly senderAddress: string;
   public readonly logger: Logger;
@@ -128,7 +131,8 @@ export class NesaClient {
     this.tm = tmClient;
     this.query = QueryClient.withExtensions(
       tmClient,
-      setupAgentExtension
+      setupAgentExtension,
+      setupSendExtension
     );
     this.senderAddress = senderAddress;
     this.chainId = chainId;
@@ -299,6 +303,37 @@ export class NesaClient {
     };
   }
 
+  public async send(
+    toAddress: string,
+    amount: Coin[]
+  ): Promise<MsgResult> {
+    this.logger.verbose(`send`);
+    const senderAddress = this.senderAddress;
+    const sendMsg = {
+      typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+      value: MsgSend.fromPartial({
+        fromAddress: senderAddress,
+        toAddress,
+        amount
+      }),
+    };
+    this.logger.debug('send Message: ', sendMsg);
+    const result = await this.sign.signAndBroadcast(
+      senderAddress,
+      [sendMsg],
+      "auto"
+    );
+    if (isDeliverTxFailure(result)) {
+      throw new Error(createDeliverTxFailureMessage(result));
+    }
+
+    return {
+      events: result.events,
+      transactionHash: result.transactionHash,
+      height: result.height,
+    };
+  }
+
   public async submitPayment(
     // account: string,
     sessionId: string,
@@ -348,13 +383,18 @@ export class NesaClient {
     return result;
   }
 
-  public async getSessionByAgent(account: string, status: SessionStatus, limit: Long, orderDesc: boolean, key: Uint8Array, expireTime?: Date): Promise<QuerySessionByAgentResponse> {
-    const result = await this.query.agent.sessionByAgentRequest(account, status, limit, orderDesc, key, expireTime);
+  public async getSessionByAgent(account: string, status: SessionStatus | undefined, expireTime: Date, limit: Long, orderDesc: boolean, key: Uint8Array,): Promise<QuerySessionByAgentResponse> {
+    const result = await this.query.agent.sessionByAgentRequest(account, status,expireTime, limit, orderDesc, key, );
     return result;
   }
 
   public async getVRFSeed(account: string): Promise<QueryVRFSeedResponse> {
     const result = await this.query.agent.VRFSeedRequest(account);
+    return result;
+  }
+
+  public async getAllBalances(account: string): Promise<QueryAllBalancesResponse> {
+    const result = await this.query.send.allBalances(account);
     return result;
   }
 }

@@ -6,9 +6,10 @@ import { Logger } from './logger';
 import { VRF } from './codec/agent/v1/tx';
 import { Payment, Params, SessionStatus } from "./codec/agent/v1/agent";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
-import { AgentExtension } from './queries';
+import { AgentExtension, setupSendExtension } from './queries';
 import { QueryParamsResponse, QueryInferenceAgentResponse, QuerySessionResponse, QueryVRFSeedResponse, QuerySessionByAgentResponse } from "./codec/agent/v1/query";
 import { StdFee } from "@cosmjs/amino";
+import { QueryAllBalancesResponse } from "./codec/cosmos/bank/v1beta1/query";
 export type NesaClientOptions = SigningStargateClientOptions & {
     logger?: Logger;
     gasPrice: GasPrice;
@@ -28,7 +29,7 @@ export type RegisterSessionResult = MsgResult & {
 export declare class NesaClient {
     readonly gasPrice: GasPrice;
     readonly sign: SigningStargateClient;
-    readonly query: QueryClient & AgentExtension;
+    readonly query: QueryClient & AgentExtension & ReturnType<typeof setupSendExtension>;
     readonly tm: CometClient;
     readonly senderAddress: string;
     readonly logger: Logger;
@@ -44,10 +45,12 @@ export declare class NesaClient {
     broadcastRegisterSession(): any;
     signRegisterSession(sessionId: string, modelName: string, fee: StdFee, lockBalance?: Coin, vrf?: VRF): Promise<any>;
     registerSession(sessionId: string, modelName: string, lockBalance?: Coin, vrf?: VRF): Promise<RegisterSessionResult>;
+    send(toAddress: string, amount: Coin[]): Promise<MsgResult>;
     submitPayment(sessionId: string, signature: Uint8Array, payment?: Payment): Promise<MsgResult>;
     getParams(): Promise<QueryParamsResponse>;
     getInferenceAgent(account: string, modelName: string, limit: Long, key: Uint8Array): Promise<QueryInferenceAgentResponse>;
     getSession(sessionId: string): Promise<QuerySessionResponse>;
-    getSessionByAgent(account: string, status: SessionStatus, limit: Long, orderDesc: boolean, key: Uint8Array, expireTime?: Date): Promise<QuerySessionByAgentResponse>;
+    getSessionByAgent(account: string, status: SessionStatus | undefined, expireTime: Date, limit: Long, orderDesc: boolean, key: Uint8Array): Promise<QuerySessionByAgentResponse>;
     getVRFSeed(account: string): Promise<QueryVRFSeedResponse>;
+    getAllBalances(account: string): Promise<QueryAllBalancesResponse>;
 }

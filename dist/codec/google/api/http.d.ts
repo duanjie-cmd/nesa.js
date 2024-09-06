@@ -1,5 +1,4 @@
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+import * as _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "google.api";
 /**
  * Defines the HTTP configuration for an API service. It contains a list of
@@ -250,22 +249,22 @@ export interface HttpRule {
      */
     selector: string;
     /** Used for listing and getting information about resources. */
-    get: string | undefined;
+    get?: string;
     /** Used for updating a resource. */
-    put: string | undefined;
+    put?: string;
     /** Used for creating a resource. */
-    post: string | undefined;
+    post?: string;
     /** Used for deleting a resource. */
-    delete: string | undefined;
+    delete?: string;
     /** Used for updating a resource. */
-    patch: string | undefined;
+    patch?: string;
     /**
      * The custom pattern is used for specifying an HTTP method that is not
      * included in the `pattern` field, such as HEAD, or "*" to leave the
      * HTTP method unspecified for this rule. The wild-card rule is useful
      * for services that provide content to Web (HTML) clients.
      */
-    custom?: CustomHttpPattern | undefined;
+    custom?: CustomHttpPattern;
     /**
      * The name of the request field whose value is mapped to the HTTP body, or
      * `*` for mapping all fields not captured by the path pattern to the HTTP
@@ -294,6 +293,7 @@ export interface CustomHttpPattern {
     path: string;
 }
 export declare const Http: {
+    typeUrl: string;
     encode(message: Http, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): Http;
     fromJSON(object: any): Http;
@@ -357,7 +357,7 @@ export declare const Http: {
             } & {
                 kind?: string | undefined;
                 path?: string | undefined;
-            } & { [K in Exclude<keyof I["rules"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+            } & Record<Exclude<keyof I["rules"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
             body?: string | undefined;
             responseBody?: string | undefined;
             additionalBindings?: ({
@@ -401,7 +401,7 @@ export declare const Http: {
                 } & {
                     kind?: string | undefined;
                     path?: string | undefined;
-                } & { [K_1 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                 body?: string | undefined;
                 responseBody?: string | undefined;
                 additionalBindings?: ({
@@ -445,7 +445,7 @@ export declare const Http: {
                     } & {
                         kind?: string | undefined;
                         path?: string | undefined;
-                    } & { [K_2 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                    } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                     body?: string | undefined;
                     responseBody?: string | undefined;
                     additionalBindings?: ({
@@ -489,7 +489,7 @@ export declare const Http: {
                         } & {
                             kind?: string | undefined;
                             path?: string | undefined;
-                        } & { [K_3 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                        } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                         body?: string | undefined;
                         responseBody?: string | undefined;
                         additionalBindings?: ({
@@ -533,7 +533,7 @@ export declare const Http: {
                             } & {
                                 kind?: string | undefined;
                                 path?: string | undefined;
-                            } & { [K_4 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                            } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                             body?: string | undefined;
                             responseBody?: string | undefined;
                             additionalBindings?: ({
@@ -577,7 +577,7 @@ export declare const Http: {
                                 } & {
                                     kind?: string | undefined;
                                     path?: string | undefined;
-                                } & { [K_5 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                 body?: string | undefined;
                                 responseBody?: string | undefined;
                                 additionalBindings?: ({
@@ -621,7 +621,7 @@ export declare const Http: {
                                     } & {
                                         kind?: string | undefined;
                                         path?: string | undefined;
-                                    } & { [K_6 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                    } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                     body?: string | undefined;
                                     responseBody?: string | undefined;
                                     additionalBindings?: ({
@@ -665,7 +665,7 @@ export declare const Http: {
                                         } & {
                                             kind?: string | undefined;
                                             path?: string | undefined;
-                                        } & { [K_7 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                        } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                         body?: string | undefined;
                                         responseBody?: string | undefined;
                                         additionalBindings?: ({
@@ -709,7 +709,7 @@ export declare const Http: {
                                             } & {
                                                 kind?: string | undefined;
                                                 path?: string | undefined;
-                                            } & { [K_8 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                            } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                             body?: string | undefined;
                                             responseBody?: string | undefined;
                                             additionalBindings?: ({
@@ -750,7 +750,7 @@ export declare const Http: {
                                                 custom?: ({
                                                     kind?: string | undefined;
                                                     path?: string | undefined;
-                                                } & any & { [K_9 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                                } & any & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                                 body?: string | undefined;
                                                 responseBody?: string | undefined;
                                                 additionalBindings?: ({
@@ -781,7 +781,7 @@ export declare const Http: {
                                                     body?: string | undefined;
                                                     responseBody?: string | undefined;
                                                     additionalBindings?: any[] | undefined;
-                                                } & any & { [K_10 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_11 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                                } & any & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                                     selector?: string | undefined;
                                                     get?: string | undefined;
                                                     put?: string | undefined;
@@ -795,8 +795,8 @@ export declare const Http: {
                                                     body?: string | undefined;
                                                     responseBody?: string | undefined;
                                                     additionalBindings?: any[] | undefined;
-                                                }[]>]: never; }) | undefined;
-                                            } & { [K_12 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_13 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                                }[]>, never>) | undefined;
+                                            } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                                 selector?: string | undefined;
                                                 get?: string | undefined;
                                                 put?: string | undefined;
@@ -810,8 +810,8 @@ export declare const Http: {
                                                 body?: string | undefined;
                                                 responseBody?: string | undefined;
                                                 additionalBindings?: any[] | undefined;
-                                            }[]>]: never; }) | undefined;
-                                        } & { [K_14 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_15 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                            }[]>, never>) | undefined;
+                                        } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                             selector?: string | undefined;
                                             get?: string | undefined;
                                             put?: string | undefined;
@@ -825,8 +825,8 @@ export declare const Http: {
                                             body?: string | undefined;
                                             responseBody?: string | undefined;
                                             additionalBindings?: any[] | undefined;
-                                        }[]>]: never; }) | undefined;
-                                    } & { [K_16 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_17 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                        }[]>, never>) | undefined;
+                                    } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                         selector?: string | undefined;
                                         get?: string | undefined;
                                         put?: string | undefined;
@@ -840,8 +840,8 @@ export declare const Http: {
                                         body?: string | undefined;
                                         responseBody?: string | undefined;
                                         additionalBindings?: any[] | undefined;
-                                    }[]>]: never; }) | undefined;
-                                } & { [K_18 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_19 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                    }[]>, never>) | undefined;
+                                } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                     selector?: string | undefined;
                                     get?: string | undefined;
                                     put?: string | undefined;
@@ -855,8 +855,8 @@ export declare const Http: {
                                     body?: string | undefined;
                                     responseBody?: string | undefined;
                                     additionalBindings?: any[] | undefined;
-                                }[]>]: never; }) | undefined;
-                            } & { [K_20 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_21 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                }[]>, never>) | undefined;
+                            } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                 selector?: string | undefined;
                                 get?: string | undefined;
                                 put?: string | undefined;
@@ -870,8 +870,8 @@ export declare const Http: {
                                 body?: string | undefined;
                                 responseBody?: string | undefined;
                                 additionalBindings?: any[] | undefined;
-                            }[]>]: never; }) | undefined;
-                        } & { [K_22 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_23 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                            }[]>, never>) | undefined;
+                        } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                             selector?: string | undefined;
                             get?: string | undefined;
                             put?: string | undefined;
@@ -885,8 +885,8 @@ export declare const Http: {
                             body?: string | undefined;
                             responseBody?: string | undefined;
                             additionalBindings?: any[] | undefined;
-                        }[]>]: never; }) | undefined;
-                    } & { [K_24 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_25 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                        }[]>, never>) | undefined;
+                    } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                         selector?: string | undefined;
                         get?: string | undefined;
                         put?: string | undefined;
@@ -900,8 +900,8 @@ export declare const Http: {
                         body?: string | undefined;
                         responseBody?: string | undefined;
                         additionalBindings?: any[] | undefined;
-                    }[]>]: never; }) | undefined;
-                } & { [K_26 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_27 in Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                    }[]>, never>) | undefined;
+                } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                     selector?: string | undefined;
                     get?: string | undefined;
                     put?: string | undefined;
@@ -915,8 +915,8 @@ export declare const Http: {
                     body?: string | undefined;
                     responseBody?: string | undefined;
                     additionalBindings?: any[] | undefined;
-                }[]>]: never; }) | undefined;
-            } & { [K_28 in Exclude<keyof I["rules"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_29 in Exclude<keyof I["rules"][number]["additionalBindings"], keyof {
+                }[]>, never>) | undefined;
+            } & Record<Exclude<keyof I["rules"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"][number]["additionalBindings"], keyof {
                 selector?: string | undefined;
                 get?: string | undefined;
                 put?: string | undefined;
@@ -930,8 +930,8 @@ export declare const Http: {
                 body?: string | undefined;
                 responseBody?: string | undefined;
                 additionalBindings?: any[] | undefined;
-            }[]>]: never; }) | undefined;
-        } & { [K_30 in Exclude<keyof I["rules"][number], keyof HttpRule>]: never; })[] & { [K_31 in Exclude<keyof I["rules"], keyof {
+            }[]>, never>) | undefined;
+        } & Record<Exclude<keyof I["rules"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["rules"], keyof {
             selector?: string | undefined;
             get?: string | undefined;
             put?: string | undefined;
@@ -945,11 +945,12 @@ export declare const Http: {
             body?: string | undefined;
             responseBody?: string | undefined;
             additionalBindings?: any[] | undefined;
-        }[]>]: never; }) | undefined;
+        }[]>, never>) | undefined;
         fullyDecodeReservedExpansion?: boolean | undefined;
-    } & { [K_32 in Exclude<keyof I, keyof Http>]: never; }>(object: I): Http;
+    } & Record<Exclude<keyof I, keyof Http>, never>>(object: I): Http;
 };
 export declare const HttpRule: {
+    typeUrl: string;
     encode(message: HttpRule, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): HttpRule;
     fromJSON(object: any): HttpRule;
@@ -981,7 +982,7 @@ export declare const HttpRule: {
         } & {
             kind?: string | undefined;
             path?: string | undefined;
-        } & { [K in Exclude<keyof I["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+        } & Record<Exclude<keyof I["custom"], keyof CustomHttpPattern>, never>) | undefined;
         body?: string | undefined;
         responseBody?: string | undefined;
         additionalBindings?: ({
@@ -1025,7 +1026,7 @@ export declare const HttpRule: {
             } & {
                 kind?: string | undefined;
                 path?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+            } & Record<Exclude<keyof I["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
             body?: string | undefined;
             responseBody?: string | undefined;
             additionalBindings?: ({
@@ -1069,7 +1070,7 @@ export declare const HttpRule: {
                 } & {
                     kind?: string | undefined;
                     path?: string | undefined;
-                } & { [K_2 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                 body?: string | undefined;
                 responseBody?: string | undefined;
                 additionalBindings?: ({
@@ -1113,7 +1114,7 @@ export declare const HttpRule: {
                     } & {
                         kind?: string | undefined;
                         path?: string | undefined;
-                    } & { [K_3 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                    } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                     body?: string | undefined;
                     responseBody?: string | undefined;
                     additionalBindings?: ({
@@ -1157,7 +1158,7 @@ export declare const HttpRule: {
                         } & {
                             kind?: string | undefined;
                             path?: string | undefined;
-                        } & { [K_4 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                        } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                         body?: string | undefined;
                         responseBody?: string | undefined;
                         additionalBindings?: ({
@@ -1201,7 +1202,7 @@ export declare const HttpRule: {
                             } & {
                                 kind?: string | undefined;
                                 path?: string | undefined;
-                            } & { [K_5 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                            } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                             body?: string | undefined;
                             responseBody?: string | undefined;
                             additionalBindings?: ({
@@ -1245,7 +1246,7 @@ export declare const HttpRule: {
                                 } & {
                                     kind?: string | undefined;
                                     path?: string | undefined;
-                                } & { [K_6 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                 body?: string | undefined;
                                 responseBody?: string | undefined;
                                 additionalBindings?: ({
@@ -1289,7 +1290,7 @@ export declare const HttpRule: {
                                     } & {
                                         kind?: string | undefined;
                                         path?: string | undefined;
-                                    } & { [K_7 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                    } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                     body?: string | undefined;
                                     responseBody?: string | undefined;
                                     additionalBindings?: ({
@@ -1333,7 +1334,7 @@ export declare const HttpRule: {
                                         } & {
                                             kind?: string | undefined;
                                             path?: string | undefined;
-                                        } & { [K_8 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                        } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                         body?: string | undefined;
                                         responseBody?: string | undefined;
                                         additionalBindings?: ({
@@ -1377,7 +1378,7 @@ export declare const HttpRule: {
                                             } & {
                                                 kind?: string | undefined;
                                                 path?: string | undefined;
-                                            } & { [K_9 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                            } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                             body?: string | undefined;
                                             responseBody?: string | undefined;
                                             additionalBindings?: ({
@@ -1418,7 +1419,7 @@ export declare const HttpRule: {
                                                 custom?: ({
                                                     kind?: string | undefined;
                                                     path?: string | undefined;
-                                                } & any & { [K_10 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>]: never; }) | undefined;
+                                                } & any & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["custom"], keyof CustomHttpPattern>, never>) | undefined;
                                                 body?: string | undefined;
                                                 responseBody?: string | undefined;
                                                 additionalBindings?: ({
@@ -1449,7 +1450,7 @@ export declare const HttpRule: {
                                                     body?: string | undefined;
                                                     responseBody?: string | undefined;
                                                     additionalBindings?: any[] | undefined;
-                                                } & any & { [K_11 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_12 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                                } & any & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                                     selector?: string | undefined;
                                                     get?: string | undefined;
                                                     put?: string | undefined;
@@ -1463,8 +1464,8 @@ export declare const HttpRule: {
                                                     body?: string | undefined;
                                                     responseBody?: string | undefined;
                                                     additionalBindings?: any[] | undefined;
-                                                }[]>]: never; }) | undefined;
-                                            } & { [K_13 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_14 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                                }[]>, never>) | undefined;
+                                            } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                                 selector?: string | undefined;
                                                 get?: string | undefined;
                                                 put?: string | undefined;
@@ -1478,8 +1479,8 @@ export declare const HttpRule: {
                                                 body?: string | undefined;
                                                 responseBody?: string | undefined;
                                                 additionalBindings?: any[] | undefined;
-                                            }[]>]: never; }) | undefined;
-                                        } & { [K_15 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_16 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                            }[]>, never>) | undefined;
+                                        } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                             selector?: string | undefined;
                                             get?: string | undefined;
                                             put?: string | undefined;
@@ -1493,8 +1494,8 @@ export declare const HttpRule: {
                                             body?: string | undefined;
                                             responseBody?: string | undefined;
                                             additionalBindings?: any[] | undefined;
-                                        }[]>]: never; }) | undefined;
-                                    } & { [K_17 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_18 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                        }[]>, never>) | undefined;
+                                    } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                         selector?: string | undefined;
                                         get?: string | undefined;
                                         put?: string | undefined;
@@ -1508,8 +1509,8 @@ export declare const HttpRule: {
                                         body?: string | undefined;
                                         responseBody?: string | undefined;
                                         additionalBindings?: any[] | undefined;
-                                    }[]>]: never; }) | undefined;
-                                } & { [K_19 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_20 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                    }[]>, never>) | undefined;
+                                } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                     selector?: string | undefined;
                                     get?: string | undefined;
                                     put?: string | undefined;
@@ -1523,8 +1524,8 @@ export declare const HttpRule: {
                                     body?: string | undefined;
                                     responseBody?: string | undefined;
                                     additionalBindings?: any[] | undefined;
-                                }[]>]: never; }) | undefined;
-                            } & { [K_21 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_22 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                                }[]>, never>) | undefined;
+                            } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                                 selector?: string | undefined;
                                 get?: string | undefined;
                                 put?: string | undefined;
@@ -1538,8 +1539,8 @@ export declare const HttpRule: {
                                 body?: string | undefined;
                                 responseBody?: string | undefined;
                                 additionalBindings?: any[] | undefined;
-                            }[]>]: never; }) | undefined;
-                        } & { [K_23 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_24 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                            }[]>, never>) | undefined;
+                        } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                             selector?: string | undefined;
                             get?: string | undefined;
                             put?: string | undefined;
@@ -1553,8 +1554,8 @@ export declare const HttpRule: {
                             body?: string | undefined;
                             responseBody?: string | undefined;
                             additionalBindings?: any[] | undefined;
-                        }[]>]: never; }) | undefined;
-                    } & { [K_25 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_26 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                        }[]>, never>) | undefined;
+                    } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                         selector?: string | undefined;
                         get?: string | undefined;
                         put?: string | undefined;
@@ -1568,8 +1569,8 @@ export declare const HttpRule: {
                         body?: string | undefined;
                         responseBody?: string | undefined;
                         additionalBindings?: any[] | undefined;
-                    }[]>]: never; }) | undefined;
-                } & { [K_27 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_28 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
+                    }[]>, never>) | undefined;
+                } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number]["additionalBindings"], keyof {
                     selector?: string | undefined;
                     get?: string | undefined;
                     put?: string | undefined;
@@ -1583,8 +1584,8 @@ export declare const HttpRule: {
                     body?: string | undefined;
                     responseBody?: string | undefined;
                     additionalBindings?: any[] | undefined;
-                }[]>]: never; }) | undefined;
-            } & { [K_29 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_30 in Exclude<keyof I["additionalBindings"][number]["additionalBindings"], keyof {
+                }[]>, never>) | undefined;
+            } & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"][number]["additionalBindings"], keyof {
                 selector?: string | undefined;
                 get?: string | undefined;
                 put?: string | undefined;
@@ -1598,8 +1599,8 @@ export declare const HttpRule: {
                 body?: string | undefined;
                 responseBody?: string | undefined;
                 additionalBindings?: any[] | undefined;
-            }[]>]: never; }) | undefined;
-        } & { [K_31 in Exclude<keyof I["additionalBindings"][number], keyof HttpRule>]: never; })[] & { [K_32 in Exclude<keyof I["additionalBindings"], keyof {
+            }[]>, never>) | undefined;
+        } & Record<Exclude<keyof I["additionalBindings"][number], keyof HttpRule>, never>)[] & Record<Exclude<keyof I["additionalBindings"], keyof {
             selector?: string | undefined;
             get?: string | undefined;
             put?: string | undefined;
@@ -1613,10 +1614,11 @@ export declare const HttpRule: {
             body?: string | undefined;
             responseBody?: string | undefined;
             additionalBindings?: any[] | undefined;
-        }[]>]: never; }) | undefined;
-    } & { [K_33 in Exclude<keyof I, keyof HttpRule>]: never; }>(object: I): HttpRule;
+        }[]>, never>) | undefined;
+    } & Record<Exclude<keyof I, keyof HttpRule>, never>>(object: I): HttpRule;
 };
 export declare const CustomHttpPattern: {
+    typeUrl: string;
     encode(message: CustomHttpPattern, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): CustomHttpPattern;
     fromJSON(object: any): CustomHttpPattern;
@@ -1627,16 +1629,5 @@ export declare const CustomHttpPattern: {
     } & {
         kind?: string | undefined;
         path?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof CustomHttpPattern>]: never; }>(object: I): CustomHttpPattern;
+    } & Record<Exclude<keyof I, keyof CustomHttpPattern>, never>>(object: I): CustomHttpPattern;
 };
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
-export type DeepPartial<T> = T extends Builtin ? T : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {
-    [K in keyof T]?: DeepPartial<T[K]>;
-} : Partial<T>;
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P : P & {
-    [K in keyof P]: Exact<P[K], I[K]>;
-} & {
-    [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-};
-export {};

@@ -7,6 +7,7 @@ import { socket } from "./socket";
 import { BigNumber } from 'bignumber.js';
 import { CosmjsOfflineSigner, suggestChain } from '@leapwallet/cosmos-snap-provider';
 import { DirectSecp256k1Wallet } from "@cosmjs/proto-signing";
+import { QueryInferenceAgentResponse } from "./codec/agent/v1/query";
 
 // this is ennoying, but stream-browserify doesn't have a type definition
 // node's stream package has a type definition, but it wasn't playing nicely, so not sure if it is compatible
@@ -424,7 +425,7 @@ class ChatClient {
     }
     this.lastGetAgentInfoPromise = new Promise((resolve, reject) => {
       WalletOperation.requestAgentInfo(this.nesaClient, result?.account, this.modelName)
-        .then((agentInfo: any) => {
+        .then((agentInfo: QueryInferenceAgentResponse) => {
           if (agentInfo && agentInfo?.inferenceAgent) {
             const selectAgent = agentInfo?.inferenceAgent;
             let agentWsUrl = selectAgent.url;
