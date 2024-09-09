@@ -4,6 +4,7 @@ The SDK is designed to be integrated into frontend projects, allowing seamless i
 
 ## If using SDK in nodejs environment, please refer to the /demo folder
 
+
 ### Install & Usage
 
 ```
@@ -15,6 +16,12 @@ npm link
 ```
 // in your project
 npm link nesa-sdk
+```
+
+### Compile Protocol Buffer 
+
+```sh
+npm run codegen # proto ==> ts, Generate .ts files into ./src/codec
 ```
 
 #### Init SDK
