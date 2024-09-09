@@ -4,6 +4,7 @@ import { GasPrice } from "@cosmjs/stargate";
 import { ChainInfo } from "@keplr-wallet/types"
 import EncryptUtils from "./encryptUtils";
 import Long from "long";
+import { QueryGetModelResponse } from "./codec/dht/v1/query";
 
 class WalletOperation {
   static getNesaClient(chainInfo: ChainInfo, offlineSigner: any): Promise<any> {
@@ -34,25 +35,30 @@ class WalletOperation {
     })
   }
 
-  static registerSession(client: any, modelName: string, lockAmount: string, denom: string, chainInfo: ChainInfo, offlineSigner: any): Promise<any> {
+  static registerSession(client: NesaClient, modelName: string, lockAmount: string, denom: string, chainInfo: ChainInfo, offlineSigner: any): Promise<any> {
     EncryptUtils.generateKey();
     return new Promise(async (resolve, reject) => {
       const lockBalance = { denom: denom, amount: lockAmount };
-      EncryptUtils.requestVrf(client, offlineSigner).then(async (res) => {
+      try {
+        const [resVrf, resModel] = await Promise.all([EncryptUtils.requestVrf(client, offlineSigner), this.requestModel(client, modelName)])
         const fee = {
           amount: [{ denom: chainInfo.feeCurrencies[0].coinMinimalDenom, amount: "6" }],
           gas: "200000",
         }
-        if (res?.vrf && res?.sessionId) {
-          resolve(client.signRegisterSession(res.sessionId, modelName, fee, lockBalance, res.vrf))
-        } else {
+        if (!(resVrf?.vrf && resVrf?.sessionId)) {
           reject(new Error('Vrf seed is null'))
+        } else if (!(resModel?.model && resModel.model?.tokenPrice)) {
+          reject(new Error('Model tokenPrice is null'))
+        } else {
+          resolve(client.signRegisterSession(resVrf.sessionId, modelName, fee, lockBalance, resVrf.vrf,resModel.model.tokenPrice))
         }
-      })
+      } catch (error) {
+        reject(error)
+      }
     })
   }
 
-  static requestAgentInfo(client: any, agentName: string, modelName: string): Promise<any> {
+  static requestAgentInfo(client: NesaClient, agentName: string, modelName: string): Promise<any> {
     console.log('modelName: ', modelName)
     return new Promise(async (resolve, reject) => {
       if (client) {
@@ -63,7 +69,7 @@ class WalletOperation {
     })
   }
 
-  static requestParams(client: any): Promise<any> {
+  static requestParams(client: NesaClient): Promise<any> {
     return new Promise(async (resolve, reject) => {
       if (client) {
         resolve(client.getParams())
@@ -73,10 +79,16 @@ class WalletOperation {
     })
   }
 
-  static requestVrfSeed(client: any, offlineSigner: any): Promise<any> {
+  static requestVrfSeed(client: NesaClient, offlineSigner: any): Promise<any> {
     return new Promise(async (resolve) => {
       const account: AccountData = (await offlineSigner.getAccounts())[0];
       resolve(client.getVRFSeed(account.address))
+    })
+  }
+
+  static requestModel(client: NesaClient, modelName: string): Promise<QueryGetModelResponse> {
+    return new Promise(async (resolve) => {
+      resolve(client.getModel(modelName))
     })
   }
 }
