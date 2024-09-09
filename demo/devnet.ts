@@ -135,21 +135,21 @@ const requestChat = (question) => {
 
 // requestSession()
 
-ChatClientUtils.initWallet()
-.then(() => {
-    ChatClientUtils.getNesaClient()
-        .then(async (nesaClient) => {
-            const address = 'nesa1fqygpg97quqkuzg5305w6gavc5nh5yjuha4r33';
-            const beforeBalance = await nesaClient.getAllBalances(address)
-            console.log(address, 'beforeBalance:', beforeBalance)
-            const resTx = await nesaClient.send(address,[
-                {
-                  denom: 'unes',
-                  amount: '1',
-                },
-            ])
-            console.log(resTx)
-            const afterbalance = await nesaClient.getAllBalances(address)
-            console.log(address, 'afterbalance:', afterbalance)
-        })
-    })
+const execFn = async () => { 
+    await ChatClientUtils.initWallet();
+    const nesaClient = await ChatClientUtils.getNesaClient();
+    const address = 'nesa1fqygpg97quqkuzg5305w6gavc5nh5yjuha4r33';
+    const beforeBalance = await nesaClient.getAllBalances(address)
+    console.log(address, 'beforeBalance:', beforeBalance)
+    const resTx = await nesaClient.send(address,[
+        {
+          denom: 'unes',
+          amount: '1',
+        },
+    ])
+    console.log(resTx)
+    const afterbalance = await nesaClient.getAllBalances(address)
+    console.log(address, 'afterbalance:', afterbalance)
+}
+
+execFn()
