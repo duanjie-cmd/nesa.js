@@ -1,18 +1,9 @@
 /* eslint-disable */
-import {
-  Params,
-  AgentStatus,
-  AgentModelStatus,
-  TokenPrice,
-  Payment,
-  agentStatusFromJSON,
-  agentStatusToJSON,
-  agentModelStatusFromJSON,
-  agentModelStatusToJSON,
-} from "./agent";
+import { Params, AgentStatus, AgentModelStatus, TokenPrice, Payment, agentStatusFromJSON, agentStatusToJSON, agentModelStatusFromJSON, agentModelStatusToJSON } from "./agent";
 import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Long, isSet, DeepPartial, Exact, bytesFromBase64, base64FromBytes, Rpc } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "agent.v1";
 export interface MsgUpdateParams {
   authority: string;
@@ -107,7 +98,7 @@ export interface MsgSubmitChallengeOriginHashResponse {}
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return {
     authority: "",
-    params: Params.fromPartial({}),
+    params: Params.fromPartial({})
   };
 }
 export const MsgUpdateParams = {
@@ -147,7 +138,7 @@ export const MsgUpdateParams = {
     if (isSet(object.params)) obj.params = Params.fromJSON(object.params);
     return obj;
   },
-  toJSON(message: MsgUpdateParams): unknown {
+  toJSON(message: MsgUpdateParams): JsonSafe<MsgUpdateParams> {
     const obj: any = {};
     message.authority !== undefined && (obj.authority = message.authority);
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
@@ -160,7 +151,7 @@ export const MsgUpdateParams = {
       message.params = Params.fromPartial(object.params);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
   return {};
@@ -188,20 +179,20 @@ export const MsgUpdateParamsResponse = {
     const obj = createBaseMsgUpdateParamsResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateParamsResponse): unknown {
+  toJSON(_: MsgUpdateParamsResponse): JsonSafe<MsgUpdateParamsResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(_: I): MsgUpdateParamsResponse {
     const message = createBaseMsgUpdateParamsResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterInferenceAgent(): MsgRegisterInferenceAgent {
   return {
     account: "",
     url: "",
-    version: Long.UZERO,
+    version: Long.UZERO
   };
 }
 export const MsgRegisterInferenceAgent = {
@@ -248,16 +239,14 @@ export const MsgRegisterInferenceAgent = {
     if (isSet(object.version)) obj.version = Long.fromValue(object.version);
     return obj;
   },
-  toJSON(message: MsgRegisterInferenceAgent): unknown {
+  toJSON(message: MsgRegisterInferenceAgent): JsonSafe<MsgRegisterInferenceAgent> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.url !== undefined && (obj.url = message.url);
     message.version !== undefined && (obj.version = (message.version || Long.UZERO).toString());
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterInferenceAgent>, I>>(
-    object: I,
-  ): MsgRegisterInferenceAgent {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterInferenceAgent>, I>>(object: I): MsgRegisterInferenceAgent {
     const message = createBaseMsgRegisterInferenceAgent();
     message.account = object.account ?? "";
     message.url = object.url ?? "";
@@ -265,7 +254,7 @@ export const MsgRegisterInferenceAgent = {
       message.version = Long.fromValue(object.version);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterInferenceAgentResponse(): MsgRegisterInferenceAgentResponse {
   return {};
@@ -293,23 +282,21 @@ export const MsgRegisterInferenceAgentResponse = {
     const obj = createBaseMsgRegisterInferenceAgentResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterInferenceAgentResponse): unknown {
+  toJSON(_: MsgRegisterInferenceAgentResponse): JsonSafe<MsgRegisterInferenceAgentResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterInferenceAgentResponse>, I>>(
-    _: I,
-  ): MsgRegisterInferenceAgentResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterInferenceAgentResponse>, I>>(_: I): MsgRegisterInferenceAgentResponse {
     const message = createBaseMsgRegisterInferenceAgentResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateInferenceAgent(): MsgUpdateInferenceAgent {
   return {
     account: "",
     url: undefined,
     version: undefined,
-    status: undefined,
+    status: undefined
   };
 }
 export const MsgUpdateInferenceAgent = {
@@ -363,7 +350,7 @@ export const MsgUpdateInferenceAgent = {
     if (isSet(object.status)) obj.status = agentStatusFromJSON(object.status);
     return obj;
   },
-  toJSON(message: MsgUpdateInferenceAgent): unknown {
+  toJSON(message: MsgUpdateInferenceAgent): JsonSafe<MsgUpdateInferenceAgent> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.url !== undefined && (obj.url = message.url);
@@ -382,7 +369,7 @@ export const MsgUpdateInferenceAgent = {
     }
     message.status = object.status ?? undefined;
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateInferenceAgentResponse(): MsgUpdateInferenceAgentResponse {
   return {};
@@ -410,22 +397,20 @@ export const MsgUpdateInferenceAgentResponse = {
     const obj = createBaseMsgUpdateInferenceAgentResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateInferenceAgentResponse): unknown {
+  toJSON(_: MsgUpdateInferenceAgentResponse): JsonSafe<MsgUpdateInferenceAgentResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateInferenceAgentResponse>, I>>(
-    _: I,
-  ): MsgUpdateInferenceAgentResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateInferenceAgentResponse>, I>>(_: I): MsgUpdateInferenceAgentResponse {
     const message = createBaseMsgUpdateInferenceAgentResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterAgentModel(): MsgRegisterAgentModel {
   return {
     account: "",
     modelName: [],
-    lock: [],
+    lock: []
   };
 }
 export const MsgRegisterAgentModel = {
@@ -481,16 +466,16 @@ export const MsgRegisterAgentModel = {
     if (Array.isArray(object?.lock)) obj.lock = object.lock.map((e: any) => Long.fromValue(e));
     return obj;
   },
-  toJSON(message: MsgRegisterAgentModel): unknown {
+  toJSON(message: MsgRegisterAgentModel): JsonSafe<MsgRegisterAgentModel> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     if (message.modelName) {
-      obj.modelName = message.modelName.map((e) => e);
+      obj.modelName = message.modelName.map(e => e);
     } else {
       obj.modelName = [];
     }
     if (message.lock) {
-      obj.lock = message.lock.map((e) => (e || Long.UZERO).toString());
+      obj.lock = message.lock.map(e => (e || Long.UZERO).toString());
     } else {
       obj.lock = [];
     }
@@ -499,10 +484,10 @@ export const MsgRegisterAgentModel = {
   fromPartial<I extends Exact<DeepPartial<MsgRegisterAgentModel>, I>>(object: I): MsgRegisterAgentModel {
     const message = createBaseMsgRegisterAgentModel();
     message.account = object.account ?? "";
-    message.modelName = object.modelName?.map((e) => e) || [];
-    message.lock = object.lock?.map((e) => Long.fromValue(e)) || [];
+    message.modelName = object.modelName?.map(e => e) || [];
+    message.lock = object.lock?.map(e => Long.fromValue(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterAgentModelResponse(): MsgRegisterAgentModelResponse {
   return {};
@@ -530,23 +515,21 @@ export const MsgRegisterAgentModelResponse = {
     const obj = createBaseMsgRegisterAgentModelResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterAgentModelResponse): unknown {
+  toJSON(_: MsgRegisterAgentModelResponse): JsonSafe<MsgRegisterAgentModelResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterAgentModelResponse>, I>>(
-    _: I,
-  ): MsgRegisterAgentModelResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterAgentModelResponse>, I>>(_: I): MsgRegisterAgentModelResponse {
     const message = createBaseMsgRegisterAgentModelResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateAgentModel(): MsgUpdateAgentModel {
   return {
     account: "",
     modelName: [],
     lock: [],
-    status: 0,
+    status: 0
   };
 }
 export const MsgUpdateAgentModel = {
@@ -609,16 +592,16 @@ export const MsgUpdateAgentModel = {
     if (isSet(object.status)) obj.status = agentModelStatusFromJSON(object.status);
     return obj;
   },
-  toJSON(message: MsgUpdateAgentModel): unknown {
+  toJSON(message: MsgUpdateAgentModel): JsonSafe<MsgUpdateAgentModel> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     if (message.modelName) {
-      obj.modelName = message.modelName.map((e) => e);
+      obj.modelName = message.modelName.map(e => e);
     } else {
       obj.modelName = [];
     }
     if (message.lock) {
-      obj.lock = message.lock.map((e) => (e || Long.UZERO).toString());
+      obj.lock = message.lock.map(e => (e || Long.UZERO).toString());
     } else {
       obj.lock = [];
     }
@@ -628,11 +611,11 @@ export const MsgUpdateAgentModel = {
   fromPartial<I extends Exact<DeepPartial<MsgUpdateAgentModel>, I>>(object: I): MsgUpdateAgentModel {
     const message = createBaseMsgUpdateAgentModel();
     message.account = object.account ?? "";
-    message.modelName = object.modelName?.map((e) => e) || [];
-    message.lock = object.lock?.map((e) => Long.fromValue(e)) || [];
+    message.modelName = object.modelName?.map(e => e) || [];
+    message.lock = object.lock?.map(e => Long.fromValue(e)) || [];
     message.status = object.status ?? 0;
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateAgentModelResponse(): MsgUpdateAgentModelResponse {
   return {};
@@ -660,22 +643,20 @@ export const MsgUpdateAgentModelResponse = {
     const obj = createBaseMsgUpdateAgentModelResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateAgentModelResponse): unknown {
+  toJSON(_: MsgUpdateAgentModelResponse): JsonSafe<MsgUpdateAgentModelResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateAgentModelResponse>, I>>(
-    _: I,
-  ): MsgUpdateAgentModelResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateAgentModelResponse>, I>>(_: I): MsgUpdateAgentModelResponse {
     const message = createBaseMsgUpdateAgentModelResponse();
     return message;
-  },
+  }
 };
 function createBaseVRF(): VRF {
   return {
     seed: new Uint8Array(),
     proof: new Uint8Array(),
-    hashRandom: new Uint8Array(),
+    hashRandom: new Uint8Array()
   };
 }
 export const VRF = {
@@ -722,16 +703,11 @@ export const VRF = {
     if (isSet(object.hashRandom)) obj.hashRandom = bytesFromBase64(object.hashRandom);
     return obj;
   },
-  toJSON(message: VRF): unknown {
+  toJSON(message: VRF): JsonSafe<VRF> {
     const obj: any = {};
-    message.seed !== undefined &&
-      (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
-    message.proof !== undefined &&
-      (obj.proof = base64FromBytes(message.proof !== undefined ? message.proof : new Uint8Array()));
-    message.hashRandom !== undefined &&
-      (obj.hashRandom = base64FromBytes(
-        message.hashRandom !== undefined ? message.hashRandom : new Uint8Array(),
-      ));
+    message.seed !== undefined && (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
+    message.proof !== undefined && (obj.proof = base64FromBytes(message.proof !== undefined ? message.proof : new Uint8Array()));
+    message.hashRandom !== undefined && (obj.hashRandom = base64FromBytes(message.hashRandom !== undefined ? message.hashRandom : new Uint8Array()));
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<VRF>, I>>(object: I): VRF {
@@ -740,7 +716,7 @@ export const VRF = {
     message.proof = object.proof ?? new Uint8Array();
     message.hashRandom = object.hashRandom ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterSession(): MsgRegisterSession {
   return {
@@ -749,7 +725,7 @@ function createBaseMsgRegisterSession(): MsgRegisterSession {
     modelName: "",
     lockBalance: Coin.fromPartial({}),
     vrf: VRF.fromPartial({}),
-    tokenPrice: TokenPrice.fromPartial({}),
+    tokenPrice: TokenPrice.fromPartial({})
   };
 }
 export const MsgRegisterSession = {
@@ -817,16 +793,14 @@ export const MsgRegisterSession = {
     if (isSet(object.tokenPrice)) obj.tokenPrice = TokenPrice.fromJSON(object.tokenPrice);
     return obj;
   },
-  toJSON(message: MsgRegisterSession): unknown {
+  toJSON(message: MsgRegisterSession): JsonSafe<MsgRegisterSession> {
     const obj: any = {};
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
     message.account !== undefined && (obj.account = message.account);
     message.modelName !== undefined && (obj.modelName = message.modelName);
-    message.lockBalance !== undefined &&
-      (obj.lockBalance = message.lockBalance ? Coin.toJSON(message.lockBalance) : undefined);
+    message.lockBalance !== undefined && (obj.lockBalance = message.lockBalance ? Coin.toJSON(message.lockBalance) : undefined);
     message.vrf !== undefined && (obj.vrf = message.vrf ? VRF.toJSON(message.vrf) : undefined);
-    message.tokenPrice !== undefined &&
-      (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
+    message.tokenPrice !== undefined && (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgRegisterSession>, I>>(object: I): MsgRegisterSession {
@@ -844,12 +818,12 @@ export const MsgRegisterSession = {
       message.tokenPrice = TokenPrice.fromPartial(object.tokenPrice);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterSessionResponse(): MsgRegisterSessionResponse {
   return {
     account: "",
-    modelName: "",
+    modelName: ""
   };
 }
 export const MsgRegisterSessionResponse = {
@@ -889,25 +863,23 @@ export const MsgRegisterSessionResponse = {
     if (isSet(object.modelName)) obj.modelName = String(object.modelName);
     return obj;
   },
-  toJSON(message: MsgRegisterSessionResponse): unknown {
+  toJSON(message: MsgRegisterSessionResponse): JsonSafe<MsgRegisterSessionResponse> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterSessionResponse>, I>>(
-    object: I,
-  ): MsgRegisterSessionResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterSessionResponse>, I>>(object: I): MsgRegisterSessionResponse {
     const message = createBaseMsgRegisterSessionResponse();
     message.account = object.account ?? "";
     message.modelName = object.modelName ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgCancelSession(): MsgCancelSession {
   return {
     sessionId: "",
-    account: "",
+    account: ""
   };
 }
 export const MsgCancelSession = {
@@ -947,7 +919,7 @@ export const MsgCancelSession = {
     if (isSet(object.account)) obj.account = String(object.account);
     return obj;
   },
-  toJSON(message: MsgCancelSession): unknown {
+  toJSON(message: MsgCancelSession): JsonSafe<MsgCancelSession> {
     const obj: any = {};
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
     message.account !== undefined && (obj.account = message.account);
@@ -958,7 +930,7 @@ export const MsgCancelSession = {
     message.sessionId = object.sessionId ?? "";
     message.account = object.account ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgCancelSessionResponse(): MsgCancelSessionResponse {
   return {};
@@ -986,21 +958,21 @@ export const MsgCancelSessionResponse = {
     const obj = createBaseMsgCancelSessionResponse();
     return obj;
   },
-  toJSON(_: MsgCancelSessionResponse): unknown {
+  toJSON(_: MsgCancelSessionResponse): JsonSafe<MsgCancelSessionResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgCancelSessionResponse>, I>>(_: I): MsgCancelSessionResponse {
     const message = createBaseMsgCancelSessionResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitPayment(): MsgSubmitPayment {
   return {
     account: "",
     sessionId: "",
     payment: undefined,
-    signature: new Uint8Array(),
+    signature: new Uint8Array()
   };
 }
 export const MsgSubmitPayment = {
@@ -1054,16 +1026,12 @@ export const MsgSubmitPayment = {
     if (isSet(object.signature)) obj.signature = bytesFromBase64(object.signature);
     return obj;
   },
-  toJSON(message: MsgSubmitPayment): unknown {
+  toJSON(message: MsgSubmitPayment): JsonSafe<MsgSubmitPayment> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
-    message.payment !== undefined &&
-      (obj.payment = message.payment ? Payment.toJSON(message.payment) : undefined);
-    message.signature !== undefined &&
-      (obj.signature = base64FromBytes(
-        message.signature !== undefined ? message.signature : new Uint8Array(),
-      ));
+    message.payment !== undefined && (obj.payment = message.payment ? Payment.toJSON(message.payment) : undefined);
+    message.signature !== undefined && (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgSubmitPayment>, I>>(object: I): MsgSubmitPayment {
@@ -1075,7 +1043,7 @@ export const MsgSubmitPayment = {
     }
     message.signature = object.signature ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitPaymentResponse(): MsgSubmitPaymentResponse {
   return {};
@@ -1103,19 +1071,19 @@ export const MsgSubmitPaymentResponse = {
     const obj = createBaseMsgSubmitPaymentResponse();
     return obj;
   },
-  toJSON(_: MsgSubmitPaymentResponse): unknown {
+  toJSON(_: MsgSubmitPaymentResponse): JsonSafe<MsgSubmitPaymentResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgSubmitPaymentResponse>, I>>(_: I): MsgSubmitPaymentResponse {
     const message = createBaseMsgSubmitPaymentResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteExpiredSession(): MsgDeleteExpiredSession {
   return {
     account: "",
-    sessionId: "",
+    sessionId: ""
   };
 }
 export const MsgDeleteExpiredSession = {
@@ -1155,7 +1123,7 @@ export const MsgDeleteExpiredSession = {
     if (isSet(object.sessionId)) obj.sessionId = String(object.sessionId);
     return obj;
   },
-  toJSON(message: MsgDeleteExpiredSession): unknown {
+  toJSON(message: MsgDeleteExpiredSession): JsonSafe<MsgDeleteExpiredSession> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
@@ -1166,7 +1134,7 @@ export const MsgDeleteExpiredSession = {
     message.account = object.account ?? "";
     message.sessionId = object.sessionId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteExpiredSessionResponse(): MsgDeleteExpiredSessionResponse {
   return {};
@@ -1194,22 +1162,20 @@ export const MsgDeleteExpiredSessionResponse = {
     const obj = createBaseMsgDeleteExpiredSessionResponse();
     return obj;
   },
-  toJSON(_: MsgDeleteExpiredSessionResponse): unknown {
+  toJSON(_: MsgDeleteExpiredSessionResponse): JsonSafe<MsgDeleteExpiredSessionResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgDeleteExpiredSessionResponse>, I>>(
-    _: I,
-  ): MsgDeleteExpiredSessionResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgDeleteExpiredSessionResponse>, I>>(_: I): MsgDeleteExpiredSessionResponse {
     const message = createBaseMsgDeleteExpiredSessionResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeCID(): MsgSubmitChallengeCID {
   return {
     account: "",
     sessionId: "",
-    cid: "",
+    cid: ""
   };
 }
 export const MsgSubmitChallengeCID = {
@@ -1256,7 +1222,7 @@ export const MsgSubmitChallengeCID = {
     if (isSet(object.cid)) obj.cid = String(object.cid);
     return obj;
   },
-  toJSON(message: MsgSubmitChallengeCID): unknown {
+  toJSON(message: MsgSubmitChallengeCID): JsonSafe<MsgSubmitChallengeCID> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
@@ -1269,7 +1235,7 @@ export const MsgSubmitChallengeCID = {
     message.sessionId = object.sessionId ?? "";
     message.cid = object.cid ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeCIDResponse(): MsgSubmitChallengeCIDResponse {
   return {};
@@ -1297,22 +1263,20 @@ export const MsgSubmitChallengeCIDResponse = {
     const obj = createBaseMsgSubmitChallengeCIDResponse();
     return obj;
   },
-  toJSON(_: MsgSubmitChallengeCIDResponse): unknown {
+  toJSON(_: MsgSubmitChallengeCIDResponse): JsonSafe<MsgSubmitChallengeCIDResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeCIDResponse>, I>>(
-    _: I,
-  ): MsgSubmitChallengeCIDResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeCIDResponse>, I>>(_: I): MsgSubmitChallengeCIDResponse {
     const message = createBaseMsgSubmitChallengeCIDResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeReply(): MsgSubmitChallengeReply {
   return {
     account: "",
     sessionId: "",
-    hash: new Uint8Array(),
+    hash: new Uint8Array()
   };
 }
 export const MsgSubmitChallengeReply = {
@@ -1359,12 +1323,11 @@ export const MsgSubmitChallengeReply = {
     if (isSet(object.hash)) obj.hash = bytesFromBase64(object.hash);
     return obj;
   },
-  toJSON(message: MsgSubmitChallengeReply): unknown {
+  toJSON(message: MsgSubmitChallengeReply): JsonSafe<MsgSubmitChallengeReply> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
-    message.hash !== undefined &&
-      (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
+    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeReply>, I>>(object: I): MsgSubmitChallengeReply {
@@ -1373,7 +1336,7 @@ export const MsgSubmitChallengeReply = {
     message.sessionId = object.sessionId ?? "";
     message.hash = object.hash ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeReplyResponse(): MsgSubmitChallengeReplyResponse {
   return {};
@@ -1401,23 +1364,21 @@ export const MsgSubmitChallengeReplyResponse = {
     const obj = createBaseMsgSubmitChallengeReplyResponse();
     return obj;
   },
-  toJSON(_: MsgSubmitChallengeReplyResponse): unknown {
+  toJSON(_: MsgSubmitChallengeReplyResponse): JsonSafe<MsgSubmitChallengeReplyResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeReplyResponse>, I>>(
-    _: I,
-  ): MsgSubmitChallengeReplyResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeReplyResponse>, I>>(_: I): MsgSubmitChallengeReplyResponse {
     const message = createBaseMsgSubmitChallengeReplyResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeMerkleTree(): MsgSubmitChallengeMerkleTree {
   return {
     account: "",
     sessionId: "",
     answerHash: new Uint8Array(),
-    merkleTree: [],
+    merkleTree: []
   };
 }
 export const MsgSubmitChallengeMerkleTree = {
@@ -1468,35 +1429,29 @@ export const MsgSubmitChallengeMerkleTree = {
     if (isSet(object.account)) obj.account = String(object.account);
     if (isSet(object.sessionId)) obj.sessionId = String(object.sessionId);
     if (isSet(object.answerHash)) obj.answerHash = bytesFromBase64(object.answerHash);
-    if (Array.isArray(object?.merkleTree))
-      obj.merkleTree = object.merkleTree.map((e: any) => bytesFromBase64(e));
+    if (Array.isArray(object?.merkleTree)) obj.merkleTree = object.merkleTree.map((e: any) => bytesFromBase64(e));
     return obj;
   },
-  toJSON(message: MsgSubmitChallengeMerkleTree): unknown {
+  toJSON(message: MsgSubmitChallengeMerkleTree): JsonSafe<MsgSubmitChallengeMerkleTree> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
-    message.answerHash !== undefined &&
-      (obj.answerHash = base64FromBytes(
-        message.answerHash !== undefined ? message.answerHash : new Uint8Array(),
-      ));
+    message.answerHash !== undefined && (obj.answerHash = base64FromBytes(message.answerHash !== undefined ? message.answerHash : new Uint8Array()));
     if (message.merkleTree) {
-      obj.merkleTree = message.merkleTree.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+      obj.merkleTree = message.merkleTree.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.merkleTree = [];
     }
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeMerkleTree>, I>>(
-    object: I,
-  ): MsgSubmitChallengeMerkleTree {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeMerkleTree>, I>>(object: I): MsgSubmitChallengeMerkleTree {
     const message = createBaseMsgSubmitChallengeMerkleTree();
     message.account = object.account ?? "";
     message.sessionId = object.sessionId ?? "";
     message.answerHash = object.answerHash ?? new Uint8Array();
-    message.merkleTree = object.merkleTree?.map((e) => e) || [];
+    message.merkleTree = object.merkleTree?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeMerkleTreeResponse(): MsgSubmitChallengeMerkleTreeResponse {
   return {};
@@ -1524,22 +1479,20 @@ export const MsgSubmitChallengeMerkleTreeResponse = {
     const obj = createBaseMsgSubmitChallengeMerkleTreeResponse();
     return obj;
   },
-  toJSON(_: MsgSubmitChallengeMerkleTreeResponse): unknown {
+  toJSON(_: MsgSubmitChallengeMerkleTreeResponse): JsonSafe<MsgSubmitChallengeMerkleTreeResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeMerkleTreeResponse>, I>>(
-    _: I,
-  ): MsgSubmitChallengeMerkleTreeResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeMerkleTreeResponse>, I>>(_: I): MsgSubmitChallengeMerkleTreeResponse {
     const message = createBaseMsgSubmitChallengeMerkleTreeResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeOriginHash(): MsgSubmitChallengeOriginHash {
   return {
     account: "",
     sessionId: "",
-    hash: new Uint8Array(),
+    hash: new Uint8Array()
   };
 }
 export const MsgSubmitChallengeOriginHash = {
@@ -1586,23 +1539,20 @@ export const MsgSubmitChallengeOriginHash = {
     if (isSet(object.hash)) obj.hash = bytesFromBase64(object.hash);
     return obj;
   },
-  toJSON(message: MsgSubmitChallengeOriginHash): unknown {
+  toJSON(message: MsgSubmitChallengeOriginHash): JsonSafe<MsgSubmitChallengeOriginHash> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
-    message.hash !== undefined &&
-      (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
+    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeOriginHash>, I>>(
-    object: I,
-  ): MsgSubmitChallengeOriginHash {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeOriginHash>, I>>(object: I): MsgSubmitChallengeOriginHash {
     const message = createBaseMsgSubmitChallengeOriginHash();
     message.account = object.account ?? "";
     message.sessionId = object.sessionId ?? "";
     message.hash = object.hash ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseMsgSubmitChallengeOriginHashResponse(): MsgSubmitChallengeOriginHashResponse {
   return {};
@@ -1630,16 +1580,14 @@ export const MsgSubmitChallengeOriginHashResponse = {
     const obj = createBaseMsgSubmitChallengeOriginHashResponse();
     return obj;
   },
-  toJSON(_: MsgSubmitChallengeOriginHashResponse): unknown {
+  toJSON(_: MsgSubmitChallengeOriginHashResponse): JsonSafe<MsgSubmitChallengeOriginHashResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeOriginHashResponse>, I>>(
-    _: I,
-  ): MsgSubmitChallengeOriginHashResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitChallengeOriginHashResponse>, I>>(_: I): MsgSubmitChallengeOriginHashResponse {
     const message = createBaseMsgSubmitChallengeOriginHashResponse();
     return message;
-  },
+  }
 };
 export interface Msg {
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
@@ -1657,12 +1605,8 @@ export interface Msg {
   DeleteExpiredSession(request: MsgDeleteExpiredSession): Promise<MsgDeleteExpiredSessionResponse>;
   SubmitChallengeCID(request: MsgSubmitChallengeCID): Promise<MsgSubmitChallengeCIDResponse>;
   SubmitChallengeReply(request: MsgSubmitChallengeReply): Promise<MsgSubmitChallengeReplyResponse>;
-  SubmitChallengeMerkleTree(
-    request: MsgSubmitChallengeMerkleTree,
-  ): Promise<MsgSubmitChallengeMerkleTreeResponse>;
-  SubmitChallengeOriginHash(
-    request: MsgSubmitChallengeOriginHash,
-  ): Promise<MsgSubmitChallengeOriginHashResponse>;
+  SubmitChallengeMerkleTree(request: MsgSubmitChallengeMerkleTree): Promise<MsgSubmitChallengeMerkleTreeResponse>;
+  SubmitChallengeOriginHash(request: MsgSubmitChallengeOriginHash): Promise<MsgSubmitChallengeOriginHashResponse>;
 }
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
@@ -1685,70 +1629,66 @@ export class MsgClientImpl implements Msg {
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
     const data = MsgUpdateParams.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "UpdateParams", data);
-    return promise.then((data) => MsgUpdateParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateParamsResponse.decode(new _m0.Reader(data)));
   }
   RegisterInferenceAgent(request: MsgRegisterInferenceAgent): Promise<MsgRegisterInferenceAgentResponse> {
     const data = MsgRegisterInferenceAgent.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "RegisterInferenceAgent", data);
-    return promise.then((data) => MsgRegisterInferenceAgentResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterInferenceAgentResponse.decode(new _m0.Reader(data)));
   }
   UpdateInferenceAgent(request: MsgUpdateInferenceAgent): Promise<MsgUpdateInferenceAgentResponse> {
     const data = MsgUpdateInferenceAgent.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "UpdateInferenceAgent", data);
-    return promise.then((data) => MsgUpdateInferenceAgentResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateInferenceAgentResponse.decode(new _m0.Reader(data)));
   }
   RegisterAgentModel(request: MsgRegisterAgentModel): Promise<MsgRegisterAgentModelResponse> {
     const data = MsgRegisterAgentModel.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "RegisterAgentModel", data);
-    return promise.then((data) => MsgRegisterAgentModelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterAgentModelResponse.decode(new _m0.Reader(data)));
   }
   UpdateAgentModel(request: MsgUpdateAgentModel): Promise<MsgUpdateAgentModelResponse> {
     const data = MsgUpdateAgentModel.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "UpdateAgentModel", data);
-    return promise.then((data) => MsgUpdateAgentModelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateAgentModelResponse.decode(new _m0.Reader(data)));
   }
   RegisterSession(request: MsgRegisterSession): Promise<MsgRegisterSessionResponse> {
     const data = MsgRegisterSession.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "RegisterSession", data);
-    return promise.then((data) => MsgRegisterSessionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterSessionResponse.decode(new _m0.Reader(data)));
   }
   CancelSession(request: MsgCancelSession): Promise<MsgCancelSessionResponse> {
     const data = MsgCancelSession.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "CancelSession", data);
-    return promise.then((data) => MsgCancelSessionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgCancelSessionResponse.decode(new _m0.Reader(data)));
   }
   SubmitPayment(request: MsgSubmitPayment): Promise<MsgSubmitPaymentResponse> {
     const data = MsgSubmitPayment.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "SubmitPayment", data);
-    return promise.then((data) => MsgSubmitPaymentResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitPaymentResponse.decode(new _m0.Reader(data)));
   }
   DeleteExpiredSession(request: MsgDeleteExpiredSession): Promise<MsgDeleteExpiredSessionResponse> {
     const data = MsgDeleteExpiredSession.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "DeleteExpiredSession", data);
-    return promise.then((data) => MsgDeleteExpiredSessionResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDeleteExpiredSessionResponse.decode(new _m0.Reader(data)));
   }
   SubmitChallengeCID(request: MsgSubmitChallengeCID): Promise<MsgSubmitChallengeCIDResponse> {
     const data = MsgSubmitChallengeCID.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "SubmitChallengeCID", data);
-    return promise.then((data) => MsgSubmitChallengeCIDResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitChallengeCIDResponse.decode(new _m0.Reader(data)));
   }
   SubmitChallengeReply(request: MsgSubmitChallengeReply): Promise<MsgSubmitChallengeReplyResponse> {
     const data = MsgSubmitChallengeReply.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "SubmitChallengeReply", data);
-    return promise.then((data) => MsgSubmitChallengeReplyResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitChallengeReplyResponse.decode(new _m0.Reader(data)));
   }
-  SubmitChallengeMerkleTree(
-    request: MsgSubmitChallengeMerkleTree,
-  ): Promise<MsgSubmitChallengeMerkleTreeResponse> {
+  SubmitChallengeMerkleTree(request: MsgSubmitChallengeMerkleTree): Promise<MsgSubmitChallengeMerkleTreeResponse> {
     const data = MsgSubmitChallengeMerkleTree.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "SubmitChallengeMerkleTree", data);
-    return promise.then((data) => MsgSubmitChallengeMerkleTreeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitChallengeMerkleTreeResponse.decode(new _m0.Reader(data)));
   }
-  SubmitChallengeOriginHash(
-    request: MsgSubmitChallengeOriginHash,
-  ): Promise<MsgSubmitChallengeOriginHashResponse> {
+  SubmitChallengeOriginHash(request: MsgSubmitChallengeOriginHash): Promise<MsgSubmitChallengeOriginHashResponse> {
     const data = MsgSubmitChallengeOriginHash.encode(request).finish();
     const promise = this.rpc.request("agent.v1.Msg", "SubmitChallengeOriginHash", data);
-    return promise.then((data) => MsgSubmitChallengeOriginHashResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgSubmitChallengeOriginHashResponse.decode(new _m0.Reader(data)));
   }
 }

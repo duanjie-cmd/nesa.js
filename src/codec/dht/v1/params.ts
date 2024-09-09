@@ -4,6 +4,7 @@ import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { TokenPrice } from "./model";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** Params defines the parameters for the module. */
 export interface Params {
@@ -31,7 +32,7 @@ function createBaseParams(): Params {
     labelAdminAccount: "",
     reputationAdminAccount: "",
     priceTokenDenoms: [],
-    modelDefaultTokenPrice: undefined,
+    modelDefaultTokenPrice: undefined
   };
 }
 export const Params = {
@@ -121,61 +122,36 @@ export const Params = {
   },
   fromJSON(object: any): Params {
     const obj = createBaseParams();
-    if (isSet(object.orchestratorValidTime))
-      obj.orchestratorValidTime = Duration.fromJSON(object.orchestratorValidTime);
+    if (isSet(object.orchestratorValidTime)) obj.orchestratorValidTime = Duration.fromJSON(object.orchestratorValidTime);
     if (isSet(object.minerValidTime)) obj.minerValidTime = Duration.fromJSON(object.minerValidTime);
     if (isSet(object.adminAccount)) obj.adminAccount = String(object.adminAccount);
-    if (isSet(object.orchestratorMinDeposit))
-      obj.orchestratorMinDeposit = Coin.fromJSON(object.orchestratorMinDeposit);
+    if (isSet(object.orchestratorMinDeposit)) obj.orchestratorMinDeposit = Coin.fromJSON(object.orchestratorMinDeposit);
     if (isSet(object.minerMinDeposit)) obj.minerMinDeposit = Coin.fromJSON(object.minerMinDeposit);
-    if (isSet(object.orchestratorUnbondingPeriod))
-      obj.orchestratorUnbondingPeriod = Duration.fromJSON(object.orchestratorUnbondingPeriod);
-    if (isSet(object.minerUnbondingPeriod))
-      obj.minerUnbondingPeriod = Duration.fromJSON(object.minerUnbondingPeriod);
+    if (isSet(object.orchestratorUnbondingPeriod)) obj.orchestratorUnbondingPeriod = Duration.fromJSON(object.orchestratorUnbondingPeriod);
+    if (isSet(object.minerUnbondingPeriod)) obj.minerUnbondingPeriod = Duration.fromJSON(object.minerUnbondingPeriod);
     if (isSet(object.labelAdminAccount)) obj.labelAdminAccount = String(object.labelAdminAccount);
-    if (isSet(object.reputationAdminAccount))
-      obj.reputationAdminAccount = String(object.reputationAdminAccount);
-    if (Array.isArray(object?.priceTokenDenoms))
-      obj.priceTokenDenoms = object.priceTokenDenoms.map((e: any) => String(e));
-    if (isSet(object.modelDefaultTokenPrice))
-      obj.modelDefaultTokenPrice = TokenPrice.fromJSON(object.modelDefaultTokenPrice);
+    if (isSet(object.reputationAdminAccount)) obj.reputationAdminAccount = String(object.reputationAdminAccount);
+    if (Array.isArray(object?.priceTokenDenoms)) obj.priceTokenDenoms = object.priceTokenDenoms.map((e: any) => String(e));
+    if (isSet(object.modelDefaultTokenPrice)) obj.modelDefaultTokenPrice = TokenPrice.fromJSON(object.modelDefaultTokenPrice);
     return obj;
   },
-  toJSON(message: Params): unknown {
+  toJSON(message: Params): JsonSafe<Params> {
     const obj: any = {};
-    message.orchestratorValidTime !== undefined &&
-      (obj.orchestratorValidTime = message.orchestratorValidTime
-        ? Duration.toJSON(message.orchestratorValidTime)
-        : undefined);
-    message.minerValidTime !== undefined &&
-      (obj.minerValidTime = message.minerValidTime ? Duration.toJSON(message.minerValidTime) : undefined);
+    message.orchestratorValidTime !== undefined && (obj.orchestratorValidTime = message.orchestratorValidTime ? Duration.toJSON(message.orchestratorValidTime) : undefined);
+    message.minerValidTime !== undefined && (obj.minerValidTime = message.minerValidTime ? Duration.toJSON(message.minerValidTime) : undefined);
     message.adminAccount !== undefined && (obj.adminAccount = message.adminAccount);
-    message.orchestratorMinDeposit !== undefined &&
-      (obj.orchestratorMinDeposit = message.orchestratorMinDeposit
-        ? Coin.toJSON(message.orchestratorMinDeposit)
-        : undefined);
-    message.minerMinDeposit !== undefined &&
-      (obj.minerMinDeposit = message.minerMinDeposit ? Coin.toJSON(message.minerMinDeposit) : undefined);
-    message.orchestratorUnbondingPeriod !== undefined &&
-      (obj.orchestratorUnbondingPeriod = message.orchestratorUnbondingPeriod
-        ? Duration.toJSON(message.orchestratorUnbondingPeriod)
-        : undefined);
-    message.minerUnbondingPeriod !== undefined &&
-      (obj.minerUnbondingPeriod = message.minerUnbondingPeriod
-        ? Duration.toJSON(message.minerUnbondingPeriod)
-        : undefined);
+    message.orchestratorMinDeposit !== undefined && (obj.orchestratorMinDeposit = message.orchestratorMinDeposit ? Coin.toJSON(message.orchestratorMinDeposit) : undefined);
+    message.minerMinDeposit !== undefined && (obj.minerMinDeposit = message.minerMinDeposit ? Coin.toJSON(message.minerMinDeposit) : undefined);
+    message.orchestratorUnbondingPeriod !== undefined && (obj.orchestratorUnbondingPeriod = message.orchestratorUnbondingPeriod ? Duration.toJSON(message.orchestratorUnbondingPeriod) : undefined);
+    message.minerUnbondingPeriod !== undefined && (obj.minerUnbondingPeriod = message.minerUnbondingPeriod ? Duration.toJSON(message.minerUnbondingPeriod) : undefined);
     message.labelAdminAccount !== undefined && (obj.labelAdminAccount = message.labelAdminAccount);
-    message.reputationAdminAccount !== undefined &&
-      (obj.reputationAdminAccount = message.reputationAdminAccount);
+    message.reputationAdminAccount !== undefined && (obj.reputationAdminAccount = message.reputationAdminAccount);
     if (message.priceTokenDenoms) {
-      obj.priceTokenDenoms = message.priceTokenDenoms.map((e) => e);
+      obj.priceTokenDenoms = message.priceTokenDenoms.map(e => e);
     } else {
       obj.priceTokenDenoms = [];
     }
-    message.modelDefaultTokenPrice !== undefined &&
-      (obj.modelDefaultTokenPrice = message.modelDefaultTokenPrice
-        ? TokenPrice.toJSON(message.modelDefaultTokenPrice)
-        : undefined);
+    message.modelDefaultTokenPrice !== undefined && (obj.modelDefaultTokenPrice = message.modelDefaultTokenPrice ? TokenPrice.toJSON(message.modelDefaultTokenPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
@@ -201,10 +177,10 @@ export const Params = {
     }
     message.labelAdminAccount = object.labelAdminAccount ?? "";
     message.reputationAdminAccount = object.reputationAdminAccount ?? "";
-    message.priceTokenDenoms = object.priceTokenDenoms?.map((e) => e) || [];
+    message.priceTokenDenoms = object.priceTokenDenoms?.map(e => e) || [];
     if (object.modelDefaultTokenPrice !== undefined && object.modelDefaultTokenPrice !== null) {
       message.modelDefaultTokenPrice = TokenPrice.fromPartial(object.modelDefaultTokenPrice);
     }
     return message;
-  },
+  }
 };

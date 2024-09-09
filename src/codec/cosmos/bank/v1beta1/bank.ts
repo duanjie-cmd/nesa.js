@@ -2,6 +2,7 @@
 import { Coin } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../../helpers";
+import { JsonSafe } from "../../../json-safe";
 export const protobufPackage = "cosmos.bank.v1beta1";
 /** Params defines the parameters for the bank module. */
 export interface Params {
@@ -79,7 +80,7 @@ export interface Metadata {
 function createBaseParams(): Params {
   return {
     sendEnabled: [],
-    defaultSendEnabled: false,
+    defaultSendEnabled: false
   };
 }
 export const Params = {
@@ -115,15 +116,14 @@ export const Params = {
   },
   fromJSON(object: any): Params {
     const obj = createBaseParams();
-    if (Array.isArray(object?.sendEnabled))
-      obj.sendEnabled = object.sendEnabled.map((e: any) => SendEnabled.fromJSON(e));
+    if (Array.isArray(object?.sendEnabled)) obj.sendEnabled = object.sendEnabled.map((e: any) => SendEnabled.fromJSON(e));
     if (isSet(object.defaultSendEnabled)) obj.defaultSendEnabled = Boolean(object.defaultSendEnabled);
     return obj;
   },
-  toJSON(message: Params): unknown {
+  toJSON(message: Params): JsonSafe<Params> {
     const obj: any = {};
     if (message.sendEnabled) {
-      obj.sendEnabled = message.sendEnabled.map((e) => (e ? SendEnabled.toJSON(e) : undefined));
+      obj.sendEnabled = message.sendEnabled.map(e => e ? SendEnabled.toJSON(e) : undefined);
     } else {
       obj.sendEnabled = [];
     }
@@ -132,15 +132,15 @@ export const Params = {
   },
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
     const message = createBaseParams();
-    message.sendEnabled = object.sendEnabled?.map((e) => SendEnabled.fromPartial(e)) || [];
+    message.sendEnabled = object.sendEnabled?.map(e => SendEnabled.fromPartial(e)) || [];
     message.defaultSendEnabled = object.defaultSendEnabled ?? false;
     return message;
-  },
+  }
 };
 function createBaseSendEnabled(): SendEnabled {
   return {
     denom: "",
-    enabled: false,
+    enabled: false
   };
 }
 export const SendEnabled = {
@@ -180,7 +180,7 @@ export const SendEnabled = {
     if (isSet(object.enabled)) obj.enabled = Boolean(object.enabled);
     return obj;
   },
-  toJSON(message: SendEnabled): unknown {
+  toJSON(message: SendEnabled): JsonSafe<SendEnabled> {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     message.enabled !== undefined && (obj.enabled = message.enabled);
@@ -191,12 +191,12 @@ export const SendEnabled = {
     message.denom = object.denom ?? "";
     message.enabled = object.enabled ?? false;
     return message;
-  },
+  }
 };
 function createBaseInput(): Input {
   return {
     address: "",
-    coins: [],
+    coins: []
   };
 }
 export const Input = {
@@ -236,11 +236,11 @@ export const Input = {
     if (Array.isArray(object?.coins)) obj.coins = object.coins.map((e: any) => Coin.fromJSON(e));
     return obj;
   },
-  toJSON(message: Input): unknown {
+  toJSON(message: Input): JsonSafe<Input> {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
     if (message.coins) {
-      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
+      obj.coins = message.coins.map(e => e ? Coin.toJSON(e) : undefined);
     } else {
       obj.coins = [];
     }
@@ -249,14 +249,14 @@ export const Input = {
   fromPartial<I extends Exact<DeepPartial<Input>, I>>(object: I): Input {
     const message = createBaseInput();
     message.address = object.address ?? "";
-    message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
+    message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseOutput(): Output {
   return {
     address: "",
-    coins: [],
+    coins: []
   };
 }
 export const Output = {
@@ -296,11 +296,11 @@ export const Output = {
     if (Array.isArray(object?.coins)) obj.coins = object.coins.map((e: any) => Coin.fromJSON(e));
     return obj;
   },
-  toJSON(message: Output): unknown {
+  toJSON(message: Output): JsonSafe<Output> {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
     if (message.coins) {
-      obj.coins = message.coins.map((e) => (e ? Coin.toJSON(e) : undefined));
+      obj.coins = message.coins.map(e => e ? Coin.toJSON(e) : undefined);
     } else {
       obj.coins = [];
     }
@@ -309,13 +309,13 @@ export const Output = {
   fromPartial<I extends Exact<DeepPartial<Output>, I>>(object: I): Output {
     const message = createBaseOutput();
     message.address = object.address ?? "";
-    message.coins = object.coins?.map((e) => Coin.fromPartial(e)) || [];
+    message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseSupply(): Supply {
   return {
-    total: [],
+    total: []
   };
 }
 export const Supply = {
@@ -348,10 +348,10 @@ export const Supply = {
     if (Array.isArray(object?.total)) obj.total = object.total.map((e: any) => Coin.fromJSON(e));
     return obj;
   },
-  toJSON(message: Supply): unknown {
+  toJSON(message: Supply): JsonSafe<Supply> {
     const obj: any = {};
     if (message.total) {
-      obj.total = message.total.map((e) => (e ? Coin.toJSON(e) : undefined));
+      obj.total = message.total.map(e => e ? Coin.toJSON(e) : undefined);
     } else {
       obj.total = [];
     }
@@ -359,15 +359,15 @@ export const Supply = {
   },
   fromPartial<I extends Exact<DeepPartial<Supply>, I>>(object: I): Supply {
     const message = createBaseSupply();
-    message.total = object.total?.map((e) => Coin.fromPartial(e)) || [];
+    message.total = object.total?.map(e => Coin.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseDenomUnit(): DenomUnit {
   return {
     denom: "",
     exponent: 0,
-    aliases: [],
+    aliases: []
   };
 }
 export const DenomUnit = {
@@ -414,12 +414,12 @@ export const DenomUnit = {
     if (Array.isArray(object?.aliases)) obj.aliases = object.aliases.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: DenomUnit): unknown {
+  toJSON(message: DenomUnit): JsonSafe<DenomUnit> {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
     if (message.aliases) {
-      obj.aliases = message.aliases.map((e) => e);
+      obj.aliases = message.aliases.map(e => e);
     } else {
       obj.aliases = [];
     }
@@ -429,9 +429,9 @@ export const DenomUnit = {
     const message = createBaseDenomUnit();
     message.denom = object.denom ?? "";
     message.exponent = object.exponent ?? 0;
-    message.aliases = object.aliases?.map((e) => e) || [];
+    message.aliases = object.aliases?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseMetadata(): Metadata {
   return {
@@ -440,7 +440,7 @@ function createBaseMetadata(): Metadata {
     base: "",
     display: "",
     name: "",
-    symbol: "",
+    symbol: ""
   };
 }
 export const Metadata = {
@@ -501,19 +501,18 @@ export const Metadata = {
   fromJSON(object: any): Metadata {
     const obj = createBaseMetadata();
     if (isSet(object.description)) obj.description = String(object.description);
-    if (Array.isArray(object?.denomUnits))
-      obj.denomUnits = object.denomUnits.map((e: any) => DenomUnit.fromJSON(e));
+    if (Array.isArray(object?.denomUnits)) obj.denomUnits = object.denomUnits.map((e: any) => DenomUnit.fromJSON(e));
     if (isSet(object.base)) obj.base = String(object.base);
     if (isSet(object.display)) obj.display = String(object.display);
     if (isSet(object.name)) obj.name = String(object.name);
     if (isSet(object.symbol)) obj.symbol = String(object.symbol);
     return obj;
   },
-  toJSON(message: Metadata): unknown {
+  toJSON(message: Metadata): JsonSafe<Metadata> {
     const obj: any = {};
     message.description !== undefined && (obj.description = message.description);
     if (message.denomUnits) {
-      obj.denomUnits = message.denomUnits.map((e) => (e ? DenomUnit.toJSON(e) : undefined));
+      obj.denomUnits = message.denomUnits.map(e => e ? DenomUnit.toJSON(e) : undefined);
     } else {
       obj.denomUnits = [];
     }
@@ -526,11 +525,11 @@ export const Metadata = {
   fromPartial<I extends Exact<DeepPartial<Metadata>, I>>(object: I): Metadata {
     const message = createBaseMetadata();
     message.description = object.description ?? "";
-    message.denomUnits = object.denomUnits?.map((e) => DenomUnit.fromPartial(e)) || [];
+    message.denomUnits = object.denomUnits?.map(e => DenomUnit.fromPartial(e)) || [];
     message.base = object.base ?? "";
     message.display = object.display ?? "";
     message.name = object.name ?? "";
     message.symbol = object.symbol ?? "";
     return message;
-  },
+  }
 };

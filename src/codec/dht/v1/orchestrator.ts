@@ -5,6 +5,7 @@ import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Reputation } from "./reputation";
 import { Long, isSet, fromJsonTimestamp, fromTimestamp, DeepPartial, Exact } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** Availability defines the availability of an Orchestrator. */
 export enum Availability {
@@ -96,7 +97,7 @@ function createBaseOrchestrator(): Orchestrator {
     validUntil: Timestamp.fromPartial({}),
     bondStatus: 0,
     deposit: Coin.fromPartial({}),
-    reputations: [],
+    reputations: []
   };
 }
 export const Orchestrator = {
@@ -187,32 +188,29 @@ export const Orchestrator = {
     if (isSet(object.modelName)) obj.modelName = String(object.modelName);
     if (isSet(object.inferenceType)) obj.inferenceType = inferenceTypeFromJSON(object.inferenceType);
     if (isSet(object.status)) obj.status = availabilityFromJSON(object.status);
-    if (Array.isArray(object?.blockCount))
-      obj.blockCount = object.blockCount.map((e: any) => Long.fromValue(e));
+    if (Array.isArray(object?.blockCount)) obj.blockCount = object.blockCount.map((e: any) => Long.fromValue(e));
     if (isSet(object.validUntil)) obj.validUntil = fromJsonTimestamp(object.validUntil);
     if (isSet(object.bondStatus)) obj.bondStatus = bondStatusFromJSON(object.bondStatus);
     if (isSet(object.deposit)) obj.deposit = Coin.fromJSON(object.deposit);
-    if (Array.isArray(object?.reputations))
-      obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
+    if (Array.isArray(object?.reputations)) obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
     return obj;
   },
-  toJSON(message: Orchestrator): unknown {
+  toJSON(message: Orchestrator): JsonSafe<Orchestrator> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     message.inferenceType !== undefined && (obj.inferenceType = inferenceTypeToJSON(message.inferenceType));
     message.status !== undefined && (obj.status = availabilityToJSON(message.status));
     if (message.blockCount) {
-      obj.blockCount = message.blockCount.map((e) => (e || Long.UZERO).toString());
+      obj.blockCount = message.blockCount.map(e => (e || Long.UZERO).toString());
     } else {
       obj.blockCount = [];
     }
     message.validUntil !== undefined && (obj.validUntil = fromTimestamp(message.validUntil).toISOString());
     message.bondStatus !== undefined && (obj.bondStatus = bondStatusToJSON(message.bondStatus));
-    message.deposit !== undefined &&
-      (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
+    message.deposit !== undefined && (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
     if (message.reputations) {
-      obj.reputations = message.reputations.map((e) => (e ? Reputation.toJSON(e) : undefined));
+      obj.reputations = message.reputations.map(e => e ? Reputation.toJSON(e) : undefined);
     } else {
       obj.reputations = [];
     }
@@ -224,7 +222,7 @@ export const Orchestrator = {
     message.modelName = object.modelName ?? "";
     message.inferenceType = object.inferenceType ?? 0;
     message.status = object.status ?? 0;
-    message.blockCount = object.blockCount?.map((e) => Long.fromValue(e)) || [];
+    message.blockCount = object.blockCount?.map(e => Long.fromValue(e)) || [];
     if (object.validUntil !== undefined && object.validUntil !== null) {
       message.validUntil = Timestamp.fromPartial(object.validUntil);
     }
@@ -232,7 +230,7 @@ export const Orchestrator = {
     if (object.deposit !== undefined && object.deposit !== null) {
       message.deposit = Coin.fromPartial(object.deposit);
     }
-    message.reputations = object.reputations?.map((e) => Reputation.fromPartial(e)) || [];
+    message.reputations = object.reputations?.map(e => Reputation.fromPartial(e)) || [];
     return message;
-  },
+  }
 };

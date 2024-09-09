@@ -1,11 +1,12 @@
 /* eslint-disable */
 import { Long, isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../../../json-safe";
 export const protobufPackage = "cosmos.base.query.v1beta1";
 /**
  * PageRequest is to be embedded in gRPC request messages for efficient
  * pagination. Ex:
- *
+ * 
  *  message SomeRequest {
  *          Foo some_parameter = 1;
  *          PageRequest pagination = 2;
@@ -42,7 +43,7 @@ export interface PageRequest {
 /**
  * PageResponse is to be embedded in gRPC response messages where the
  * corresponding request message has used PageRequest.
- *
+ * 
  *  message SomeResponse {
  *          repeated Bar results = 1;
  *          PageResponse page = 2;
@@ -67,7 +68,7 @@ function createBasePageRequest(): PageRequest {
     offset: Long.UZERO,
     limit: Long.UZERO,
     countTotal: false,
-    reverse: false,
+    reverse: false
   };
 }
 export const PageRequest = {
@@ -128,10 +129,9 @@ export const PageRequest = {
     if (isSet(object.reverse)) obj.reverse = Boolean(object.reverse);
     return obj;
   },
-  toJSON(message: PageRequest): unknown {
+  toJSON(message: PageRequest): JsonSafe<PageRequest> {
     const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
     message.offset !== undefined && (obj.offset = (message.offset || Long.UZERO).toString());
     message.limit !== undefined && (obj.limit = (message.limit || Long.UZERO).toString());
     message.countTotal !== undefined && (obj.countTotal = message.countTotal);
@@ -150,12 +150,12 @@ export const PageRequest = {
     message.countTotal = object.countTotal ?? false;
     message.reverse = object.reverse ?? false;
     return message;
-  },
+  }
 };
 function createBasePageResponse(): PageResponse {
   return {
     nextKey: new Uint8Array(),
-    total: Long.UZERO,
+    total: Long.UZERO
   };
 }
 export const PageResponse = {
@@ -195,10 +195,9 @@ export const PageResponse = {
     if (isSet(object.total)) obj.total = Long.fromValue(object.total);
     return obj;
   },
-  toJSON(message: PageResponse): unknown {
+  toJSON(message: PageResponse): JsonSafe<PageResponse> {
     const obj: any = {};
-    message.nextKey !== undefined &&
-      (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
+    message.nextKey !== undefined && (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
     message.total !== undefined && (obj.total = (message.total || Long.UZERO).toString());
     return obj;
   },
@@ -209,5 +208,5 @@ export const PageResponse = {
       message.total = Long.fromValue(object.total);
     }
     return message;
-  },
+  }
 };

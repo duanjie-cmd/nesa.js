@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Long, isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 export interface Node {
   nodeId: string;
@@ -25,7 +26,7 @@ function createBaseNode(): Node {
     networkRps: 0,
     nextPings: [],
     usingRelay: false,
-    labels: [],
+    labels: []
   };
 }
 export const Node = {
@@ -116,13 +117,12 @@ export const Node = {
     if (isSet(object.walletAddress)) obj.walletAddress = String(object.walletAddress);
     if (isSet(object.vram)) obj.vram = Long.fromValue(object.vram);
     if (isSet(object.networkRps)) obj.networkRps = Number(object.networkRps);
-    if (Array.isArray(object?.nextPings))
-      obj.nextPings = object.nextPings.map((e: any) => bytesFromBase64(e));
+    if (Array.isArray(object?.nextPings)) obj.nextPings = object.nextPings.map((e: any) => bytesFromBase64(e));
     if (isSet(object.usingRelay)) obj.usingRelay = Boolean(object.usingRelay);
     if (Array.isArray(object?.labels)) obj.labels = object.labels.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: Node): unknown {
+  toJSON(message: Node): JsonSafe<Node> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.publicName !== undefined && (obj.publicName = message.publicName);
@@ -132,13 +132,13 @@ export const Node = {
     message.vram !== undefined && (obj.vram = (message.vram || Long.UZERO).toString());
     message.networkRps !== undefined && (obj.networkRps = message.networkRps);
     if (message.nextPings) {
-      obj.nextPings = message.nextPings.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+      obj.nextPings = message.nextPings.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.nextPings = [];
     }
     message.usingRelay !== undefined && (obj.usingRelay = message.usingRelay);
     if (message.labels) {
-      obj.labels = message.labels.map((e) => e);
+      obj.labels = message.labels.map(e => e);
     } else {
       obj.labels = [];
     }
@@ -155,9 +155,9 @@ export const Node = {
       message.vram = Long.fromValue(object.vram);
     }
     message.networkRps = object.networkRps ?? 0;
-    message.nextPings = object.nextPings?.map((e) => e) || [];
+    message.nextPings = object.nextPings?.map(e => e) || [];
     message.usingRelay = object.usingRelay ?? false;
-    message.labels = object.labels?.map((e) => e) || [];
+    message.labels = object.labels?.map(e => e) || [];
     return message;
-  },
+  }
 };

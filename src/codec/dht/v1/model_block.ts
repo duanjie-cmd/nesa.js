@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 export interface ModelBlock {
   modelName: string;
@@ -13,7 +14,7 @@ function createBaseModelBlock(): ModelBlock {
     modelName: "",
     nodeId: "",
     blockId: 0,
-    cid: "",
+    cid: ""
   };
 }
 export const ModelBlock = {
@@ -67,7 +68,7 @@ export const ModelBlock = {
     if (isSet(object.cid)) obj.cid = String(object.cid);
     return obj;
   },
-  toJSON(message: ModelBlock): unknown {
+  toJSON(message: ModelBlock): JsonSafe<ModelBlock> {
     const obj: any = {};
     message.modelName !== undefined && (obj.modelName = message.modelName);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -82,5 +83,5 @@ export const ModelBlock = {
     message.blockId = object.blockId ?? 0;
     message.cid = object.cid ?? "";
     return message;
-  },
+  }
 };

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Long, DeepPartial, Exact, isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "google.protobuf";
 export enum FieldDescriptorProto_Type {
   /**
@@ -31,6 +32,7 @@ export enum FieldDescriptorProto_Type {
    * treat group fields as unknown fields.
    */
   TYPE_GROUP = 10,
+  /** TYPE_MESSAGE - Length-delimited aggregate. */
   TYPE_MESSAGE = 11,
   /** TYPE_BYTES - New in version 2. */
   TYPE_BYTES = 12,
@@ -188,12 +190,9 @@ export function fieldDescriptorProto_LabelToJSON(object: FieldDescriptorProto_La
 }
 /** Generated classes can be optimized for speed or code size. */
 export enum FileOptions_OptimizeMode {
-  /**
-   * SPEED - Generate complete code for parsing, serialization,
-   * etc.
-   */
+  /** SPEED - Generate complete code for parsing, serialization, */
   SPEED = 1,
-  /** CODE_SIZE - Use ReflectionOps to implement these methods. */
+  /** CODE_SIZE - etc. */
   CODE_SIZE = 2,
   /** LITE_RUNTIME - Generate code using MessageLite and the lite runtime. */
   LITE_RUNTIME = 3,
@@ -359,6 +358,7 @@ export interface FileDescriptorSet {
 export interface FileDescriptorProto {
   /** file name, relative to root of source tree */
   name: string;
+  /** e.g. "foo", "foo.bar", etc. */
   package: string;
   /** Names of files imported by this file. */
   dependency: string[];
@@ -497,7 +497,7 @@ export interface EnumDescriptorProto {
 /**
  * Range of reserved numeric values. Reserved values may not be used by
  * entries in the same enum. Reserved ranges may not overlap.
- *
+ * 
  * Note that this is distinct from DescriptorProto.ReservedRange in that it
  * is inclusive such that it can appropriately represent the entire int32
  * domain.
@@ -587,7 +587,7 @@ export interface FileOptions {
    * main code generators in each language (without additional plugins).
    * Generic services were the only kind of service generation supported by
    * early versions of google.protobuf.
-   *
+   * 
    * Generic services are now considered deprecated in favor of using plugins
    * that generate code specific to your particular RPC system.  Therefore,
    * these default to false.  Old code which depends on generic services should
@@ -658,7 +658,7 @@ export interface MessageOptions {
    * This is provided for backwards-compatibility with the MessageSet wire
    * format.  You should not use this for any other reason:  It's less
    * efficient, has fewer features, and is more complicated.
-   *
+   * 
    * The message must be defined exactly as follows:
    *   message Foo {
    *     option message_set_wire_format = true;
@@ -666,10 +666,10 @@ export interface MessageOptions {
    *   }
    * Note that the message cannot have any defined fields; MessageSets only
    * have extensions.
-   *
+   * 
    * All extensions of your type must be singular messages; e.g. they cannot
    * be int32s, enums, or repeated messages.
-   *
+   * 
    * Because this is an option, the above two restrictions are not enforced by
    * the protocol compiler.
    */
@@ -690,7 +690,7 @@ export interface MessageOptions {
   /**
    * Whether the message is an automatically generated map entry type for the
    * maps field.
-   *
+   * 
    * For maps fields:
    *     map<KeyType, ValueType> map_field = 1;
    * The parsed descriptor looks like:
@@ -700,12 +700,12 @@ export interface MessageOptions {
    *         optional ValueType value = 2;
    *     }
    *     repeated MapFieldEntry map_field = 1;
-   *
+   * 
    * Implementations may choose not to generate the map_entry=true message, but
    * use a native map in the target language to hold the keys and values.
    * The reflection APIs in such implementations still need to work as
    * if the field is a repeated message field.
-   *
+   * 
    * NOTE: Do not set the option in .proto files. Always use the maps syntax
    * instead. The option should only be implicitly set by the proto compiler
    * parser.
@@ -739,7 +739,7 @@ export interface FieldOptions {
    * Specifying JS_NUMBER for the jstype causes the generated JavaScript code to
    * use the JavaScript "number" type.  The behavior of the default option
    * JS_NORMAL is implementation dependent.
-   *
+   * 
    * This option is an enum to permit additional types to be added, e.g.
    * goog.math.Integer.
    */
@@ -749,20 +749,20 @@ export interface FieldOptions {
    * fields.  It means that when the outer message is initially parsed, the
    * inner message's contents will not be parsed but instead stored in encoded
    * form.  The inner message will actually be parsed when it is first accessed.
-   *
+   * 
    * This is only a hint.  Implementations are free to choose whether to use
    * eager or lazy parsing regardless of the value of this option.  However,
    * setting this option true suggests that the protocol author believes that
    * using lazy parsing on this field is worth the additional bookkeeping
    * overhead typically needed to implement it.
-   *
+   * 
    * This option does not affect the public interface of any generated code;
    * all method signatures remain the same.  Furthermore, thread-safety of the
    * interface is not affected by this option; const methods remain safe to
    * call from multiple threads concurrently, while non-const methods continue
    * to require exclusive access.
-   *
-   *
+   * 
+   * 
    * Note that implementations may choose not to check required fields within
    * a lazy sub-message.  That is, calling IsInitialized() on the outer message
    * may return true even if the inner message has missing required fields.
@@ -883,7 +883,7 @@ export interface SourceCodeInfo {
    * corresponds to a particular definition.  This information is intended
    * to be useful to IDEs, code indexers, documentation generators, and similar
    * tools.
-   *
+   * 
    * For example, say we have a file like:
    *   message Foo {
    *     optional string foo = 1;
@@ -899,7 +899,7 @@ export interface SourceCodeInfo {
    *   [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
    *   [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
    *   [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
-   *
+   * 
    * Notes:
    * - A location may refer to a repeated field itself (i.e. not to any
    *   particular index within it).  This is used whenever a set of elements are
@@ -929,7 +929,7 @@ export interface SourceCodeInfo_Location {
   /**
    * Identifies which part of the FileDescriptorProto was defined at this
    * location.
-   *
+   * 
    * Each element is a field number or an index.  They form a path from
    * the root FileDescriptorProto to the place where the definition.  For
    * example, this path:
@@ -944,7 +944,7 @@ export interface SourceCodeInfo_Location {
    *   repeated FieldDescriptorProto field = 2;
    * and FieldDescriptorProto.name has field number 1:
    *   optional string name = 1;
-   *
+   * 
    * Thus, the above path gives the location of a field name.  If we removed
    * the last element:
    *   [ 4, 3, 2, 7 ]
@@ -964,41 +964,41 @@ export interface SourceCodeInfo_Location {
    * If this SourceCodeInfo represents a complete declaration, these are any
    * comments appearing before and after the declaration which appear to be
    * attached to the declaration.
-   *
+   * 
    * A series of line comments appearing on consecutive lines, with no other
    * tokens appearing on those lines, will be treated as a single comment.
-   *
+   * 
    * leading_detached_comments will keep paragraphs of comments that appear
    * before (but not connected to) the current element. Each paragraph,
    * separated by empty lines, will be one comment element in the repeated
    * field.
-   *
+   * 
    * Only the comment content is provided; comment markers (e.g. //) are
    * stripped out.  For block comments, leading whitespace and an asterisk
    * will be stripped from the beginning of each line other than the first.
    * Newlines are included in the output.
-   *
+   * 
    * Examples:
-   *
+   * 
    *   optional int32 foo = 1;  // Comment attached to foo.
    *   // Comment attached to bar.
    *   optional int32 bar = 2;
-   *
+   * 
    *   optional string baz = 3;
    *   // Comment attached to baz.
    *   // Another line attached to baz.
-   *
+   * 
    *   // Comment attached to qux.
    *   //
    *   // Another line attached to qux.
    *   optional double qux = 4;
-   *
+   * 
    *   // Detached comment for corge. This is not leading or trailing comments
    *   // to qux or corge because there are blank lines separating it from
    *   // both.
-   *
+   * 
    *   // Detached comment for corge paragraph 2.
-   *
+   * 
    *   optional string corge = 5;
    *   /* Block comment attached
    *    * to corge.  Leading asterisks
@@ -1006,7 +1006,7 @@ export interface SourceCodeInfo_Location {
    *   /* Block comment attached to
    *    * grault. *\/
    *   optional int32 grault = 6;
-   *
+   * 
    *   // ignored detached comments.
    */
   leadingComments: string;
@@ -1047,7 +1047,7 @@ export interface GeneratedCodeInfo_Annotation {
 }
 function createBaseFileDescriptorSet(): FileDescriptorSet {
   return {
-    file: [],
+    file: []
   };
 }
 export const FileDescriptorSet = {
@@ -1080,10 +1080,10 @@ export const FileDescriptorSet = {
     if (Array.isArray(object?.file)) obj.file = object.file.map((e: any) => FileDescriptorProto.fromJSON(e));
     return obj;
   },
-  toJSON(message: FileDescriptorSet): unknown {
+  toJSON(message: FileDescriptorSet): JsonSafe<FileDescriptorSet> {
     const obj: any = {};
     if (message.file) {
-      obj.file = message.file.map((e) => (e ? FileDescriptorProto.toJSON(e) : undefined));
+      obj.file = message.file.map(e => e ? FileDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.file = [];
     }
@@ -1091,9 +1091,9 @@ export const FileDescriptorSet = {
   },
   fromPartial<I extends Exact<DeepPartial<FileDescriptorSet>, I>>(object: I): FileDescriptorSet {
     const message = createBaseFileDescriptorSet();
-    message.file = object.file?.map((e) => FileDescriptorProto.fromPartial(e)) || [];
+    message.file = object.file?.map(e => FileDescriptorProto.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseFileDescriptorProto(): FileDescriptorProto {
   return {
@@ -1108,7 +1108,7 @@ function createBaseFileDescriptorProto(): FileDescriptorProto {
     extension: [],
     options: undefined,
     sourceCodeInfo: undefined,
-    syntax: "",
+    syntax: ""
   };
 }
 export const FileDescriptorProto = {
@@ -1225,68 +1225,58 @@ export const FileDescriptorProto = {
     if (isSet(object.name)) obj.name = String(object.name);
     if (isSet(object.package)) obj.package = String(object.package);
     if (Array.isArray(object?.dependency)) obj.dependency = object.dependency.map((e: any) => String(e));
-    if (Array.isArray(object?.publicDependency))
-      obj.publicDependency = object.publicDependency.map((e: any) => Number(e));
-    if (Array.isArray(object?.weakDependency))
-      obj.weakDependency = object.weakDependency.map((e: any) => Number(e));
-    if (Array.isArray(object?.messageType))
-      obj.messageType = object.messageType.map((e: any) => DescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.enumType))
-      obj.enumType = object.enumType.map((e: any) => EnumDescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.service))
-      obj.service = object.service.map((e: any) => ServiceDescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.extension))
-      obj.extension = object.extension.map((e: any) => FieldDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.publicDependency)) obj.publicDependency = object.publicDependency.map((e: any) => Number(e));
+    if (Array.isArray(object?.weakDependency)) obj.weakDependency = object.weakDependency.map((e: any) => Number(e));
+    if (Array.isArray(object?.messageType)) obj.messageType = object.messageType.map((e: any) => DescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.enumType)) obj.enumType = object.enumType.map((e: any) => EnumDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.service)) obj.service = object.service.map((e: any) => ServiceDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.extension)) obj.extension = object.extension.map((e: any) => FieldDescriptorProto.fromJSON(e));
     if (isSet(object.options)) obj.options = FileOptions.fromJSON(object.options);
     if (isSet(object.sourceCodeInfo)) obj.sourceCodeInfo = SourceCodeInfo.fromJSON(object.sourceCodeInfo);
     if (isSet(object.syntax)) obj.syntax = String(object.syntax);
     return obj;
   },
-  toJSON(message: FileDescriptorProto): unknown {
+  toJSON(message: FileDescriptorProto): JsonSafe<FileDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.package !== undefined && (obj.package = message.package);
     if (message.dependency) {
-      obj.dependency = message.dependency.map((e) => e);
+      obj.dependency = message.dependency.map(e => e);
     } else {
       obj.dependency = [];
     }
     if (message.publicDependency) {
-      obj.publicDependency = message.publicDependency.map((e) => Math.round(e));
+      obj.publicDependency = message.publicDependency.map(e => Math.round(e));
     } else {
       obj.publicDependency = [];
     }
     if (message.weakDependency) {
-      obj.weakDependency = message.weakDependency.map((e) => Math.round(e));
+      obj.weakDependency = message.weakDependency.map(e => Math.round(e));
     } else {
       obj.weakDependency = [];
     }
     if (message.messageType) {
-      obj.messageType = message.messageType.map((e) => (e ? DescriptorProto.toJSON(e) : undefined));
+      obj.messageType = message.messageType.map(e => e ? DescriptorProto.toJSON(e) : undefined);
     } else {
       obj.messageType = [];
     }
     if (message.enumType) {
-      obj.enumType = message.enumType.map((e) => (e ? EnumDescriptorProto.toJSON(e) : undefined));
+      obj.enumType = message.enumType.map(e => e ? EnumDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.enumType = [];
     }
     if (message.service) {
-      obj.service = message.service.map((e) => (e ? ServiceDescriptorProto.toJSON(e) : undefined));
+      obj.service = message.service.map(e => e ? ServiceDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.service = [];
     }
     if (message.extension) {
-      obj.extension = message.extension.map((e) => (e ? FieldDescriptorProto.toJSON(e) : undefined));
+      obj.extension = message.extension.map(e => e ? FieldDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.extension = [];
     }
-    message.options !== undefined &&
-      (obj.options = message.options ? FileOptions.toJSON(message.options) : undefined);
-    message.sourceCodeInfo !== undefined &&
-      (obj.sourceCodeInfo = message.sourceCodeInfo
-        ? SourceCodeInfo.toJSON(message.sourceCodeInfo)
-        : undefined);
+    message.options !== undefined && (obj.options = message.options ? FileOptions.toJSON(message.options) : undefined);
+    message.sourceCodeInfo !== undefined && (obj.sourceCodeInfo = message.sourceCodeInfo ? SourceCodeInfo.toJSON(message.sourceCodeInfo) : undefined);
     message.syntax !== undefined && (obj.syntax = message.syntax);
     return obj;
   },
@@ -1294,13 +1284,13 @@ export const FileDescriptorProto = {
     const message = createBaseFileDescriptorProto();
     message.name = object.name ?? "";
     message.package = object.package ?? "";
-    message.dependency = object.dependency?.map((e) => e) || [];
-    message.publicDependency = object.publicDependency?.map((e) => e) || [];
-    message.weakDependency = object.weakDependency?.map((e) => e) || [];
-    message.messageType = object.messageType?.map((e) => DescriptorProto.fromPartial(e)) || [];
-    message.enumType = object.enumType?.map((e) => EnumDescriptorProto.fromPartial(e)) || [];
-    message.service = object.service?.map((e) => ServiceDescriptorProto.fromPartial(e)) || [];
-    message.extension = object.extension?.map((e) => FieldDescriptorProto.fromPartial(e)) || [];
+    message.dependency = object.dependency?.map(e => e) || [];
+    message.publicDependency = object.publicDependency?.map(e => e) || [];
+    message.weakDependency = object.weakDependency?.map(e => e) || [];
+    message.messageType = object.messageType?.map(e => DescriptorProto.fromPartial(e)) || [];
+    message.enumType = object.enumType?.map(e => EnumDescriptorProto.fromPartial(e)) || [];
+    message.service = object.service?.map(e => ServiceDescriptorProto.fromPartial(e)) || [];
+    message.extension = object.extension?.map(e => FieldDescriptorProto.fromPartial(e)) || [];
     if (object.options !== undefined && object.options !== null) {
       message.options = FileOptions.fromPartial(object.options);
     }
@@ -1309,7 +1299,7 @@ export const FileDescriptorProto = {
     }
     message.syntax = object.syntax ?? "";
     return message;
-  },
+  }
 };
 function createBaseDescriptorProto(): DescriptorProto {
   return {
@@ -1322,7 +1312,7 @@ function createBaseDescriptorProto(): DescriptorProto {
     oneofDecl: [],
     options: undefined,
     reservedRange: [],
-    reservedName: [],
+    reservedName: []
   };
 }
 export const DescriptorProto = {
@@ -1407,71 +1397,58 @@ export const DescriptorProto = {
   fromJSON(object: any): DescriptorProto {
     const obj = createBaseDescriptorProto();
     if (isSet(object.name)) obj.name = String(object.name);
-    if (Array.isArray(object?.field))
-      obj.field = object.field.map((e: any) => FieldDescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.extension))
-      obj.extension = object.extension.map((e: any) => FieldDescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.nestedType))
-      obj.nestedType = object.nestedType.map((e: any) => DescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.enumType))
-      obj.enumType = object.enumType.map((e: any) => EnumDescriptorProto.fromJSON(e));
-    if (Array.isArray(object?.extensionRange))
-      obj.extensionRange = object.extensionRange.map((e: any) => DescriptorProto_ExtensionRange.fromJSON(e));
-    if (Array.isArray(object?.oneofDecl))
-      obj.oneofDecl = object.oneofDecl.map((e: any) => OneofDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.field)) obj.field = object.field.map((e: any) => FieldDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.extension)) obj.extension = object.extension.map((e: any) => FieldDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.nestedType)) obj.nestedType = object.nestedType.map((e: any) => DescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.enumType)) obj.enumType = object.enumType.map((e: any) => EnumDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.extensionRange)) obj.extensionRange = object.extensionRange.map((e: any) => DescriptorProto_ExtensionRange.fromJSON(e));
+    if (Array.isArray(object?.oneofDecl)) obj.oneofDecl = object.oneofDecl.map((e: any) => OneofDescriptorProto.fromJSON(e));
     if (isSet(object.options)) obj.options = MessageOptions.fromJSON(object.options);
-    if (Array.isArray(object?.reservedRange))
-      obj.reservedRange = object.reservedRange.map((e: any) => DescriptorProto_ReservedRange.fromJSON(e));
-    if (Array.isArray(object?.reservedName))
-      obj.reservedName = object.reservedName.map((e: any) => String(e));
+    if (Array.isArray(object?.reservedRange)) obj.reservedRange = object.reservedRange.map((e: any) => DescriptorProto_ReservedRange.fromJSON(e));
+    if (Array.isArray(object?.reservedName)) obj.reservedName = object.reservedName.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: DescriptorProto): unknown {
+  toJSON(message: DescriptorProto): JsonSafe<DescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     if (message.field) {
-      obj.field = message.field.map((e) => (e ? FieldDescriptorProto.toJSON(e) : undefined));
+      obj.field = message.field.map(e => e ? FieldDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.field = [];
     }
     if (message.extension) {
-      obj.extension = message.extension.map((e) => (e ? FieldDescriptorProto.toJSON(e) : undefined));
+      obj.extension = message.extension.map(e => e ? FieldDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.extension = [];
     }
     if (message.nestedType) {
-      obj.nestedType = message.nestedType.map((e) => (e ? DescriptorProto.toJSON(e) : undefined));
+      obj.nestedType = message.nestedType.map(e => e ? DescriptorProto.toJSON(e) : undefined);
     } else {
       obj.nestedType = [];
     }
     if (message.enumType) {
-      obj.enumType = message.enumType.map((e) => (e ? EnumDescriptorProto.toJSON(e) : undefined));
+      obj.enumType = message.enumType.map(e => e ? EnumDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.enumType = [];
     }
     if (message.extensionRange) {
-      obj.extensionRange = message.extensionRange.map((e) =>
-        e ? DescriptorProto_ExtensionRange.toJSON(e) : undefined,
-      );
+      obj.extensionRange = message.extensionRange.map(e => e ? DescriptorProto_ExtensionRange.toJSON(e) : undefined);
     } else {
       obj.extensionRange = [];
     }
     if (message.oneofDecl) {
-      obj.oneofDecl = message.oneofDecl.map((e) => (e ? OneofDescriptorProto.toJSON(e) : undefined));
+      obj.oneofDecl = message.oneofDecl.map(e => e ? OneofDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.oneofDecl = [];
     }
-    message.options !== undefined &&
-      (obj.options = message.options ? MessageOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? MessageOptions.toJSON(message.options) : undefined);
     if (message.reservedRange) {
-      obj.reservedRange = message.reservedRange.map((e) =>
-        e ? DescriptorProto_ReservedRange.toJSON(e) : undefined,
-      );
+      obj.reservedRange = message.reservedRange.map(e => e ? DescriptorProto_ReservedRange.toJSON(e) : undefined);
     } else {
       obj.reservedRange = [];
     }
     if (message.reservedName) {
-      obj.reservedName = message.reservedName.map((e) => e);
+      obj.reservedName = message.reservedName.map(e => e);
     } else {
       obj.reservedName = [];
     }
@@ -1480,27 +1457,25 @@ export const DescriptorProto = {
   fromPartial<I extends Exact<DeepPartial<DescriptorProto>, I>>(object: I): DescriptorProto {
     const message = createBaseDescriptorProto();
     message.name = object.name ?? "";
-    message.field = object.field?.map((e) => FieldDescriptorProto.fromPartial(e)) || [];
-    message.extension = object.extension?.map((e) => FieldDescriptorProto.fromPartial(e)) || [];
-    message.nestedType = object.nestedType?.map((e) => DescriptorProto.fromPartial(e)) || [];
-    message.enumType = object.enumType?.map((e) => EnumDescriptorProto.fromPartial(e)) || [];
-    message.extensionRange =
-      object.extensionRange?.map((e) => DescriptorProto_ExtensionRange.fromPartial(e)) || [];
-    message.oneofDecl = object.oneofDecl?.map((e) => OneofDescriptorProto.fromPartial(e)) || [];
+    message.field = object.field?.map(e => FieldDescriptorProto.fromPartial(e)) || [];
+    message.extension = object.extension?.map(e => FieldDescriptorProto.fromPartial(e)) || [];
+    message.nestedType = object.nestedType?.map(e => DescriptorProto.fromPartial(e)) || [];
+    message.enumType = object.enumType?.map(e => EnumDescriptorProto.fromPartial(e)) || [];
+    message.extensionRange = object.extensionRange?.map(e => DescriptorProto_ExtensionRange.fromPartial(e)) || [];
+    message.oneofDecl = object.oneofDecl?.map(e => OneofDescriptorProto.fromPartial(e)) || [];
     if (object.options !== undefined && object.options !== null) {
       message.options = MessageOptions.fromPartial(object.options);
     }
-    message.reservedRange =
-      object.reservedRange?.map((e) => DescriptorProto_ReservedRange.fromPartial(e)) || [];
-    message.reservedName = object.reservedName?.map((e) => e) || [];
+    message.reservedRange = object.reservedRange?.map(e => DescriptorProto_ReservedRange.fromPartial(e)) || [];
+    message.reservedName = object.reservedName?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseDescriptorProto_ExtensionRange(): DescriptorProto_ExtensionRange {
   return {
     start: 0,
     end: 0,
-    options: undefined,
+    options: undefined
   };
 }
 export const DescriptorProto_ExtensionRange = {
@@ -1547,17 +1522,14 @@ export const DescriptorProto_ExtensionRange = {
     if (isSet(object.options)) obj.options = ExtensionRangeOptions.fromJSON(object.options);
     return obj;
   },
-  toJSON(message: DescriptorProto_ExtensionRange): unknown {
+  toJSON(message: DescriptorProto_ExtensionRange): JsonSafe<DescriptorProto_ExtensionRange> {
     const obj: any = {};
     message.start !== undefined && (obj.start = Math.round(message.start));
     message.end !== undefined && (obj.end = Math.round(message.end));
-    message.options !== undefined &&
-      (obj.options = message.options ? ExtensionRangeOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? ExtensionRangeOptions.toJSON(message.options) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<DescriptorProto_ExtensionRange>, I>>(
-    object: I,
-  ): DescriptorProto_ExtensionRange {
+  fromPartial<I extends Exact<DeepPartial<DescriptorProto_ExtensionRange>, I>>(object: I): DescriptorProto_ExtensionRange {
     const message = createBaseDescriptorProto_ExtensionRange();
     message.start = object.start ?? 0;
     message.end = object.end ?? 0;
@@ -1565,12 +1537,12 @@ export const DescriptorProto_ExtensionRange = {
       message.options = ExtensionRangeOptions.fromPartial(object.options);
     }
     return message;
-  },
+  }
 };
 function createBaseDescriptorProto_ReservedRange(): DescriptorProto_ReservedRange {
   return {
     start: 0,
-    end: 0,
+    end: 0
   };
 }
 export const DescriptorProto_ReservedRange = {
@@ -1610,24 +1582,22 @@ export const DescriptorProto_ReservedRange = {
     if (isSet(object.end)) obj.end = Number(object.end);
     return obj;
   },
-  toJSON(message: DescriptorProto_ReservedRange): unknown {
+  toJSON(message: DescriptorProto_ReservedRange): JsonSafe<DescriptorProto_ReservedRange> {
     const obj: any = {};
     message.start !== undefined && (obj.start = Math.round(message.start));
     message.end !== undefined && (obj.end = Math.round(message.end));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<DescriptorProto_ReservedRange>, I>>(
-    object: I,
-  ): DescriptorProto_ReservedRange {
+  fromPartial<I extends Exact<DeepPartial<DescriptorProto_ReservedRange>, I>>(object: I): DescriptorProto_ReservedRange {
     const message = createBaseDescriptorProto_ReservedRange();
     message.start = object.start ?? 0;
     message.end = object.end ?? 0;
     return message;
-  },
+  }
 };
 function createBaseExtensionRangeOptions(): ExtensionRangeOptions {
   return {
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const ExtensionRangeOptions = {
@@ -1657,16 +1627,13 @@ export const ExtensionRangeOptions = {
   },
   fromJSON(object: any): ExtensionRangeOptions {
     const obj = createBaseExtensionRangeOptions();
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: ExtensionRangeOptions): unknown {
+  toJSON(message: ExtensionRangeOptions): JsonSafe<ExtensionRangeOptions> {
     const obj: any = {};
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -1674,10 +1641,9 @@ export const ExtensionRangeOptions = {
   },
   fromPartial<I extends Exact<DeepPartial<ExtensionRangeOptions>, I>>(object: I): ExtensionRangeOptions {
     const message = createBaseExtensionRangeOptions();
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseFieldDescriptorProto(): FieldDescriptorProto {
   return {
@@ -1690,7 +1656,7 @@ function createBaseFieldDescriptorProto(): FieldDescriptorProto {
     defaultValue: "",
     oneofIndex: 0,
     jsonName: "",
-    options: undefined,
+    options: undefined
   };
 }
 export const FieldDescriptorProto = {
@@ -1786,7 +1752,7 @@ export const FieldDescriptorProto = {
     if (isSet(object.options)) obj.options = FieldOptions.fromJSON(object.options);
     return obj;
   },
-  toJSON(message: FieldDescriptorProto): unknown {
+  toJSON(message: FieldDescriptorProto): JsonSafe<FieldDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.number !== undefined && (obj.number = Math.round(message.number));
@@ -1797,8 +1763,7 @@ export const FieldDescriptorProto = {
     message.defaultValue !== undefined && (obj.defaultValue = message.defaultValue);
     message.oneofIndex !== undefined && (obj.oneofIndex = Math.round(message.oneofIndex));
     message.jsonName !== undefined && (obj.jsonName = message.jsonName);
-    message.options !== undefined &&
-      (obj.options = message.options ? FieldOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? FieldOptions.toJSON(message.options) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<FieldDescriptorProto>, I>>(object: I): FieldDescriptorProto {
@@ -1816,12 +1781,12 @@ export const FieldDescriptorProto = {
       message.options = FieldOptions.fromPartial(object.options);
     }
     return message;
-  },
+  }
 };
 function createBaseOneofDescriptorProto(): OneofDescriptorProto {
   return {
     name: "",
-    options: undefined,
+    options: undefined
   };
 }
 export const OneofDescriptorProto = {
@@ -1861,11 +1826,10 @@ export const OneofDescriptorProto = {
     if (isSet(object.options)) obj.options = OneofOptions.fromJSON(object.options);
     return obj;
   },
-  toJSON(message: OneofDescriptorProto): unknown {
+  toJSON(message: OneofDescriptorProto): JsonSafe<OneofDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.options !== undefined &&
-      (obj.options = message.options ? OneofOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? OneofOptions.toJSON(message.options) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<OneofDescriptorProto>, I>>(object: I): OneofDescriptorProto {
@@ -1875,7 +1839,7 @@ export const OneofDescriptorProto = {
       message.options = OneofOptions.fromPartial(object.options);
     }
     return message;
-  },
+  }
 };
 function createBaseEnumDescriptorProto(): EnumDescriptorProto {
   return {
@@ -1883,7 +1847,7 @@ function createBaseEnumDescriptorProto(): EnumDescriptorProto {
     value: [],
     options: undefined,
     reservedRange: [],
-    reservedName: [],
+    reservedName: []
   };
 }
 export const EnumDescriptorProto = {
@@ -1938,36 +1902,28 @@ export const EnumDescriptorProto = {
   fromJSON(object: any): EnumDescriptorProto {
     const obj = createBaseEnumDescriptorProto();
     if (isSet(object.name)) obj.name = String(object.name);
-    if (Array.isArray(object?.value))
-      obj.value = object.value.map((e: any) => EnumValueDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.value)) obj.value = object.value.map((e: any) => EnumValueDescriptorProto.fromJSON(e));
     if (isSet(object.options)) obj.options = EnumOptions.fromJSON(object.options);
-    if (Array.isArray(object?.reservedRange))
-      obj.reservedRange = object.reservedRange.map((e: any) =>
-        EnumDescriptorProto_EnumReservedRange.fromJSON(e),
-      );
-    if (Array.isArray(object?.reservedName))
-      obj.reservedName = object.reservedName.map((e: any) => String(e));
+    if (Array.isArray(object?.reservedRange)) obj.reservedRange = object.reservedRange.map((e: any) => EnumDescriptorProto_EnumReservedRange.fromJSON(e));
+    if (Array.isArray(object?.reservedName)) obj.reservedName = object.reservedName.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: EnumDescriptorProto): unknown {
+  toJSON(message: EnumDescriptorProto): JsonSafe<EnumDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     if (message.value) {
-      obj.value = message.value.map((e) => (e ? EnumValueDescriptorProto.toJSON(e) : undefined));
+      obj.value = message.value.map(e => e ? EnumValueDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.value = [];
     }
-    message.options !== undefined &&
-      (obj.options = message.options ? EnumOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? EnumOptions.toJSON(message.options) : undefined);
     if (message.reservedRange) {
-      obj.reservedRange = message.reservedRange.map((e) =>
-        e ? EnumDescriptorProto_EnumReservedRange.toJSON(e) : undefined,
-      );
+      obj.reservedRange = message.reservedRange.map(e => e ? EnumDescriptorProto_EnumReservedRange.toJSON(e) : undefined);
     } else {
       obj.reservedRange = [];
     }
     if (message.reservedName) {
-      obj.reservedName = message.reservedName.map((e) => e);
+      obj.reservedName = message.reservedName.map(e => e);
     } else {
       obj.reservedName = [];
     }
@@ -1976,28 +1932,24 @@ export const EnumDescriptorProto = {
   fromPartial<I extends Exact<DeepPartial<EnumDescriptorProto>, I>>(object: I): EnumDescriptorProto {
     const message = createBaseEnumDescriptorProto();
     message.name = object.name ?? "";
-    message.value = object.value?.map((e) => EnumValueDescriptorProto.fromPartial(e)) || [];
+    message.value = object.value?.map(e => EnumValueDescriptorProto.fromPartial(e)) || [];
     if (object.options !== undefined && object.options !== null) {
       message.options = EnumOptions.fromPartial(object.options);
     }
-    message.reservedRange =
-      object.reservedRange?.map((e) => EnumDescriptorProto_EnumReservedRange.fromPartial(e)) || [];
-    message.reservedName = object.reservedName?.map((e) => e) || [];
+    message.reservedRange = object.reservedRange?.map(e => EnumDescriptorProto_EnumReservedRange.fromPartial(e)) || [];
+    message.reservedName = object.reservedName?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseEnumDescriptorProto_EnumReservedRange(): EnumDescriptorProto_EnumReservedRange {
   return {
     start: 0,
-    end: 0,
+    end: 0
   };
 }
 export const EnumDescriptorProto_EnumReservedRange = {
   typeUrl: "/google.protobuf.EnumReservedRange",
-  encode(
-    message: EnumDescriptorProto_EnumReservedRange,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
+  encode(message: EnumDescriptorProto_EnumReservedRange, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.start !== 0) {
       writer.uint32(8).int32(message.start);
     }
@@ -2032,26 +1984,24 @@ export const EnumDescriptorProto_EnumReservedRange = {
     if (isSet(object.end)) obj.end = Number(object.end);
     return obj;
   },
-  toJSON(message: EnumDescriptorProto_EnumReservedRange): unknown {
+  toJSON(message: EnumDescriptorProto_EnumReservedRange): JsonSafe<EnumDescriptorProto_EnumReservedRange> {
     const obj: any = {};
     message.start !== undefined && (obj.start = Math.round(message.start));
     message.end !== undefined && (obj.end = Math.round(message.end));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<EnumDescriptorProto_EnumReservedRange>, I>>(
-    object: I,
-  ): EnumDescriptorProto_EnumReservedRange {
+  fromPartial<I extends Exact<DeepPartial<EnumDescriptorProto_EnumReservedRange>, I>>(object: I): EnumDescriptorProto_EnumReservedRange {
     const message = createBaseEnumDescriptorProto_EnumReservedRange();
     message.start = object.start ?? 0;
     message.end = object.end ?? 0;
     return message;
-  },
+  }
 };
 function createBaseEnumValueDescriptorProto(): EnumValueDescriptorProto {
   return {
     name: "",
     number: 0,
-    options: undefined,
+    options: undefined
   };
 }
 export const EnumValueDescriptorProto = {
@@ -2098,17 +2048,14 @@ export const EnumValueDescriptorProto = {
     if (isSet(object.options)) obj.options = EnumValueOptions.fromJSON(object.options);
     return obj;
   },
-  toJSON(message: EnumValueDescriptorProto): unknown {
+  toJSON(message: EnumValueDescriptorProto): JsonSafe<EnumValueDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.number !== undefined && (obj.number = Math.round(message.number));
-    message.options !== undefined &&
-      (obj.options = message.options ? EnumValueOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? EnumValueOptions.toJSON(message.options) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<EnumValueDescriptorProto>, I>>(
-    object: I,
-  ): EnumValueDescriptorProto {
+  fromPartial<I extends Exact<DeepPartial<EnumValueDescriptorProto>, I>>(object: I): EnumValueDescriptorProto {
     const message = createBaseEnumValueDescriptorProto();
     message.name = object.name ?? "";
     message.number = object.number ?? 0;
@@ -2116,13 +2063,13 @@ export const EnumValueDescriptorProto = {
       message.options = EnumValueOptions.fromPartial(object.options);
     }
     return message;
-  },
+  }
 };
 function createBaseServiceDescriptorProto(): ServiceDescriptorProto {
   return {
     name: "",
     method: [],
-    options: undefined,
+    options: undefined
   };
 }
 export const ServiceDescriptorProto = {
@@ -2165,32 +2112,30 @@ export const ServiceDescriptorProto = {
   fromJSON(object: any): ServiceDescriptorProto {
     const obj = createBaseServiceDescriptorProto();
     if (isSet(object.name)) obj.name = String(object.name);
-    if (Array.isArray(object?.method))
-      obj.method = object.method.map((e: any) => MethodDescriptorProto.fromJSON(e));
+    if (Array.isArray(object?.method)) obj.method = object.method.map((e: any) => MethodDescriptorProto.fromJSON(e));
     if (isSet(object.options)) obj.options = ServiceOptions.fromJSON(object.options);
     return obj;
   },
-  toJSON(message: ServiceDescriptorProto): unknown {
+  toJSON(message: ServiceDescriptorProto): JsonSafe<ServiceDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     if (message.method) {
-      obj.method = message.method.map((e) => (e ? MethodDescriptorProto.toJSON(e) : undefined));
+      obj.method = message.method.map(e => e ? MethodDescriptorProto.toJSON(e) : undefined);
     } else {
       obj.method = [];
     }
-    message.options !== undefined &&
-      (obj.options = message.options ? ServiceOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? ServiceOptions.toJSON(message.options) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<ServiceDescriptorProto>, I>>(object: I): ServiceDescriptorProto {
     const message = createBaseServiceDescriptorProto();
     message.name = object.name ?? "";
-    message.method = object.method?.map((e) => MethodDescriptorProto.fromPartial(e)) || [];
+    message.method = object.method?.map(e => MethodDescriptorProto.fromPartial(e)) || [];
     if (object.options !== undefined && object.options !== null) {
       message.options = ServiceOptions.fromPartial(object.options);
     }
     return message;
-  },
+  }
 };
 function createBaseMethodDescriptorProto(): MethodDescriptorProto {
   return {
@@ -2199,7 +2144,7 @@ function createBaseMethodDescriptorProto(): MethodDescriptorProto {
     outputType: "",
     options: undefined,
     clientStreaming: false,
-    serverStreaming: false,
+    serverStreaming: false
   };
 }
 export const MethodDescriptorProto = {
@@ -2267,13 +2212,12 @@ export const MethodDescriptorProto = {
     if (isSet(object.serverStreaming)) obj.serverStreaming = Boolean(object.serverStreaming);
     return obj;
   },
-  toJSON(message: MethodDescriptorProto): unknown {
+  toJSON(message: MethodDescriptorProto): JsonSafe<MethodDescriptorProto> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.inputType !== undefined && (obj.inputType = message.inputType);
     message.outputType !== undefined && (obj.outputType = message.outputType);
-    message.options !== undefined &&
-      (obj.options = message.options ? MethodOptions.toJSON(message.options) : undefined);
+    message.options !== undefined && (obj.options = message.options ? MethodOptions.toJSON(message.options) : undefined);
     message.clientStreaming !== undefined && (obj.clientStreaming = message.clientStreaming);
     message.serverStreaming !== undefined && (obj.serverStreaming = message.serverStreaming);
     return obj;
@@ -2289,7 +2233,7 @@ export const MethodDescriptorProto = {
     message.clientStreaming = object.clientStreaming ?? false;
     message.serverStreaming = object.serverStreaming ?? false;
     return message;
-  },
+  }
 };
 function createBaseFileOptions(): FileOptions {
   return {
@@ -2313,7 +2257,7 @@ function createBaseFileOptions(): FileOptions {
     phpNamespace: "",
     phpMetadataNamespace: "",
     rubyPackage: "",
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const FileOptions = {
@@ -2466,8 +2410,7 @@ export const FileOptions = {
     if (isSet(object.javaPackage)) obj.javaPackage = String(object.javaPackage);
     if (isSet(object.javaOuterClassname)) obj.javaOuterClassname = String(object.javaOuterClassname);
     if (isSet(object.javaMultipleFiles)) obj.javaMultipleFiles = Boolean(object.javaMultipleFiles);
-    if (isSet(object.javaGenerateEqualsAndHash))
-      obj.javaGenerateEqualsAndHash = Boolean(object.javaGenerateEqualsAndHash);
+    if (isSet(object.javaGenerateEqualsAndHash)) obj.javaGenerateEqualsAndHash = Boolean(object.javaGenerateEqualsAndHash);
     if (isSet(object.javaStringCheckUtf8)) obj.javaStringCheckUtf8 = Boolean(object.javaStringCheckUtf8);
     if (isSet(object.optimizeFor)) obj.optimizeFor = fileOptions_OptimizeModeFromJSON(object.optimizeFor);
     if (isSet(object.goPackage)) obj.goPackage = String(object.goPackage);
@@ -2484,20 +2427,17 @@ export const FileOptions = {
     if (isSet(object.phpNamespace)) obj.phpNamespace = String(object.phpNamespace);
     if (isSet(object.phpMetadataNamespace)) obj.phpMetadataNamespace = String(object.phpMetadataNamespace);
     if (isSet(object.rubyPackage)) obj.rubyPackage = String(object.rubyPackage);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: FileOptions): unknown {
+  toJSON(message: FileOptions): JsonSafe<FileOptions> {
     const obj: any = {};
     message.javaPackage !== undefined && (obj.javaPackage = message.javaPackage);
     message.javaOuterClassname !== undefined && (obj.javaOuterClassname = message.javaOuterClassname);
     message.javaMultipleFiles !== undefined && (obj.javaMultipleFiles = message.javaMultipleFiles);
-    message.javaGenerateEqualsAndHash !== undefined &&
-      (obj.javaGenerateEqualsAndHash = message.javaGenerateEqualsAndHash);
+    message.javaGenerateEqualsAndHash !== undefined && (obj.javaGenerateEqualsAndHash = message.javaGenerateEqualsAndHash);
     message.javaStringCheckUtf8 !== undefined && (obj.javaStringCheckUtf8 = message.javaStringCheckUtf8);
-    message.optimizeFor !== undefined &&
-      (obj.optimizeFor = fileOptions_OptimizeModeToJSON(message.optimizeFor));
+    message.optimizeFor !== undefined && (obj.optimizeFor = fileOptions_OptimizeModeToJSON(message.optimizeFor));
     message.goPackage !== undefined && (obj.goPackage = message.goPackage);
     message.ccGenericServices !== undefined && (obj.ccGenericServices = message.ccGenericServices);
     message.javaGenericServices !== undefined && (obj.javaGenericServices = message.javaGenericServices);
@@ -2513,9 +2453,7 @@ export const FileOptions = {
     message.phpMetadataNamespace !== undefined && (obj.phpMetadataNamespace = message.phpMetadataNamespace);
     message.rubyPackage !== undefined && (obj.rubyPackage = message.rubyPackage);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2543,10 +2481,9 @@ export const FileOptions = {
     message.phpNamespace = object.phpNamespace ?? "";
     message.phpMetadataNamespace = object.phpMetadataNamespace ?? "";
     message.rubyPackage = object.rubyPackage ?? "";
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseMessageOptions(): MessageOptions {
   return {
@@ -2554,7 +2491,7 @@ function createBaseMessageOptions(): MessageOptions {
     noStandardDescriptorAccessor: false,
     deprecated: false,
     mapEntry: false,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const MessageOptions = {
@@ -2609,25 +2546,20 @@ export const MessageOptions = {
   fromJSON(object: any): MessageOptions {
     const obj = createBaseMessageOptions();
     if (isSet(object.messageSetWireFormat)) obj.messageSetWireFormat = Boolean(object.messageSetWireFormat);
-    if (isSet(object.noStandardDescriptorAccessor))
-      obj.noStandardDescriptorAccessor = Boolean(object.noStandardDescriptorAccessor);
+    if (isSet(object.noStandardDescriptorAccessor)) obj.noStandardDescriptorAccessor = Boolean(object.noStandardDescriptorAccessor);
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
     if (isSet(object.mapEntry)) obj.mapEntry = Boolean(object.mapEntry);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: MessageOptions): unknown {
+  toJSON(message: MessageOptions): JsonSafe<MessageOptions> {
     const obj: any = {};
     message.messageSetWireFormat !== undefined && (obj.messageSetWireFormat = message.messageSetWireFormat);
-    message.noStandardDescriptorAccessor !== undefined &&
-      (obj.noStandardDescriptorAccessor = message.noStandardDescriptorAccessor);
+    message.noStandardDescriptorAccessor !== undefined && (obj.noStandardDescriptorAccessor = message.noStandardDescriptorAccessor);
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
     message.mapEntry !== undefined && (obj.mapEntry = message.mapEntry);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2639,10 +2571,9 @@ export const MessageOptions = {
     message.noStandardDescriptorAccessor = object.noStandardDescriptorAccessor ?? false;
     message.deprecated = object.deprecated ?? false;
     message.mapEntry = object.mapEntry ?? false;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseFieldOptions(): FieldOptions {
   return {
@@ -2652,7 +2583,7 @@ function createBaseFieldOptions(): FieldOptions {
     lazy: false,
     deprecated: false,
     weak: false,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const FieldOptions = {
@@ -2724,11 +2655,10 @@ export const FieldOptions = {
     if (isSet(object.lazy)) obj.lazy = Boolean(object.lazy);
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
     if (isSet(object.weak)) obj.weak = Boolean(object.weak);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: FieldOptions): unknown {
+  toJSON(message: FieldOptions): JsonSafe<FieldOptions> {
     const obj: any = {};
     message.ctype !== undefined && (obj.ctype = fieldOptions_CTypeToJSON(message.ctype));
     message.packed !== undefined && (obj.packed = message.packed);
@@ -2737,9 +2667,7 @@ export const FieldOptions = {
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
     message.weak !== undefined && (obj.weak = message.weak);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2753,14 +2681,13 @@ export const FieldOptions = {
     message.lazy = object.lazy ?? false;
     message.deprecated = object.deprecated ?? false;
     message.weak = object.weak ?? false;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseOneofOptions(): OneofOptions {
   return {
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const OneofOptions = {
@@ -2790,16 +2717,13 @@ export const OneofOptions = {
   },
   fromJSON(object: any): OneofOptions {
     const obj = createBaseOneofOptions();
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: OneofOptions): unknown {
+  toJSON(message: OneofOptions): JsonSafe<OneofOptions> {
     const obj: any = {};
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2807,16 +2731,15 @@ export const OneofOptions = {
   },
   fromPartial<I extends Exact<DeepPartial<OneofOptions>, I>>(object: I): OneofOptions {
     const message = createBaseOneofOptions();
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseEnumOptions(): EnumOptions {
   return {
     allowAlias: false,
     deprecated: false,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const EnumOptions = {
@@ -2860,18 +2783,15 @@ export const EnumOptions = {
     const obj = createBaseEnumOptions();
     if (isSet(object.allowAlias)) obj.allowAlias = Boolean(object.allowAlias);
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: EnumOptions): unknown {
+  toJSON(message: EnumOptions): JsonSafe<EnumOptions> {
     const obj: any = {};
     message.allowAlias !== undefined && (obj.allowAlias = message.allowAlias);
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2881,15 +2801,14 @@ export const EnumOptions = {
     const message = createBaseEnumOptions();
     message.allowAlias = object.allowAlias ?? false;
     message.deprecated = object.deprecated ?? false;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseEnumValueOptions(): EnumValueOptions {
   return {
     deprecated: false,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const EnumValueOptions = {
@@ -2926,17 +2845,14 @@ export const EnumValueOptions = {
   fromJSON(object: any): EnumValueOptions {
     const obj = createBaseEnumValueOptions();
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: EnumValueOptions): unknown {
+  toJSON(message: EnumValueOptions): JsonSafe<EnumValueOptions> {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -2945,15 +2861,14 @@ export const EnumValueOptions = {
   fromPartial<I extends Exact<DeepPartial<EnumValueOptions>, I>>(object: I): EnumValueOptions {
     const message = createBaseEnumValueOptions();
     message.deprecated = object.deprecated ?? false;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseServiceOptions(): ServiceOptions {
   return {
     deprecated: false,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const ServiceOptions = {
@@ -2990,17 +2905,14 @@ export const ServiceOptions = {
   fromJSON(object: any): ServiceOptions {
     const obj = createBaseServiceOptions();
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: ServiceOptions): unknown {
+  toJSON(message: ServiceOptions): JsonSafe<ServiceOptions> {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -3009,16 +2921,15 @@ export const ServiceOptions = {
   fromPartial<I extends Exact<DeepPartial<ServiceOptions>, I>>(object: I): ServiceOptions {
     const message = createBaseServiceOptions();
     message.deprecated = object.deprecated ?? false;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseMethodOptions(): MethodOptions {
   return {
     deprecated: false,
     idempotencyLevel: 1,
-    uninterpretedOption: [],
+    uninterpretedOption: []
   };
 }
 export const MethodOptions = {
@@ -3061,21 +2972,16 @@ export const MethodOptions = {
   fromJSON(object: any): MethodOptions {
     const obj = createBaseMethodOptions();
     if (isSet(object.deprecated)) obj.deprecated = Boolean(object.deprecated);
-    if (isSet(object.idempotencyLevel))
-      obj.idempotencyLevel = methodOptions_IdempotencyLevelFromJSON(object.idempotencyLevel);
-    if (Array.isArray(object?.uninterpretedOption))
-      obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
+    if (isSet(object.idempotencyLevel)) obj.idempotencyLevel = methodOptions_IdempotencyLevelFromJSON(object.idempotencyLevel);
+    if (Array.isArray(object?.uninterpretedOption)) obj.uninterpretedOption = object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e));
     return obj;
   },
-  toJSON(message: MethodOptions): unknown {
+  toJSON(message: MethodOptions): JsonSafe<MethodOptions> {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
-    message.idempotencyLevel !== undefined &&
-      (obj.idempotencyLevel = methodOptions_IdempotencyLevelToJSON(message.idempotencyLevel));
+    message.idempotencyLevel !== undefined && (obj.idempotencyLevel = methodOptions_IdempotencyLevelToJSON(message.idempotencyLevel));
     if (message.uninterpretedOption) {
-      obj.uninterpretedOption = message.uninterpretedOption.map((e) =>
-        e ? UninterpretedOption.toJSON(e) : undefined,
-      );
+      obj.uninterpretedOption = message.uninterpretedOption.map(e => e ? UninterpretedOption.toJSON(e) : undefined);
     } else {
       obj.uninterpretedOption = [];
     }
@@ -3085,10 +2991,9 @@ export const MethodOptions = {
     const message = createBaseMethodOptions();
     message.deprecated = object.deprecated ?? false;
     message.idempotencyLevel = object.idempotencyLevel ?? 1;
-    message.uninterpretedOption =
-      object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
+    message.uninterpretedOption = object.uninterpretedOption?.map(e => UninterpretedOption.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseUninterpretedOption(): UninterpretedOption {
   return {
@@ -3098,7 +3003,7 @@ function createBaseUninterpretedOption(): UninterpretedOption {
     negativeIntValue: Long.ZERO,
     doubleValue: 0,
     stringValue: new Uint8Array(),
-    aggregateValue: "",
+    aggregateValue: ""
   };
 }
 export const UninterpretedOption = {
@@ -3164,8 +3069,7 @@ export const UninterpretedOption = {
   },
   fromJSON(object: any): UninterpretedOption {
     const obj = createBaseUninterpretedOption();
-    if (Array.isArray(object?.name))
-      obj.name = object.name.map((e: any) => UninterpretedOption_NamePart.fromJSON(e));
+    if (Array.isArray(object?.name)) obj.name = object.name.map((e: any) => UninterpretedOption_NamePart.fromJSON(e));
     if (isSet(object.identifierValue)) obj.identifierValue = String(object.identifierValue);
     if (isSet(object.positiveIntValue)) obj.positiveIntValue = Long.fromValue(object.positiveIntValue);
     if (isSet(object.negativeIntValue)) obj.negativeIntValue = Long.fromValue(object.negativeIntValue);
@@ -3174,29 +3078,24 @@ export const UninterpretedOption = {
     if (isSet(object.aggregateValue)) obj.aggregateValue = String(object.aggregateValue);
     return obj;
   },
-  toJSON(message: UninterpretedOption): unknown {
+  toJSON(message: UninterpretedOption): JsonSafe<UninterpretedOption> {
     const obj: any = {};
     if (message.name) {
-      obj.name = message.name.map((e) => (e ? UninterpretedOption_NamePart.toJSON(e) : undefined));
+      obj.name = message.name.map(e => e ? UninterpretedOption_NamePart.toJSON(e) : undefined);
     } else {
       obj.name = [];
     }
     message.identifierValue !== undefined && (obj.identifierValue = message.identifierValue);
-    message.positiveIntValue !== undefined &&
-      (obj.positiveIntValue = (message.positiveIntValue || Long.UZERO).toString());
-    message.negativeIntValue !== undefined &&
-      (obj.negativeIntValue = (message.negativeIntValue || Long.ZERO).toString());
+    message.positiveIntValue !== undefined && (obj.positiveIntValue = (message.positiveIntValue || Long.UZERO).toString());
+    message.negativeIntValue !== undefined && (obj.negativeIntValue = (message.negativeIntValue || Long.ZERO).toString());
     message.doubleValue !== undefined && (obj.doubleValue = message.doubleValue);
-    message.stringValue !== undefined &&
-      (obj.stringValue = base64FromBytes(
-        message.stringValue !== undefined ? message.stringValue : new Uint8Array(),
-      ));
+    message.stringValue !== undefined && (obj.stringValue = base64FromBytes(message.stringValue !== undefined ? message.stringValue : new Uint8Array()));
     message.aggregateValue !== undefined && (obj.aggregateValue = message.aggregateValue);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<UninterpretedOption>, I>>(object: I): UninterpretedOption {
     const message = createBaseUninterpretedOption();
-    message.name = object.name?.map((e) => UninterpretedOption_NamePart.fromPartial(e)) || [];
+    message.name = object.name?.map(e => UninterpretedOption_NamePart.fromPartial(e)) || [];
     message.identifierValue = object.identifierValue ?? "";
     if (object.positiveIntValue !== undefined && object.positiveIntValue !== null) {
       message.positiveIntValue = Long.fromValue(object.positiveIntValue);
@@ -3208,12 +3107,12 @@ export const UninterpretedOption = {
     message.stringValue = object.stringValue ?? new Uint8Array();
     message.aggregateValue = object.aggregateValue ?? "";
     return message;
-  },
+  }
 };
 function createBaseUninterpretedOption_NamePart(): UninterpretedOption_NamePart {
   return {
     namePart: "",
-    isExtension: false,
+    isExtension: false
   };
 }
 export const UninterpretedOption_NamePart = {
@@ -3253,24 +3152,22 @@ export const UninterpretedOption_NamePart = {
     if (isSet(object.isExtension)) obj.isExtension = Boolean(object.isExtension);
     return obj;
   },
-  toJSON(message: UninterpretedOption_NamePart): unknown {
+  toJSON(message: UninterpretedOption_NamePart): JsonSafe<UninterpretedOption_NamePart> {
     const obj: any = {};
     message.namePart !== undefined && (obj.namePart = message.namePart);
     message.isExtension !== undefined && (obj.isExtension = message.isExtension);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<UninterpretedOption_NamePart>, I>>(
-    object: I,
-  ): UninterpretedOption_NamePart {
+  fromPartial<I extends Exact<DeepPartial<UninterpretedOption_NamePart>, I>>(object: I): UninterpretedOption_NamePart {
     const message = createBaseUninterpretedOption_NamePart();
     message.namePart = object.namePart ?? "";
     message.isExtension = object.isExtension ?? false;
     return message;
-  },
+  }
 };
 function createBaseSourceCodeInfo(): SourceCodeInfo {
   return {
-    location: [],
+    location: []
   };
 }
 export const SourceCodeInfo = {
@@ -3300,14 +3197,13 @@ export const SourceCodeInfo = {
   },
   fromJSON(object: any): SourceCodeInfo {
     const obj = createBaseSourceCodeInfo();
-    if (Array.isArray(object?.location))
-      obj.location = object.location.map((e: any) => SourceCodeInfo_Location.fromJSON(e));
+    if (Array.isArray(object?.location)) obj.location = object.location.map((e: any) => SourceCodeInfo_Location.fromJSON(e));
     return obj;
   },
-  toJSON(message: SourceCodeInfo): unknown {
+  toJSON(message: SourceCodeInfo): JsonSafe<SourceCodeInfo> {
     const obj: any = {};
     if (message.location) {
-      obj.location = message.location.map((e) => (e ? SourceCodeInfo_Location.toJSON(e) : undefined));
+      obj.location = message.location.map(e => e ? SourceCodeInfo_Location.toJSON(e) : undefined);
     } else {
       obj.location = [];
     }
@@ -3315,9 +3211,9 @@ export const SourceCodeInfo = {
   },
   fromPartial<I extends Exact<DeepPartial<SourceCodeInfo>, I>>(object: I): SourceCodeInfo {
     const message = createBaseSourceCodeInfo();
-    message.location = object.location?.map((e) => SourceCodeInfo_Location.fromPartial(e)) || [];
+    message.location = object.location?.map(e => SourceCodeInfo_Location.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseSourceCodeInfo_Location(): SourceCodeInfo_Location {
   return {
@@ -3325,7 +3221,7 @@ function createBaseSourceCodeInfo_Location(): SourceCodeInfo_Location {
     span: [],
     leadingComments: "",
     trailingComments: "",
-    leadingDetachedComments: [],
+    leadingDetachedComments: []
   };
 }
 export const SourceCodeInfo_Location = {
@@ -3401,26 +3297,25 @@ export const SourceCodeInfo_Location = {
     if (Array.isArray(object?.span)) obj.span = object.span.map((e: any) => Number(e));
     if (isSet(object.leadingComments)) obj.leadingComments = String(object.leadingComments);
     if (isSet(object.trailingComments)) obj.trailingComments = String(object.trailingComments);
-    if (Array.isArray(object?.leadingDetachedComments))
-      obj.leadingDetachedComments = object.leadingDetachedComments.map((e: any) => String(e));
+    if (Array.isArray(object?.leadingDetachedComments)) obj.leadingDetachedComments = object.leadingDetachedComments.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: SourceCodeInfo_Location): unknown {
+  toJSON(message: SourceCodeInfo_Location): JsonSafe<SourceCodeInfo_Location> {
     const obj: any = {};
     if (message.path) {
-      obj.path = message.path.map((e) => Math.round(e));
+      obj.path = message.path.map(e => Math.round(e));
     } else {
       obj.path = [];
     }
     if (message.span) {
-      obj.span = message.span.map((e) => Math.round(e));
+      obj.span = message.span.map(e => Math.round(e));
     } else {
       obj.span = [];
     }
     message.leadingComments !== undefined && (obj.leadingComments = message.leadingComments);
     message.trailingComments !== undefined && (obj.trailingComments = message.trailingComments);
     if (message.leadingDetachedComments) {
-      obj.leadingDetachedComments = message.leadingDetachedComments.map((e) => e);
+      obj.leadingDetachedComments = message.leadingDetachedComments.map(e => e);
     } else {
       obj.leadingDetachedComments = [];
     }
@@ -3428,17 +3323,17 @@ export const SourceCodeInfo_Location = {
   },
   fromPartial<I extends Exact<DeepPartial<SourceCodeInfo_Location>, I>>(object: I): SourceCodeInfo_Location {
     const message = createBaseSourceCodeInfo_Location();
-    message.path = object.path?.map((e) => e) || [];
-    message.span = object.span?.map((e) => e) || [];
+    message.path = object.path?.map(e => e) || [];
+    message.span = object.span?.map(e => e) || [];
     message.leadingComments = object.leadingComments ?? "";
     message.trailingComments = object.trailingComments ?? "";
-    message.leadingDetachedComments = object.leadingDetachedComments?.map((e) => e) || [];
+    message.leadingDetachedComments = object.leadingDetachedComments?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseGeneratedCodeInfo(): GeneratedCodeInfo {
   return {
-    annotation: [],
+    annotation: []
   };
 }
 export const GeneratedCodeInfo = {
@@ -3468,16 +3363,13 @@ export const GeneratedCodeInfo = {
   },
   fromJSON(object: any): GeneratedCodeInfo {
     const obj = createBaseGeneratedCodeInfo();
-    if (Array.isArray(object?.annotation))
-      obj.annotation = object.annotation.map((e: any) => GeneratedCodeInfo_Annotation.fromJSON(e));
+    if (Array.isArray(object?.annotation)) obj.annotation = object.annotation.map((e: any) => GeneratedCodeInfo_Annotation.fromJSON(e));
     return obj;
   },
-  toJSON(message: GeneratedCodeInfo): unknown {
+  toJSON(message: GeneratedCodeInfo): JsonSafe<GeneratedCodeInfo> {
     const obj: any = {};
     if (message.annotation) {
-      obj.annotation = message.annotation.map((e) =>
-        e ? GeneratedCodeInfo_Annotation.toJSON(e) : undefined,
-      );
+      obj.annotation = message.annotation.map(e => e ? GeneratedCodeInfo_Annotation.toJSON(e) : undefined);
     } else {
       obj.annotation = [];
     }
@@ -3485,16 +3377,16 @@ export const GeneratedCodeInfo = {
   },
   fromPartial<I extends Exact<DeepPartial<GeneratedCodeInfo>, I>>(object: I): GeneratedCodeInfo {
     const message = createBaseGeneratedCodeInfo();
-    message.annotation = object.annotation?.map((e) => GeneratedCodeInfo_Annotation.fromPartial(e)) || [];
+    message.annotation = object.annotation?.map(e => GeneratedCodeInfo_Annotation.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseGeneratedCodeInfo_Annotation(): GeneratedCodeInfo_Annotation {
   return {
     path: [],
     sourceFile: "",
     begin: 0,
-    end: 0,
+    end: 0
   };
 }
 export const GeneratedCodeInfo_Annotation = {
@@ -3557,10 +3449,10 @@ export const GeneratedCodeInfo_Annotation = {
     if (isSet(object.end)) obj.end = Number(object.end);
     return obj;
   },
-  toJSON(message: GeneratedCodeInfo_Annotation): unknown {
+  toJSON(message: GeneratedCodeInfo_Annotation): JsonSafe<GeneratedCodeInfo_Annotation> {
     const obj: any = {};
     if (message.path) {
-      obj.path = message.path.map((e) => Math.round(e));
+      obj.path = message.path.map(e => Math.round(e));
     } else {
       obj.path = [];
     }
@@ -3569,14 +3461,12 @@ export const GeneratedCodeInfo_Annotation = {
     message.end !== undefined && (obj.end = Math.round(message.end));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<GeneratedCodeInfo_Annotation>, I>>(
-    object: I,
-  ): GeneratedCodeInfo_Annotation {
+  fromPartial<I extends Exact<DeepPartial<GeneratedCodeInfo_Annotation>, I>>(object: I): GeneratedCodeInfo_Annotation {
     const message = createBaseGeneratedCodeInfo_Annotation();
-    message.path = object.path?.map((e) => e) || [];
+    message.path = object.path?.map(e => e) || [];
     message.sourceFile = object.sourceFile ?? "";
     message.begin = object.begin ?? 0;
     message.end = object.end ?? 0;
     return message;
-  },
+  }
 };

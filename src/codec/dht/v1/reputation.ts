@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Long, isSet, DeepPartial, Exact } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 export interface Reputation {
   name: string;
@@ -9,7 +10,7 @@ export interface Reputation {
 function createBaseReputation(): Reputation {
   return {
     name: "",
-    score: Long.ZERO,
+    score: Long.ZERO
   };
 }
 export const Reputation = {
@@ -49,7 +50,7 @@ export const Reputation = {
     if (isSet(object.score)) obj.score = Long.fromValue(object.score);
     return obj;
   },
-  toJSON(message: Reputation): unknown {
+  toJSON(message: Reputation): JsonSafe<Reputation> {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.score !== undefined && (obj.score = (message.score || Long.ZERO).toString());
@@ -62,5 +63,5 @@ export const Reputation = {
       message.score = Long.fromValue(object.score);
     }
     return message;
-  },
+  }
 };

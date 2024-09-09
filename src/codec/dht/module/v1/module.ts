@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../../helpers";
+import { JsonSafe } from "../../../json-safe";
 export const protobufPackage = "nesaorg.nesachain.dht.module.v1";
 /** Module is the config object for the module. */
 export interface Module {
@@ -12,7 +13,7 @@ export interface Module {
 }
 function createBaseModule(): Module {
   return {
-    authority: "",
+    authority: ""
   };
 }
 export const Module = {
@@ -45,7 +46,7 @@ export const Module = {
     if (isSet(object.authority)) obj.authority = String(object.authority);
     return obj;
   },
-  toJSON(message: Module): unknown {
+  toJSON(message: Module): JsonSafe<Module> {
     const obj: any = {};
     message.authority !== undefined && (obj.authority = message.authority);
     return obj;
@@ -54,5 +55,5 @@ export const Module = {
     const message = createBaseModule();
     message.authority = object.authority ?? "";
     return message;
-  },
+  }
 };

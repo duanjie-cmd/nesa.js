@@ -2,6 +2,7 @@
 import { Coin } from "../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 export interface TokenPrice {
   inputPrice: Coin;
@@ -16,7 +17,7 @@ export interface Model {
 function createBaseTokenPrice(): TokenPrice {
   return {
     inputPrice: Coin.fromPartial({}),
-    outputPrice: Coin.fromPartial({}),
+    outputPrice: Coin.fromPartial({})
   };
 }
 export const TokenPrice = {
@@ -56,12 +57,10 @@ export const TokenPrice = {
     if (isSet(object.outputPrice)) obj.outputPrice = Coin.fromJSON(object.outputPrice);
     return obj;
   },
-  toJSON(message: TokenPrice): unknown {
+  toJSON(message: TokenPrice): JsonSafe<TokenPrice> {
     const obj: any = {};
-    message.inputPrice !== undefined &&
-      (obj.inputPrice = message.inputPrice ? Coin.toJSON(message.inputPrice) : undefined);
-    message.outputPrice !== undefined &&
-      (obj.outputPrice = message.outputPrice ? Coin.toJSON(message.outputPrice) : undefined);
+    message.inputPrice !== undefined && (obj.inputPrice = message.inputPrice ? Coin.toJSON(message.inputPrice) : undefined);
+    message.outputPrice !== undefined && (obj.outputPrice = message.outputPrice ? Coin.toJSON(message.outputPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<TokenPrice>, I>>(object: I): TokenPrice {
@@ -73,14 +72,14 @@ export const TokenPrice = {
       message.outputPrice = Coin.fromPartial(object.outputPrice);
     }
     return message;
-  },
+  }
 };
 function createBaseModel(): Model {
   return {
     creator: "",
     modelName: "",
     blockCids: [],
-    tokenPrice: TokenPrice.fromPartial({}),
+    tokenPrice: TokenPrice.fromPartial({})
   };
 }
 export const Model = {
@@ -134,27 +133,26 @@ export const Model = {
     if (isSet(object.tokenPrice)) obj.tokenPrice = TokenPrice.fromJSON(object.tokenPrice);
     return obj;
   },
-  toJSON(message: Model): unknown {
+  toJSON(message: Model): JsonSafe<Model> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     if (message.blockCids) {
-      obj.blockCids = message.blockCids.map((e) => e);
+      obj.blockCids = message.blockCids.map(e => e);
     } else {
       obj.blockCids = [];
     }
-    message.tokenPrice !== undefined &&
-      (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
+    message.tokenPrice !== undefined && (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<Model>, I>>(object: I): Model {
     const message = createBaseModel();
     message.creator = object.creator ?? "";
     message.modelName = object.modelName ?? "";
-    message.blockCids = object.blockCids?.map((e) => e) || [];
+    message.blockCids = object.blockCids?.map(e => e) || [];
     if (object.tokenPrice !== undefined && object.tokenPrice !== null) {
       message.tokenPrice = TokenPrice.fromPartial(object.tokenPrice);
     }
     return message;
-  },
+  }
 };

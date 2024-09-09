@@ -2,6 +2,7 @@
 import { Params, InnerValues, InferenceAgent, AgentModel, Session, VrfSeed } from "./agent";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "agent.v1";
 export interface GenesisState {
   params: Params;
@@ -18,7 +19,7 @@ function createBaseGenesisState(): GenesisState {
     agents: [],
     agentModels: [],
     sessions: [],
-    vrfSeeds: [],
+    vrfSeeds: []
   };
 }
 export const GenesisState = {
@@ -81,34 +82,32 @@ export const GenesisState = {
     if (isSet(object.params)) obj.params = Params.fromJSON(object.params);
     if (isSet(object.innerValues)) obj.innerValues = InnerValues.fromJSON(object.innerValues);
     if (Array.isArray(object?.agents)) obj.agents = object.agents.map((e: any) => InferenceAgent.fromJSON(e));
-    if (Array.isArray(object?.agentModels))
-      obj.agentModels = object.agentModels.map((e: any) => AgentModel.fromJSON(e));
+    if (Array.isArray(object?.agentModels)) obj.agentModels = object.agentModels.map((e: any) => AgentModel.fromJSON(e));
     if (Array.isArray(object?.sessions)) obj.sessions = object.sessions.map((e: any) => Session.fromJSON(e));
     if (Array.isArray(object?.vrfSeeds)) obj.vrfSeeds = object.vrfSeeds.map((e: any) => VrfSeed.fromJSON(e));
     return obj;
   },
-  toJSON(message: GenesisState): unknown {
+  toJSON(message: GenesisState): JsonSafe<GenesisState> {
     const obj: any = {};
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    message.innerValues !== undefined &&
-      (obj.innerValues = message.innerValues ? InnerValues.toJSON(message.innerValues) : undefined);
+    message.innerValues !== undefined && (obj.innerValues = message.innerValues ? InnerValues.toJSON(message.innerValues) : undefined);
     if (message.agents) {
-      obj.agents = message.agents.map((e) => (e ? InferenceAgent.toJSON(e) : undefined));
+      obj.agents = message.agents.map(e => e ? InferenceAgent.toJSON(e) : undefined);
     } else {
       obj.agents = [];
     }
     if (message.agentModels) {
-      obj.agentModels = message.agentModels.map((e) => (e ? AgentModel.toJSON(e) : undefined));
+      obj.agentModels = message.agentModels.map(e => e ? AgentModel.toJSON(e) : undefined);
     } else {
       obj.agentModels = [];
     }
     if (message.sessions) {
-      obj.sessions = message.sessions.map((e) => (e ? Session.toJSON(e) : undefined));
+      obj.sessions = message.sessions.map(e => e ? Session.toJSON(e) : undefined);
     } else {
       obj.sessions = [];
     }
     if (message.vrfSeeds) {
-      obj.vrfSeeds = message.vrfSeeds.map((e) => (e ? VrfSeed.toJSON(e) : undefined));
+      obj.vrfSeeds = message.vrfSeeds.map(e => e ? VrfSeed.toJSON(e) : undefined);
     } else {
       obj.vrfSeeds = [];
     }
@@ -122,10 +121,10 @@ export const GenesisState = {
     if (object.innerValues !== undefined && object.innerValues !== null) {
       message.innerValues = InnerValues.fromPartial(object.innerValues);
     }
-    message.agents = object.agents?.map((e) => InferenceAgent.fromPartial(e)) || [];
-    message.agentModels = object.agentModels?.map((e) => AgentModel.fromPartial(e)) || [];
-    message.sessions = object.sessions?.map((e) => Session.fromPartial(e)) || [];
-    message.vrfSeeds = object.vrfSeeds?.map((e) => VrfSeed.fromPartial(e)) || [];
+    message.agents = object.agents?.map(e => InferenceAgent.fromPartial(e)) || [];
+    message.agentModels = object.agentModels?.map(e => AgentModel.fromPartial(e)) || [];
+    message.sessions = object.sessions?.map(e => Session.fromPartial(e)) || [];
+    message.vrfSeeds = object.vrfSeeds?.map(e => VrfSeed.fromPartial(e)) || [];
     return message;
-  },
+  }
 };

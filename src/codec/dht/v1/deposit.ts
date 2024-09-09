@@ -3,6 +3,7 @@ import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, fromJsonTimestamp, fromTimestamp, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** BondStatus defines the deposit status of a miner or Orchestrator. */
 export enum BondStatus {
@@ -63,7 +64,7 @@ function createBaseUnbondingEntry(): UnbondingEntry {
     nodeId: "",
     amount: Coin.fromPartial({}),
     completionTime: Timestamp.fromPartial({}),
-    receiver: "",
+    receiver: ""
   };
 }
 export const UnbondingEntry = {
@@ -117,12 +118,11 @@ export const UnbondingEntry = {
     if (isSet(object.receiver)) obj.receiver = String(object.receiver);
     return obj;
   },
-  toJSON(message: UnbondingEntry): unknown {
+  toJSON(message: UnbondingEntry): JsonSafe<UnbondingEntry> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    message.completionTime !== undefined &&
-      (obj.completionTime = fromTimestamp(message.completionTime).toISOString());
+    message.completionTime !== undefined && (obj.completionTime = fromTimestamp(message.completionTime).toISOString());
     message.receiver !== undefined && (obj.receiver = message.receiver);
     return obj;
   },
@@ -137,5 +137,5 @@ export const UnbondingEntry = {
     }
     message.receiver = object.receiver ?? "";
     return message;
-  },
+  }
 };

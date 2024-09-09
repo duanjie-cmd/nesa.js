@@ -5,6 +5,7 @@ import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Reputation } from "./reputation";
 import { Long, isSet, fromJsonTimestamp, fromTimestamp, DeepPartial, Exact } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** Miner defines a miner of a model. */
 export interface Miner {
@@ -34,7 +35,7 @@ function createBaseMiner(): Miner {
     validUntil: Timestamp.fromPartial({}),
     bondStatus: 0,
     deposit: Coin.fromPartial({}),
-    reputations: [],
+    reputations: []
   };
 }
 export const Miner = {
@@ -141,27 +142,24 @@ export const Miner = {
     if (isSet(object.validUntil)) obj.validUntil = fromJsonTimestamp(object.validUntil);
     if (isSet(object.bondStatus)) obj.bondStatus = bondStatusFromJSON(object.bondStatus);
     if (isSet(object.deposit)) obj.deposit = Coin.fromJSON(object.deposit);
-    if (Array.isArray(object?.reputations))
-      obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
+    if (Array.isArray(object?.reputations)) obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
     return obj;
   },
-  toJSON(message: Miner): unknown {
+  toJSON(message: Miner): JsonSafe<Miner> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.startBlock !== undefined && (obj.startBlock = (message.startBlock || Long.UZERO).toString());
     message.endBlock !== undefined && (obj.endBlock = (message.endBlock || Long.UZERO).toString());
     message.torchDtype !== undefined && (obj.torchDtype = message.torchDtype);
     message.quantType !== undefined && (obj.quantType = message.quantType);
-    message.cacheTokensLeft !== undefined &&
-      (obj.cacheTokensLeft = (message.cacheTokensLeft || Long.UZERO).toString());
+    message.cacheTokensLeft !== undefined && (obj.cacheTokensLeft = (message.cacheTokensLeft || Long.UZERO).toString());
     message.inferenceRps !== undefined && (obj.inferenceRps = message.inferenceRps);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     message.validUntil !== undefined && (obj.validUntil = fromTimestamp(message.validUntil).toISOString());
     message.bondStatus !== undefined && (obj.bondStatus = bondStatusToJSON(message.bondStatus));
-    message.deposit !== undefined &&
-      (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
+    message.deposit !== undefined && (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
     if (message.reputations) {
-      obj.reputations = message.reputations.map((e) => (e ? Reputation.toJSON(e) : undefined));
+      obj.reputations = message.reputations.map(e => e ? Reputation.toJSON(e) : undefined);
     } else {
       obj.reputations = [];
     }
@@ -190,7 +188,7 @@ export const Miner = {
     if (object.deposit !== undefined && object.deposit !== null) {
       message.deposit = Coin.fromPartial(object.deposit);
     }
-    message.reputations = object.reputations?.map((e) => Reputation.fromPartial(e)) || [];
+    message.reputations = object.reputations?.map(e => Reputation.fromPartial(e)) || [];
     return message;
-  },
+  }
 };

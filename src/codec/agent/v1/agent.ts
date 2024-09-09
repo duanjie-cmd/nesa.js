@@ -2,17 +2,9 @@
 import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Duration } from "../../google/protobuf/duration";
 import { Timestamp } from "../../google/protobuf/timestamp";
-import {
-  Long,
-  isSet,
-  bytesFromBase64,
-  base64FromBytes,
-  DeepPartial,
-  Exact,
-  fromJsonTimestamp,
-  fromTimestamp,
-} from "../../helpers";
+import { Long, isSet, bytesFromBase64, base64FromBytes, DeepPartial, Exact, fromJsonTimestamp, fromTimestamp } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "agent.v1";
 /** AgentStatus enumerates the inference agent status. */
 export enum AgentStatus {
@@ -412,7 +404,7 @@ function createBaseParams(): Params {
     challengeReplyTime: Duration.fromPartial({}),
     challengeMerkleTime: Duration.fromPartial({}),
     challengeOriginTime: Duration.fromPartial({}),
-    agentValidTime: Duration.fromPartial({}),
+    agentValidTime: Duration.fromPartial({})
   };
 }
 export const Params = {
@@ -532,63 +524,34 @@ export const Params = {
     if (isSet(object.challengeTime)) obj.challengeTime = Duration.fromJSON(object.challengeTime);
     if (isSet(object.globalSeed)) obj.globalSeed = bytesFromBase64(object.globalSeed);
     if (isSet(object.lowestAgentVersion)) obj.lowestAgentVersion = Long.fromValue(object.lowestAgentVersion);
-    if (isSet(object.highestAgentVersion))
-      obj.highestAgentVersion = Long.fromValue(object.highestAgentVersion);
+    if (isSet(object.highestAgentVersion)) obj.highestAgentVersion = Long.fromValue(object.highestAgentVersion);
     if (isSet(object.challengeRate)) obj.challengeRate = Long.fromValue(object.challengeRate);
     if (isSet(object.validatorCount)) obj.validatorCount = Long.fromValue(object.validatorCount);
     if (isSet(object.challengeRound)) obj.challengeRound = Long.fromValue(object.challengeRound);
     if (isSet(object.challengeCidTime)) obj.challengeCidTime = Duration.fromJSON(object.challengeCidTime);
-    if (isSet(object.challengeReplyTime))
-      obj.challengeReplyTime = Duration.fromJSON(object.challengeReplyTime);
-    if (isSet(object.challengeMerkleTime))
-      obj.challengeMerkleTime = Duration.fromJSON(object.challengeMerkleTime);
-    if (isSet(object.challengeOriginTime))
-      obj.challengeOriginTime = Duration.fromJSON(object.challengeOriginTime);
+    if (isSet(object.challengeReplyTime)) obj.challengeReplyTime = Duration.fromJSON(object.challengeReplyTime);
+    if (isSet(object.challengeMerkleTime)) obj.challengeMerkleTime = Duration.fromJSON(object.challengeMerkleTime);
+    if (isSet(object.challengeOriginTime)) obj.challengeOriginTime = Duration.fromJSON(object.challengeOriginTime);
     if (isSet(object.agentValidTime)) obj.agentValidTime = Duration.fromJSON(object.agentValidTime);
     return obj;
   },
-  toJSON(message: Params): unknown {
+  toJSON(message: Params): JsonSafe<Params> {
     const obj: any = {};
-    message.agentMinimumLock !== undefined &&
-      (obj.agentMinimumLock = message.agentMinimumLock ? Coin.toJSON(message.agentMinimumLock) : undefined);
-    message.userMinimumLock !== undefined &&
-      (obj.userMinimumLock = message.userMinimumLock ? Coin.toJSON(message.userMinimumLock) : undefined);
-    message.sessionTime !== undefined &&
-      (obj.sessionTime = message.sessionTime ? Duration.toJSON(message.sessionTime) : undefined);
-    message.challengeTime !== undefined &&
-      (obj.challengeTime = message.challengeTime ? Duration.toJSON(message.challengeTime) : undefined);
-    message.globalSeed !== undefined &&
-      (obj.globalSeed = base64FromBytes(
-        message.globalSeed !== undefined ? message.globalSeed : new Uint8Array(),
-      ));
-    message.lowestAgentVersion !== undefined &&
-      (obj.lowestAgentVersion = (message.lowestAgentVersion || Long.UZERO).toString());
-    message.highestAgentVersion !== undefined &&
-      (obj.highestAgentVersion = (message.highestAgentVersion || Long.UZERO).toString());
-    message.challengeRate !== undefined &&
-      (obj.challengeRate = (message.challengeRate || Long.UZERO).toString());
-    message.validatorCount !== undefined &&
-      (obj.validatorCount = (message.validatorCount || Long.UZERO).toString());
-    message.challengeRound !== undefined &&
-      (obj.challengeRound = (message.challengeRound || Long.UZERO).toString());
-    message.challengeCidTime !== undefined &&
-      (obj.challengeCidTime = message.challengeCidTime
-        ? Duration.toJSON(message.challengeCidTime)
-        : undefined);
-    message.challengeReplyTime !== undefined &&
-      (obj.challengeReplyTime = message.challengeReplyTime
-        ? Duration.toJSON(message.challengeReplyTime)
-        : undefined);
-    message.challengeMerkleTime !== undefined &&
-      (obj.challengeMerkleTime = message.challengeMerkleTime
-        ? Duration.toJSON(message.challengeMerkleTime)
-        : undefined);
-    message.challengeOriginTime !== undefined &&
-      (obj.challengeOriginTime = message.challengeOriginTime
-        ? Duration.toJSON(message.challengeOriginTime)
-        : undefined);
-    message.agentValidTime !== undefined &&
-      (obj.agentValidTime = message.agentValidTime ? Duration.toJSON(message.agentValidTime) : undefined);
+    message.agentMinimumLock !== undefined && (obj.agentMinimumLock = message.agentMinimumLock ? Coin.toJSON(message.agentMinimumLock) : undefined);
+    message.userMinimumLock !== undefined && (obj.userMinimumLock = message.userMinimumLock ? Coin.toJSON(message.userMinimumLock) : undefined);
+    message.sessionTime !== undefined && (obj.sessionTime = message.sessionTime ? Duration.toJSON(message.sessionTime) : undefined);
+    message.challengeTime !== undefined && (obj.challengeTime = message.challengeTime ? Duration.toJSON(message.challengeTime) : undefined);
+    message.globalSeed !== undefined && (obj.globalSeed = base64FromBytes(message.globalSeed !== undefined ? message.globalSeed : new Uint8Array()));
+    message.lowestAgentVersion !== undefined && (obj.lowestAgentVersion = (message.lowestAgentVersion || Long.UZERO).toString());
+    message.highestAgentVersion !== undefined && (obj.highestAgentVersion = (message.highestAgentVersion || Long.UZERO).toString());
+    message.challengeRate !== undefined && (obj.challengeRate = (message.challengeRate || Long.UZERO).toString());
+    message.validatorCount !== undefined && (obj.validatorCount = (message.validatorCount || Long.UZERO).toString());
+    message.challengeRound !== undefined && (obj.challengeRound = (message.challengeRound || Long.UZERO).toString());
+    message.challengeCidTime !== undefined && (obj.challengeCidTime = message.challengeCidTime ? Duration.toJSON(message.challengeCidTime) : undefined);
+    message.challengeReplyTime !== undefined && (obj.challengeReplyTime = message.challengeReplyTime ? Duration.toJSON(message.challengeReplyTime) : undefined);
+    message.challengeMerkleTime !== undefined && (obj.challengeMerkleTime = message.challengeMerkleTime ? Duration.toJSON(message.challengeMerkleTime) : undefined);
+    message.challengeOriginTime !== undefined && (obj.challengeOriginTime = message.challengeOriginTime ? Duration.toJSON(message.challengeOriginTime) : undefined);
+    message.agentValidTime !== undefined && (obj.agentValidTime = message.agentValidTime ? Duration.toJSON(message.agentValidTime) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
@@ -637,11 +600,11 @@ export const Params = {
       message.agentValidTime = Duration.fromPartial(object.agentValidTime);
     }
     return message;
-  },
+  }
 };
 function createBaseInnerValues(): InnerValues {
   return {
-    seed: new Uint8Array(),
+    seed: new Uint8Array()
   };
 }
 export const InnerValues = {
@@ -674,22 +637,21 @@ export const InnerValues = {
     if (isSet(object.seed)) obj.seed = bytesFromBase64(object.seed);
     return obj;
   },
-  toJSON(message: InnerValues): unknown {
+  toJSON(message: InnerValues): JsonSafe<InnerValues> {
     const obj: any = {};
-    message.seed !== undefined &&
-      (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
+    message.seed !== undefined && (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<InnerValues>, I>>(object: I): InnerValues {
     const message = createBaseInnerValues();
     message.seed = object.seed ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBasePrestige(): Prestige {
   return {
     count: Long.UZERO,
-    total: Long.UZERO,
+    total: Long.UZERO
   };
 }
 export const Prestige = {
@@ -729,7 +691,7 @@ export const Prestige = {
     if (isSet(object.total)) obj.total = Long.fromValue(object.total);
     return obj;
   },
-  toJSON(message: Prestige): unknown {
+  toJSON(message: Prestige): JsonSafe<Prestige> {
     const obj: any = {};
     message.count !== undefined && (obj.count = (message.count || Long.UZERO).toString());
     message.total !== undefined && (obj.total = (message.total || Long.UZERO).toString());
@@ -744,7 +706,7 @@ export const Prestige = {
       message.total = Long.fromValue(object.total);
     }
     return message;
-  },
+  }
 };
 function createBaseInferenceAgent(): InferenceAgent {
   return {
@@ -753,7 +715,7 @@ function createBaseInferenceAgent(): InferenceAgent {
     version: Long.UZERO,
     prestige: Prestige.fromPartial({}),
     status: 0,
-    validUntil: Timestamp.fromPartial({}),
+    validUntil: Timestamp.fromPartial({})
   };
 }
 export const InferenceAgent = {
@@ -821,13 +783,12 @@ export const InferenceAgent = {
     if (isSet(object.validUntil)) obj.validUntil = fromJsonTimestamp(object.validUntil);
     return obj;
   },
-  toJSON(message: InferenceAgent): unknown {
+  toJSON(message: InferenceAgent): JsonSafe<InferenceAgent> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.url !== undefined && (obj.url = message.url);
     message.version !== undefined && (obj.version = (message.version || Long.UZERO).toString());
-    message.prestige !== undefined &&
-      (obj.prestige = message.prestige ? Prestige.toJSON(message.prestige) : undefined);
+    message.prestige !== undefined && (obj.prestige = message.prestige ? Prestige.toJSON(message.prestige) : undefined);
     message.status !== undefined && (obj.status = agentStatusToJSON(message.status));
     message.validUntil !== undefined && (obj.validUntil = fromTimestamp(message.validUntil).toISOString());
     return obj;
@@ -847,14 +808,14 @@ export const InferenceAgent = {
       message.validUntil = Timestamp.fromPartial(object.validUntil);
     }
     return message;
-  },
+  }
 };
 function createBaseAgentModel(): AgentModel {
   return {
     account: "",
     modelName: "",
     lock: Long.UZERO,
-    status: 0,
+    status: 0
   };
 }
 export const AgentModel = {
@@ -908,7 +869,7 @@ export const AgentModel = {
     if (isSet(object.status)) obj.status = agentModelStatusFromJSON(object.status);
     return obj;
   },
-  toJSON(message: AgentModel): unknown {
+  toJSON(message: AgentModel): JsonSafe<AgentModel> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.modelName !== undefined && (obj.modelName = message.modelName);
@@ -925,12 +886,12 @@ export const AgentModel = {
     }
     message.status = object.status ?? 0;
     return message;
-  },
+  }
 };
 function createBaseTokenPrice(): TokenPrice {
   return {
     inputPrice: Coin.fromPartial({}),
-    outputPrice: Coin.fromPartial({}),
+    outputPrice: Coin.fromPartial({})
   };
 }
 export const TokenPrice = {
@@ -970,12 +931,10 @@ export const TokenPrice = {
     if (isSet(object.outputPrice)) obj.outputPrice = Coin.fromJSON(object.outputPrice);
     return obj;
   },
-  toJSON(message: TokenPrice): unknown {
+  toJSON(message: TokenPrice): JsonSafe<TokenPrice> {
     const obj: any = {};
-    message.inputPrice !== undefined &&
-      (obj.inputPrice = message.inputPrice ? Coin.toJSON(message.inputPrice) : undefined);
-    message.outputPrice !== undefined &&
-      (obj.outputPrice = message.outputPrice ? Coin.toJSON(message.outputPrice) : undefined);
+    message.inputPrice !== undefined && (obj.inputPrice = message.inputPrice ? Coin.toJSON(message.inputPrice) : undefined);
+    message.outputPrice !== undefined && (obj.outputPrice = message.outputPrice ? Coin.toJSON(message.outputPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<TokenPrice>, I>>(object: I): TokenPrice {
@@ -987,13 +946,13 @@ export const TokenPrice = {
       message.outputPrice = Coin.fromPartial(object.outputPrice);
     }
     return message;
-  },
+  }
 };
 function createBasePaymentContribution(): PaymentContribution {
   return {
     account: "",
     rate: Long.UZERO,
-    amount: undefined,
+    amount: undefined
   };
 }
 export const PaymentContribution = {
@@ -1040,7 +999,7 @@ export const PaymentContribution = {
     if (isSet(object.amount)) obj.amount = Coin.fromJSON(object.amount);
     return obj;
   },
-  toJSON(message: PaymentContribution): unknown {
+  toJSON(message: PaymentContribution): JsonSafe<PaymentContribution> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.rate !== undefined && (obj.rate = (message.rate || Long.UZERO).toString());
@@ -1057,14 +1016,14 @@ export const PaymentContribution = {
       message.amount = Coin.fromPartial(object.amount);
     }
     return message;
-  },
+  }
 };
 function createBasePayment(): Payment {
   return {
     inputTokens: [],
     outputTokens: [],
     merkleRoot: new Uint8Array(),
-    contributions: [],
+    contributions: []
   };
 }
 export const Payment = {
@@ -1130,33 +1089,27 @@ export const Payment = {
   },
   fromJSON(object: any): Payment {
     const obj = createBasePayment();
-    if (Array.isArray(object?.inputTokens))
-      obj.inputTokens = object.inputTokens.map((e: any) => Long.fromValue(e));
-    if (Array.isArray(object?.outputTokens))
-      obj.outputTokens = object.outputTokens.map((e: any) => Long.fromValue(e));
+    if (Array.isArray(object?.inputTokens)) obj.inputTokens = object.inputTokens.map((e: any) => Long.fromValue(e));
+    if (Array.isArray(object?.outputTokens)) obj.outputTokens = object.outputTokens.map((e: any) => Long.fromValue(e));
     if (isSet(object.merkleRoot)) obj.merkleRoot = bytesFromBase64(object.merkleRoot);
-    if (Array.isArray(object?.contributions))
-      obj.contributions = object.contributions.map((e: any) => PaymentContribution.fromJSON(e));
+    if (Array.isArray(object?.contributions)) obj.contributions = object.contributions.map((e: any) => PaymentContribution.fromJSON(e));
     return obj;
   },
-  toJSON(message: Payment): unknown {
+  toJSON(message: Payment): JsonSafe<Payment> {
     const obj: any = {};
     if (message.inputTokens) {
-      obj.inputTokens = message.inputTokens.map((e) => (e || Long.UZERO).toString());
+      obj.inputTokens = message.inputTokens.map(e => (e || Long.UZERO).toString());
     } else {
       obj.inputTokens = [];
     }
     if (message.outputTokens) {
-      obj.outputTokens = message.outputTokens.map((e) => (e || Long.UZERO).toString());
+      obj.outputTokens = message.outputTokens.map(e => (e || Long.UZERO).toString());
     } else {
       obj.outputTokens = [];
     }
-    message.merkleRoot !== undefined &&
-      (obj.merkleRoot = base64FromBytes(
-        message.merkleRoot !== undefined ? message.merkleRoot : new Uint8Array(),
-      ));
+    message.merkleRoot !== undefined && (obj.merkleRoot = base64FromBytes(message.merkleRoot !== undefined ? message.merkleRoot : new Uint8Array()));
     if (message.contributions) {
-      obj.contributions = message.contributions.map((e) => (e ? PaymentContribution.toJSON(e) : undefined));
+      obj.contributions = message.contributions.map(e => e ? PaymentContribution.toJSON(e) : undefined);
     } else {
       obj.contributions = [];
     }
@@ -1164,19 +1117,19 @@ export const Payment = {
   },
   fromPartial<I extends Exact<DeepPartial<Payment>, I>>(object: I): Payment {
     const message = createBasePayment();
-    message.inputTokens = object.inputTokens?.map((e) => Long.fromValue(e)) || [];
-    message.outputTokens = object.outputTokens?.map((e) => Long.fromValue(e)) || [];
+    message.inputTokens = object.inputTokens?.map(e => Long.fromValue(e)) || [];
+    message.outputTokens = object.outputTokens?.map(e => Long.fromValue(e)) || [];
     message.merkleRoot = object.merkleRoot ?? new Uint8Array();
-    message.contributions = object.contributions?.map((e) => PaymentContribution.fromPartial(e)) || [];
+    message.contributions = object.contributions?.map(e => PaymentContribution.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseChallengeValidator(): ChallengeValidator {
   return {
     account: "",
     hash: new Uint8Array(),
     originHash: new Uint8Array(),
-    status: 0,
+    status: 0
   };
 }
 export const ChallengeValidator = {
@@ -1230,15 +1183,11 @@ export const ChallengeValidator = {
     if (isSet(object.status)) obj.status = validatorStatusFromJSON(object.status);
     return obj;
   },
-  toJSON(message: ChallengeValidator): unknown {
+  toJSON(message: ChallengeValidator): JsonSafe<ChallengeValidator> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
-    message.hash !== undefined &&
-      (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
-    message.originHash !== undefined &&
-      (obj.originHash = base64FromBytes(
-        message.originHash !== undefined ? message.originHash : new Uint8Array(),
-      ));
+    message.hash !== undefined && (obj.hash = base64FromBytes(message.hash !== undefined ? message.hash : new Uint8Array()));
+    message.originHash !== undefined && (obj.originHash = base64FromBytes(message.originHash !== undefined ? message.originHash : new Uint8Array()));
     message.status !== undefined && (obj.status = validatorStatusToJSON(message.status));
     return obj;
   },
@@ -1249,7 +1198,7 @@ export const ChallengeValidator = {
     message.originHash = object.originHash ?? new Uint8Array();
     message.status = object.status ?? 0;
     return message;
-  },
+  }
 };
 function createBaseChallengeInfo(): ChallengeInfo {
   return {
@@ -1258,7 +1207,7 @@ function createBaseChallengeInfo(): ChallengeInfo {
     answerHash: new Uint8Array(),
     cutMerkle: [],
     validators: [],
-    hashCount: Long.UZERO,
+    hashCount: Long.UZERO
   };
 }
 export const ChallengeInfo = {
@@ -1321,28 +1270,23 @@ export const ChallengeInfo = {
     if (isSet(object.questionId)) obj.questionId = Long.fromValue(object.questionId);
     if (isSet(object.cid)) obj.cid = String(object.cid);
     if (isSet(object.answerHash)) obj.answerHash = bytesFromBase64(object.answerHash);
-    if (Array.isArray(object?.cutMerkle))
-      obj.cutMerkle = object.cutMerkle.map((e: any) => bytesFromBase64(e));
-    if (Array.isArray(object?.validators))
-      obj.validators = object.validators.map((e: any) => ChallengeValidator.fromJSON(e));
+    if (Array.isArray(object?.cutMerkle)) obj.cutMerkle = object.cutMerkle.map((e: any) => bytesFromBase64(e));
+    if (Array.isArray(object?.validators)) obj.validators = object.validators.map((e: any) => ChallengeValidator.fromJSON(e));
     if (isSet(object.hashCount)) obj.hashCount = Long.fromValue(object.hashCount);
     return obj;
   },
-  toJSON(message: ChallengeInfo): unknown {
+  toJSON(message: ChallengeInfo): JsonSafe<ChallengeInfo> {
     const obj: any = {};
     message.questionId !== undefined && (obj.questionId = (message.questionId || Long.UZERO).toString());
     message.cid !== undefined && (obj.cid = message.cid);
-    message.answerHash !== undefined &&
-      (obj.answerHash = base64FromBytes(
-        message.answerHash !== undefined ? message.answerHash : new Uint8Array(),
-      ));
+    message.answerHash !== undefined && (obj.answerHash = base64FromBytes(message.answerHash !== undefined ? message.answerHash : new Uint8Array()));
     if (message.cutMerkle) {
-      obj.cutMerkle = message.cutMerkle.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+      obj.cutMerkle = message.cutMerkle.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.cutMerkle = [];
     }
     if (message.validators) {
-      obj.validators = message.validators.map((e) => (e ? ChallengeValidator.toJSON(e) : undefined));
+      obj.validators = message.validators.map(e => e ? ChallengeValidator.toJSON(e) : undefined);
     } else {
       obj.validators = [];
     }
@@ -1356,13 +1300,13 @@ export const ChallengeInfo = {
     }
     message.cid = object.cid ?? "";
     message.answerHash = object.answerHash ?? new Uint8Array();
-    message.cutMerkle = object.cutMerkle?.map((e) => e) || [];
-    message.validators = object.validators?.map((e) => ChallengeValidator.fromPartial(e)) || [];
+    message.cutMerkle = object.cutMerkle?.map(e => e) || [];
+    message.validators = object.validators?.map(e => ChallengeValidator.fromPartial(e)) || [];
     if (object.hashCount !== undefined && object.hashCount !== null) {
       message.hashCount = Long.fromValue(object.hashCount);
     }
     return message;
-  },
+  }
 };
 function createBaseSession(): Session {
   return {
@@ -1376,7 +1320,7 @@ function createBaseSession(): Session {
     expirationAt: Timestamp.fromPartial({}),
     payment: undefined,
     status: 0,
-    challengeInfo: [],
+    challengeInfo: []
   };
 }
 export const Session = {
@@ -1476,29 +1420,23 @@ export const Session = {
     if (isSet(object.expirationAt)) obj.expirationAt = fromJsonTimestamp(object.expirationAt);
     if (isSet(object.payment)) obj.payment = Payment.fromJSON(object.payment);
     if (isSet(object.status)) obj.status = sessionStatusFromJSON(object.status);
-    if (Array.isArray(object?.challengeInfo))
-      obj.challengeInfo = object.challengeInfo.map((e: any) => ChallengeInfo.fromJSON(e));
+    if (Array.isArray(object?.challengeInfo)) obj.challengeInfo = object.challengeInfo.map((e: any) => ChallengeInfo.fromJSON(e));
     return obj;
   },
-  toJSON(message: Session): unknown {
+  toJSON(message: Session): JsonSafe<Session> {
     const obj: any = {};
     message.sessionId !== undefined && (obj.sessionId = message.sessionId);
     message.account !== undefined && (obj.account = message.account);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     message.agentAccount !== undefined && (obj.agentAccount = message.agentAccount);
-    message.userLock !== undefined &&
-      (obj.userLock = message.userLock ? Coin.toJSON(message.userLock) : undefined);
-    message.minerLock !== undefined &&
-      (obj.minerLock = message.minerLock ? Coin.toJSON(message.minerLock) : undefined);
-    message.tokenPrice !== undefined &&
-      (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
-    message.expirationAt !== undefined &&
-      (obj.expirationAt = fromTimestamp(message.expirationAt).toISOString());
-    message.payment !== undefined &&
-      (obj.payment = message.payment ? Payment.toJSON(message.payment) : undefined);
+    message.userLock !== undefined && (obj.userLock = message.userLock ? Coin.toJSON(message.userLock) : undefined);
+    message.minerLock !== undefined && (obj.minerLock = message.minerLock ? Coin.toJSON(message.minerLock) : undefined);
+    message.tokenPrice !== undefined && (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
+    message.expirationAt !== undefined && (obj.expirationAt = fromTimestamp(message.expirationAt).toISOString());
+    message.payment !== undefined && (obj.payment = message.payment ? Payment.toJSON(message.payment) : undefined);
     message.status !== undefined && (obj.status = sessionStatusToJSON(message.status));
     if (message.challengeInfo) {
-      obj.challengeInfo = message.challengeInfo.map((e) => (e ? ChallengeInfo.toJSON(e) : undefined));
+      obj.challengeInfo = message.challengeInfo.map(e => e ? ChallengeInfo.toJSON(e) : undefined);
     } else {
       obj.challengeInfo = [];
     }
@@ -1526,14 +1464,14 @@ export const Session = {
       message.payment = Payment.fromPartial(object.payment);
     }
     message.status = object.status ?? 0;
-    message.challengeInfo = object.challengeInfo?.map((e) => ChallengeInfo.fromPartial(e)) || [];
+    message.challengeInfo = object.challengeInfo?.map(e => ChallengeInfo.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseVrfSeed(): VrfSeed {
   return {
     account: "",
-    seed: new Uint8Array(),
+    seed: new Uint8Array()
   };
 }
 export const VrfSeed = {
@@ -1573,11 +1511,10 @@ export const VrfSeed = {
     if (isSet(object.seed)) obj.seed = bytesFromBase64(object.seed);
     return obj;
   },
-  toJSON(message: VrfSeed): unknown {
+  toJSON(message: VrfSeed): JsonSafe<VrfSeed> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
-    message.seed !== undefined &&
-      (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
+    message.seed !== undefined && (obj.seed = base64FromBytes(message.seed !== undefined ? message.seed : new Uint8Array()));
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<VrfSeed>, I>>(object: I): VrfSeed {
@@ -1585,5 +1522,5 @@ export const VrfSeed = {
     message.account = object.account ?? "";
     message.seed = object.seed ?? new Uint8Array();
     return message;
-  },
+  }
 };

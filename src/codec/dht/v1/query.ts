@@ -1,20 +1,13 @@
 /* eslint-disable */
 import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagination";
-import {
-  InferenceType,
-  Availability,
-  Orchestrator,
-  inferenceTypeFromJSON,
-  availabilityFromJSON,
-  inferenceTypeToJSON,
-  availabilityToJSON,
-} from "./orchestrator";
+import { InferenceType, Availability, Orchestrator, inferenceTypeFromJSON, availabilityFromJSON, inferenceTypeToJSON, availabilityToJSON } from "./orchestrator";
 import { Params } from "./params";
 import { Model } from "./model";
 import { ModelBlock } from "./model_block";
 import { Node } from "./node";
 import { Miner } from "./miner";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 import { DeepPartial, Exact, isSet, bytesFromBase64, base64FromBytes, Rpc } from "../../helpers";
 export const protobufPackage = "dht.v1";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -113,18 +106,18 @@ export const QueryParamsRequest = {
     const obj = createBaseQueryParamsRequest();
     return obj;
   },
-  toJSON(_: QueryParamsRequest): unknown {
+  toJSON(_: QueryParamsRequest): JsonSafe<QueryParamsRequest> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
-  },
+  }
 };
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
-    params: Params.fromPartial({}),
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
@@ -157,7 +150,7 @@ export const QueryParamsResponse = {
     if (isSet(object.params)) obj.params = Params.fromJSON(object.params);
     return obj;
   },
-  toJSON(message: QueryParamsResponse): unknown {
+  toJSON(message: QueryParamsResponse): JsonSafe<QueryParamsResponse> {
     const obj: any = {};
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     return obj;
@@ -168,11 +161,11 @@ export const QueryParamsResponse = {
       message.params = Params.fromPartial(object.params);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetModelRequest(): QueryGetModelRequest {
   return {
-    modelName: "",
+    modelName: ""
   };
 }
 export const QueryGetModelRequest = {
@@ -205,7 +198,7 @@ export const QueryGetModelRequest = {
     if (isSet(object.modelName)) obj.modelName = String(object.modelName);
     return obj;
   },
-  toJSON(message: QueryGetModelRequest): unknown {
+  toJSON(message: QueryGetModelRequest): JsonSafe<QueryGetModelRequest> {
     const obj: any = {};
     message.modelName !== undefined && (obj.modelName = message.modelName);
     return obj;
@@ -214,11 +207,11 @@ export const QueryGetModelRequest = {
     const message = createBaseQueryGetModelRequest();
     message.modelName = object.modelName ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetModelResponse(): QueryGetModelResponse {
   return {
-    model: undefined,
+    model: undefined
   };
 }
 export const QueryGetModelResponse = {
@@ -251,7 +244,7 @@ export const QueryGetModelResponse = {
     if (isSet(object.model)) obj.model = Model.fromJSON(object.model);
     return obj;
   },
-  toJSON(message: QueryGetModelResponse): unknown {
+  toJSON(message: QueryGetModelResponse): JsonSafe<QueryGetModelResponse> {
     const obj: any = {};
     message.model !== undefined && (obj.model = message.model ? Model.toJSON(message.model) : undefined);
     return obj;
@@ -262,12 +255,12 @@ export const QueryGetModelResponse = {
       message.model = Model.fromPartial(object.model);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetModelBlocksRequest(): QueryGetModelBlocksRequest {
   return {
     modelName: "",
-    pagination: undefined,
+    pagination: undefined
   };
 }
 export const QueryGetModelBlocksRequest = {
@@ -307,28 +300,25 @@ export const QueryGetModelBlocksRequest = {
     if (isSet(object.pagination)) obj.pagination = PageRequest.fromJSON(object.pagination);
     return obj;
   },
-  toJSON(message: QueryGetModelBlocksRequest): unknown {
+  toJSON(message: QueryGetModelBlocksRequest): JsonSafe<QueryGetModelBlocksRequest> {
     const obj: any = {};
     message.modelName !== undefined && (obj.modelName = message.modelName);
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetModelBlocksRequest>, I>>(
-    object: I,
-  ): QueryGetModelBlocksRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetModelBlocksRequest>, I>>(object: I): QueryGetModelBlocksRequest {
     const message = createBaseQueryGetModelBlocksRequest();
     message.modelName = object.modelName ?? "";
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromPartial(object.pagination);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetModelBlocksResponse(): QueryGetModelBlocksResponse {
   return {
     blocks: [],
-    pagination: undefined,
+    pagination: undefined
   };
 }
 export const QueryGetModelBlocksResponse = {
@@ -368,31 +358,28 @@ export const QueryGetModelBlocksResponse = {
     if (isSet(object.pagination)) obj.pagination = PageResponse.fromJSON(object.pagination);
     return obj;
   },
-  toJSON(message: QueryGetModelBlocksResponse): unknown {
+  toJSON(message: QueryGetModelBlocksResponse): JsonSafe<QueryGetModelBlocksResponse> {
     const obj: any = {};
     if (message.blocks) {
-      obj.blocks = message.blocks.map((e) => (e ? ModelBlock.toJSON(e) : undefined));
+      obj.blocks = message.blocks.map(e => e ? ModelBlock.toJSON(e) : undefined);
     } else {
       obj.blocks = [];
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetModelBlocksResponse>, I>>(
-    object: I,
-  ): QueryGetModelBlocksResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetModelBlocksResponse>, I>>(object: I): QueryGetModelBlocksResponse {
     const message = createBaseQueryGetModelBlocksResponse();
-    message.blocks = object.blocks?.map((e) => ModelBlock.fromPartial(e)) || [];
+    message.blocks = object.blocks?.map(e => ModelBlock.fromPartial(e)) || [];
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageResponse.fromPartial(object.pagination);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetNodeRequest(): QueryGetNodeRequest {
   return {
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const QueryGetNodeRequest = {
@@ -425,7 +412,7 @@ export const QueryGetNodeRequest = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: QueryGetNodeRequest): unknown {
+  toJSON(message: QueryGetNodeRequest): JsonSafe<QueryGetNodeRequest> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
@@ -434,11 +421,11 @@ export const QueryGetNodeRequest = {
     const message = createBaseQueryGetNodeRequest();
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetNodeResponse(): QueryGetNodeResponse {
   return {
-    node: undefined,
+    node: undefined
   };
 }
 export const QueryGetNodeResponse = {
@@ -471,7 +458,7 @@ export const QueryGetNodeResponse = {
     if (isSet(object.node)) obj.node = Node.fromJSON(object.node);
     return obj;
   },
-  toJSON(message: QueryGetNodeResponse): unknown {
+  toJSON(message: QueryGetNodeResponse): JsonSafe<QueryGetNodeResponse> {
     const obj: any = {};
     message.node !== undefined && (obj.node = message.node ? Node.toJSON(message.node) : undefined);
     return obj;
@@ -482,11 +469,11 @@ export const QueryGetNodeResponse = {
       message.node = Node.fromPartial(object.node);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetMinerRequest(): QueryGetMinerRequest {
   return {
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const QueryGetMinerRequest = {
@@ -519,7 +506,7 @@ export const QueryGetMinerRequest = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: QueryGetMinerRequest): unknown {
+  toJSON(message: QueryGetMinerRequest): JsonSafe<QueryGetMinerRequest> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
@@ -528,12 +515,12 @@ export const QueryGetMinerRequest = {
     const message = createBaseQueryGetMinerRequest();
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetMinerResponse(): QueryGetMinerResponse {
   return {
     miner: undefined,
-    node: undefined,
+    node: undefined
   };
 }
 export const QueryGetMinerResponse = {
@@ -573,7 +560,7 @@ export const QueryGetMinerResponse = {
     if (isSet(object.node)) obj.node = Node.fromJSON(object.node);
     return obj;
   },
-  toJSON(message: QueryGetMinerResponse): unknown {
+  toJSON(message: QueryGetMinerResponse): JsonSafe<QueryGetMinerResponse> {
     const obj: any = {};
     message.miner !== undefined && (obj.miner = message.miner ? Miner.toJSON(message.miner) : undefined);
     message.node !== undefined && (obj.node = message.node ? Node.toJSON(message.node) : undefined);
@@ -588,11 +575,11 @@ export const QueryGetMinerResponse = {
       message.node = Node.fromPartial(object.node);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorRequest(): QueryGetOrchestratorRequest {
   return {
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const QueryGetOrchestratorRequest = {
@@ -625,23 +612,21 @@ export const QueryGetOrchestratorRequest = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorRequest): unknown {
+  toJSON(message: QueryGetOrchestratorRequest): JsonSafe<QueryGetOrchestratorRequest> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorRequest>, I>>(
-    object: I,
-  ): QueryGetOrchestratorRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorRequest>, I>>(object: I): QueryGetOrchestratorRequest {
     const message = createBaseQueryGetOrchestratorRequest();
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorResponse(): QueryGetOrchestratorResponse {
   return {
     orchestrator: undefined,
-    node: undefined,
+    node: undefined
   };
 }
 export const QueryGetOrchestratorResponse = {
@@ -681,16 +666,13 @@ export const QueryGetOrchestratorResponse = {
     if (isSet(object.node)) obj.node = Node.fromJSON(object.node);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorResponse): unknown {
+  toJSON(message: QueryGetOrchestratorResponse): JsonSafe<QueryGetOrchestratorResponse> {
     const obj: any = {};
-    message.orchestrator !== undefined &&
-      (obj.orchestrator = message.orchestrator ? Orchestrator.toJSON(message.orchestrator) : undefined);
+    message.orchestrator !== undefined && (obj.orchestrator = message.orchestrator ? Orchestrator.toJSON(message.orchestrator) : undefined);
     message.node !== undefined && (obj.node = message.node ? Node.toJSON(message.node) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorResponse>, I>>(
-    object: I,
-  ): QueryGetOrchestratorResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorResponse>, I>>(object: I): QueryGetOrchestratorResponse {
     const message = createBaseQueryGetOrchestratorResponse();
     if (object.orchestrator !== undefined && object.orchestrator !== null) {
       message.orchestrator = Orchestrator.fromPartial(object.orchestrator);
@@ -699,22 +681,19 @@ export const QueryGetOrchestratorResponse = {
       message.node = Node.fromPartial(object.node);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorsByParamsRequest(): QueryGetOrchestratorsByParamsRequest {
   return {
     inferenceType: 0,
     availability: 0,
     limit: 0,
-    key: new Uint8Array(),
+    key: new Uint8Array()
   };
 }
 export const QueryGetOrchestratorsByParamsRequest = {
   typeUrl: "/dht.v1.QueryGetOrchestratorsByParamsRequest",
-  encode(
-    message: QueryGetOrchestratorsByParamsRequest,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
+  encode(message: QueryGetOrchestratorsByParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.inferenceType !== 0) {
       writer.uint32(8).int32(message.inferenceType);
     }
@@ -763,38 +742,32 @@ export const QueryGetOrchestratorsByParamsRequest = {
     if (isSet(object.key)) obj.key = bytesFromBase64(object.key);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorsByParamsRequest): unknown {
+  toJSON(message: QueryGetOrchestratorsByParamsRequest): JsonSafe<QueryGetOrchestratorsByParamsRequest> {
     const obj: any = {};
     message.inferenceType !== undefined && (obj.inferenceType = inferenceTypeToJSON(message.inferenceType));
     message.availability !== undefined && (obj.availability = availabilityToJSON(message.availability));
     message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
+    message.key !== undefined && (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorsByParamsRequest>, I>>(
-    object: I,
-  ): QueryGetOrchestratorsByParamsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorsByParamsRequest>, I>>(object: I): QueryGetOrchestratorsByParamsRequest {
     const message = createBaseQueryGetOrchestratorsByParamsRequest();
     message.inferenceType = object.inferenceType ?? 0;
     message.availability = object.availability ?? 0;
     message.limit = object.limit ?? 0;
     message.key = object.key ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorsByParamsResponse(): QueryGetOrchestratorsByParamsResponse {
   return {
     orchestrators: [],
-    nextKey: new Uint8Array(),
+    nextKey: new Uint8Array()
   };
 }
 export const QueryGetOrchestratorsByParamsResponse = {
   typeUrl: "/dht.v1.QueryGetOrchestratorsByParamsResponse",
-  encode(
-    message: QueryGetOrchestratorsByParamsResponse,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
+  encode(message: QueryGetOrchestratorsByParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.orchestrators) {
       Orchestrator.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -825,34 +798,30 @@ export const QueryGetOrchestratorsByParamsResponse = {
   },
   fromJSON(object: any): QueryGetOrchestratorsByParamsResponse {
     const obj = createBaseQueryGetOrchestratorsByParamsResponse();
-    if (Array.isArray(object?.orchestrators))
-      obj.orchestrators = object.orchestrators.map((e: any) => Orchestrator.fromJSON(e));
+    if (Array.isArray(object?.orchestrators)) obj.orchestrators = object.orchestrators.map((e: any) => Orchestrator.fromJSON(e));
     if (isSet(object.nextKey)) obj.nextKey = bytesFromBase64(object.nextKey);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorsByParamsResponse): unknown {
+  toJSON(message: QueryGetOrchestratorsByParamsResponse): JsonSafe<QueryGetOrchestratorsByParamsResponse> {
     const obj: any = {};
     if (message.orchestrators) {
-      obj.orchestrators = message.orchestrators.map((e) => (e ? Orchestrator.toJSON(e) : undefined));
+      obj.orchestrators = message.orchestrators.map(e => e ? Orchestrator.toJSON(e) : undefined);
     } else {
       obj.orchestrators = [];
     }
-    message.nextKey !== undefined &&
-      (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
+    message.nextKey !== undefined && (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorsByParamsResponse>, I>>(
-    object: I,
-  ): QueryGetOrchestratorsByParamsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorsByParamsResponse>, I>>(object: I): QueryGetOrchestratorsByParamsResponse {
     const message = createBaseQueryGetOrchestratorsByParamsResponse();
-    message.orchestrators = object.orchestrators?.map((e) => Orchestrator.fromPartial(e)) || [];
+    message.orchestrators = object.orchestrators?.map(e => Orchestrator.fromPartial(e)) || [];
     message.nextKey = object.nextKey ?? new Uint8Array();
     return message;
-  },
+  }
 };
 function createBaseQueryGetAllOrchestratorRequest(): QueryGetAllOrchestratorRequest {
   return {
-    pagination: undefined,
+    pagination: undefined
   };
 }
 export const QueryGetAllOrchestratorRequest = {
@@ -885,26 +854,23 @@ export const QueryGetAllOrchestratorRequest = {
     if (isSet(object.pagination)) obj.pagination = PageRequest.fromJSON(object.pagination);
     return obj;
   },
-  toJSON(message: QueryGetAllOrchestratorRequest): unknown {
+  toJSON(message: QueryGetAllOrchestratorRequest): JsonSafe<QueryGetAllOrchestratorRequest> {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetAllOrchestratorRequest>, I>>(
-    object: I,
-  ): QueryGetAllOrchestratorRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetAllOrchestratorRequest>, I>>(object: I): QueryGetAllOrchestratorRequest {
     const message = createBaseQueryGetAllOrchestratorRequest();
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromPartial(object.pagination);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetAllOrchestratorResponse(): QueryGetAllOrchestratorResponse {
   return {
     orchestrators: [],
-    pagination: undefined,
+    pagination: undefined
   };
 }
 export const QueryGetAllOrchestratorResponse = {
@@ -940,44 +906,37 @@ export const QueryGetAllOrchestratorResponse = {
   },
   fromJSON(object: any): QueryGetAllOrchestratorResponse {
     const obj = createBaseQueryGetAllOrchestratorResponse();
-    if (Array.isArray(object?.orchestrators))
-      obj.orchestrators = object.orchestrators.map((e: any) => Orchestrator.fromJSON(e));
+    if (Array.isArray(object?.orchestrators)) obj.orchestrators = object.orchestrators.map((e: any) => Orchestrator.fromJSON(e));
     if (isSet(object.pagination)) obj.pagination = PageResponse.fromJSON(object.pagination);
     return obj;
   },
-  toJSON(message: QueryGetAllOrchestratorResponse): unknown {
+  toJSON(message: QueryGetAllOrchestratorResponse): JsonSafe<QueryGetAllOrchestratorResponse> {
     const obj: any = {};
     if (message.orchestrators) {
-      obj.orchestrators = message.orchestrators.map((e) => (e ? Orchestrator.toJSON(e) : undefined));
+      obj.orchestrators = message.orchestrators.map(e => e ? Orchestrator.toJSON(e) : undefined);
     } else {
       obj.orchestrators = [];
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetAllOrchestratorResponse>, I>>(
-    object: I,
-  ): QueryGetAllOrchestratorResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetAllOrchestratorResponse>, I>>(object: I): QueryGetAllOrchestratorResponse {
     const message = createBaseQueryGetAllOrchestratorResponse();
-    message.orchestrators = object.orchestrators?.map((e) => Orchestrator.fromPartial(e)) || [];
+    message.orchestrators = object.orchestrators?.map(e => Orchestrator.fromPartial(e)) || [];
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageResponse.fromPartial(object.pagination);
     }
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorHeartbeatRequest(): QueryGetOrchestratorHeartbeatRequest {
   return {
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const QueryGetOrchestratorHeartbeatRequest = {
   typeUrl: "/dht.v1.QueryGetOrchestratorHeartbeatRequest",
-  encode(
-    message: QueryGetOrchestratorHeartbeatRequest,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
+  encode(message: QueryGetOrchestratorHeartbeatRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nodeId !== "") {
       writer.uint32(10).string(message.nodeId);
     }
@@ -1005,30 +964,25 @@ export const QueryGetOrchestratorHeartbeatRequest = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorHeartbeatRequest): unknown {
+  toJSON(message: QueryGetOrchestratorHeartbeatRequest): JsonSafe<QueryGetOrchestratorHeartbeatRequest> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorHeartbeatRequest>, I>>(
-    object: I,
-  ): QueryGetOrchestratorHeartbeatRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorHeartbeatRequest>, I>>(object: I): QueryGetOrchestratorHeartbeatRequest {
     const message = createBaseQueryGetOrchestratorHeartbeatRequest();
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetOrchestratorHeartbeatResponse(): QueryGetOrchestratorHeartbeatResponse {
   return {
-    timestamp: 0,
+    timestamp: 0
   };
 }
 export const QueryGetOrchestratorHeartbeatResponse = {
   typeUrl: "/dht.v1.QueryGetOrchestratorHeartbeatResponse",
-  encode(
-    message: QueryGetOrchestratorHeartbeatResponse,
-    writer: _m0.Writer = _m0.Writer.create(),
-  ): _m0.Writer {
+  encode(message: QueryGetOrchestratorHeartbeatResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.timestamp !== 0) {
       writer.uint32(8).int32(message.timestamp);
     }
@@ -1056,22 +1010,20 @@ export const QueryGetOrchestratorHeartbeatResponse = {
     if (isSet(object.timestamp)) obj.timestamp = Number(object.timestamp);
     return obj;
   },
-  toJSON(message: QueryGetOrchestratorHeartbeatResponse): unknown {
+  toJSON(message: QueryGetOrchestratorHeartbeatResponse): JsonSafe<QueryGetOrchestratorHeartbeatResponse> {
     const obj: any = {};
     message.timestamp !== undefined && (obj.timestamp = Math.round(message.timestamp));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorHeartbeatResponse>, I>>(
-    object: I,
-  ): QueryGetOrchestratorHeartbeatResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetOrchestratorHeartbeatResponse>, I>>(object: I): QueryGetOrchestratorHeartbeatResponse {
     const message = createBaseQueryGetOrchestratorHeartbeatResponse();
     message.timestamp = object.timestamp ?? 0;
     return message;
-  },
+  }
 };
 function createBaseQueryGetMinerHeartbeatRequest(): QueryGetMinerHeartbeatRequest {
   return {
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const QueryGetMinerHeartbeatRequest = {
@@ -1104,22 +1056,20 @@ export const QueryGetMinerHeartbeatRequest = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: QueryGetMinerHeartbeatRequest): unknown {
+  toJSON(message: QueryGetMinerHeartbeatRequest): JsonSafe<QueryGetMinerHeartbeatRequest> {
     const obj: any = {};
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetMinerHeartbeatRequest>, I>>(
-    object: I,
-  ): QueryGetMinerHeartbeatRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetMinerHeartbeatRequest>, I>>(object: I): QueryGetMinerHeartbeatRequest {
     const message = createBaseQueryGetMinerHeartbeatRequest();
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseQueryGetMinerHeartbeatResponse(): QueryGetMinerHeartbeatResponse {
   return {
-    timestamp: 0,
+    timestamp: 0
   };
 }
 export const QueryGetMinerHeartbeatResponse = {
@@ -1152,18 +1102,16 @@ export const QueryGetMinerHeartbeatResponse = {
     if (isSet(object.timestamp)) obj.timestamp = Number(object.timestamp);
     return obj;
   },
-  toJSON(message: QueryGetMinerHeartbeatResponse): unknown {
+  toJSON(message: QueryGetMinerHeartbeatResponse): JsonSafe<QueryGetMinerHeartbeatResponse> {
     const obj: any = {};
     message.timestamp !== undefined && (obj.timestamp = Math.round(message.timestamp));
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetMinerHeartbeatResponse>, I>>(
-    object: I,
-  ): QueryGetMinerHeartbeatResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetMinerHeartbeatResponse>, I>>(object: I): QueryGetMinerHeartbeatResponse {
     const message = createBaseQueryGetMinerHeartbeatResponse();
     message.timestamp = object.timestamp ?? 0;
     return message;
-  },
+  }
 };
 /** Query defines the gRPC querier service. */
 export interface Query {
@@ -1179,13 +1127,9 @@ export interface Query {
   /** Queries a list of GetOrchestrator items. */
   GetOrchestrator(request: QueryGetOrchestratorRequest): Promise<QueryGetOrchestratorResponse>;
   GetAllOrchestrator(request?: QueryGetAllOrchestratorRequest): Promise<QueryGetAllOrchestratorResponse>;
-  GetOrchestratorsByParams(
-    request: QueryGetOrchestratorsByParamsRequest,
-  ): Promise<QueryGetOrchestratorsByParamsResponse>;
+  GetOrchestratorsByParams(request: QueryGetOrchestratorsByParamsRequest): Promise<QueryGetOrchestratorsByParamsResponse>;
   /** Queries a list of GetOrchestratorHeartbeat items. */
-  GetOrchestratorHeartbeat(
-    request: QueryGetOrchestratorHeartbeatRequest,
-  ): Promise<QueryGetOrchestratorHeartbeatResponse>;
+  GetOrchestratorHeartbeat(request: QueryGetOrchestratorHeartbeatRequest): Promise<QueryGetOrchestratorHeartbeatResponse>;
   /** Queries a list of GetMinerHeartbeat items. */
   GetMinerHeartbeat(request: QueryGetMinerHeartbeatRequest): Promise<QueryGetMinerHeartbeatResponse>;
 }
@@ -1207,59 +1151,53 @@ export class QueryClientImpl implements Query {
   Params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "Params", data);
-    return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
   GetModel(request: QueryGetModelRequest): Promise<QueryGetModelResponse> {
     const data = QueryGetModelRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetModel", data);
-    return promise.then((data) => QueryGetModelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetModelResponse.decode(new _m0.Reader(data)));
   }
   GetModelBlocks(request: QueryGetModelBlocksRequest): Promise<QueryGetModelBlocksResponse> {
     const data = QueryGetModelBlocksRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetModelBlocks", data);
-    return promise.then((data) => QueryGetModelBlocksResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetModelBlocksResponse.decode(new _m0.Reader(data)));
   }
   GetNode(request: QueryGetNodeRequest): Promise<QueryGetNodeResponse> {
     const data = QueryGetNodeRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetNode", data);
-    return promise.then((data) => QueryGetNodeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetNodeResponse.decode(new _m0.Reader(data)));
   }
   GetMiner(request: QueryGetMinerRequest): Promise<QueryGetMinerResponse> {
     const data = QueryGetMinerRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetMiner", data);
-    return promise.then((data) => QueryGetMinerResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetMinerResponse.decode(new _m0.Reader(data)));
   }
   GetOrchestrator(request: QueryGetOrchestratorRequest): Promise<QueryGetOrchestratorResponse> {
     const data = QueryGetOrchestratorRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetOrchestrator", data);
-    return promise.then((data) => QueryGetOrchestratorResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetOrchestratorResponse.decode(new _m0.Reader(data)));
   }
-  GetAllOrchestrator(
-    request: QueryGetAllOrchestratorRequest = {
-      pagination: PageRequest.fromPartial({}),
-    },
-  ): Promise<QueryGetAllOrchestratorResponse> {
+  GetAllOrchestrator(request: QueryGetAllOrchestratorRequest = {
+    pagination: PageRequest.fromPartial({})
+  }): Promise<QueryGetAllOrchestratorResponse> {
     const data = QueryGetAllOrchestratorRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetAllOrchestrator", data);
-    return promise.then((data) => QueryGetAllOrchestratorResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetAllOrchestratorResponse.decode(new _m0.Reader(data)));
   }
-  GetOrchestratorsByParams(
-    request: QueryGetOrchestratorsByParamsRequest,
-  ): Promise<QueryGetOrchestratorsByParamsResponse> {
+  GetOrchestratorsByParams(request: QueryGetOrchestratorsByParamsRequest): Promise<QueryGetOrchestratorsByParamsResponse> {
     const data = QueryGetOrchestratorsByParamsRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetOrchestratorsByParams", data);
-    return promise.then((data) => QueryGetOrchestratorsByParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetOrchestratorsByParamsResponse.decode(new _m0.Reader(data)));
   }
-  GetOrchestratorHeartbeat(
-    request: QueryGetOrchestratorHeartbeatRequest,
-  ): Promise<QueryGetOrchestratorHeartbeatResponse> {
+  GetOrchestratorHeartbeat(request: QueryGetOrchestratorHeartbeatRequest): Promise<QueryGetOrchestratorHeartbeatResponse> {
     const data = QueryGetOrchestratorHeartbeatRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetOrchestratorHeartbeat", data);
-    return promise.then((data) => QueryGetOrchestratorHeartbeatResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetOrchestratorHeartbeatResponse.decode(new _m0.Reader(data)));
   }
   GetMinerHeartbeat(request: QueryGetMinerHeartbeatRequest): Promise<QueryGetMinerHeartbeatResponse> {
     const data = QueryGetMinerHeartbeatRequest.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Query", "GetMinerHeartbeat", data);
-    return promise.then((data) => QueryGetMinerHeartbeatResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => QueryGetMinerHeartbeatResponse.decode(new _m0.Reader(data)));
   }
 }

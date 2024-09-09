@@ -1,18 +1,12 @@
 /* eslint-disable */
 import { Params } from "./params";
 import { TokenPrice } from "./model";
-import {
-  Availability,
-  InferenceType,
-  availabilityFromJSON,
-  inferenceTypeFromJSON,
-  availabilityToJSON,
-  inferenceTypeToJSON,
-} from "./orchestrator";
+import { Availability, InferenceType, availabilityFromJSON, inferenceTypeFromJSON, availabilityToJSON, inferenceTypeToJSON } from "./orchestrator";
 import { Coin } from "../../cosmos/base/v1beta1/coin";
 import { Reputation } from "./reputation";
 import { Long, isSet, DeepPartial, Exact, bytesFromBase64, base64FromBytes, Rpc } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** MsgUpdateParams is the Msg/UpdateParams request type. */
 export interface MsgUpdateParams {
@@ -180,7 +174,7 @@ export interface MsgUpdateOrchestratorReputationResponse {}
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return {
     authority: "",
-    params: Params.fromPartial({}),
+    params: Params.fromPartial({})
   };
 }
 export const MsgUpdateParams = {
@@ -220,7 +214,7 @@ export const MsgUpdateParams = {
     if (isSet(object.params)) obj.params = Params.fromJSON(object.params);
     return obj;
   },
-  toJSON(message: MsgUpdateParams): unknown {
+  toJSON(message: MsgUpdateParams): JsonSafe<MsgUpdateParams> {
     const obj: any = {};
     message.authority !== undefined && (obj.authority = message.authority);
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
@@ -233,7 +227,7 @@ export const MsgUpdateParams = {
       message.params = Params.fromPartial(object.params);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
   return {};
@@ -261,14 +255,14 @@ export const MsgUpdateParamsResponse = {
     const obj = createBaseMsgUpdateParamsResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateParamsResponse): unknown {
+  toJSON(_: MsgUpdateParamsResponse): JsonSafe<MsgUpdateParamsResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(_: I): MsgUpdateParamsResponse {
     const message = createBaseMsgUpdateParamsResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterModel(): MsgRegisterModel {
   return {
@@ -276,7 +270,7 @@ function createBaseMsgRegisterModel(): MsgRegisterModel {
     modelName: "",
     blockCids: [],
     allowList: [],
-    tokenPrice: undefined,
+    tokenPrice: undefined
   };
 }
 export const MsgRegisterModel = {
@@ -337,35 +331,34 @@ export const MsgRegisterModel = {
     if (isSet(object.tokenPrice)) obj.tokenPrice = TokenPrice.fromJSON(object.tokenPrice);
     return obj;
   },
-  toJSON(message: MsgRegisterModel): unknown {
+  toJSON(message: MsgRegisterModel): JsonSafe<MsgRegisterModel> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     if (message.blockCids) {
-      obj.blockCids = message.blockCids.map((e) => e);
+      obj.blockCids = message.blockCids.map(e => e);
     } else {
       obj.blockCids = [];
     }
     if (message.allowList) {
-      obj.allowList = message.allowList.map((e) => e);
+      obj.allowList = message.allowList.map(e => e);
     } else {
       obj.allowList = [];
     }
-    message.tokenPrice !== undefined &&
-      (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
+    message.tokenPrice !== undefined && (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgRegisterModel>, I>>(object: I): MsgRegisterModel {
     const message = createBaseMsgRegisterModel();
     message.creator = object.creator ?? "";
     message.modelName = object.modelName ?? "";
-    message.blockCids = object.blockCids?.map((e) => e) || [];
-    message.allowList = object.allowList?.map((e) => e) || [];
+    message.blockCids = object.blockCids?.map(e => e) || [];
+    message.allowList = object.allowList?.map(e => e) || [];
     if (object.tokenPrice !== undefined && object.tokenPrice !== null) {
       message.tokenPrice = TokenPrice.fromPartial(object.tokenPrice);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterModelResponse(): MsgRegisterModelResponse {
   return {};
@@ -393,14 +386,14 @@ export const MsgRegisterModelResponse = {
     const obj = createBaseMsgRegisterModelResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterModelResponse): unknown {
+  toJSON(_: MsgRegisterModelResponse): JsonSafe<MsgRegisterModelResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgRegisterModelResponse>, I>>(_: I): MsgRegisterModelResponse {
     const message = createBaseMsgRegisterModelResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterNode(): MsgRegisterNode {
   return {
@@ -413,7 +406,7 @@ function createBaseMsgRegisterNode(): MsgRegisterNode {
     vram: Long.UZERO,
     networkRps: 0,
     usingRelay: false,
-    nextPings: [],
+    nextPings: []
   };
 }
 export const MsgRegisterNode = {
@@ -506,11 +499,10 @@ export const MsgRegisterNode = {
     if (isSet(object.vram)) obj.vram = Long.fromValue(object.vram);
     if (isSet(object.networkRps)) obj.networkRps = Number(object.networkRps);
     if (isSet(object.usingRelay)) obj.usingRelay = Boolean(object.usingRelay);
-    if (Array.isArray(object?.nextPings))
-      obj.nextPings = object.nextPings.map((e: any) => bytesFromBase64(e));
+    if (Array.isArray(object?.nextPings)) obj.nextPings = object.nextPings.map((e: any) => bytesFromBase64(e));
     return obj;
   },
-  toJSON(message: MsgRegisterNode): unknown {
+  toJSON(message: MsgRegisterNode): JsonSafe<MsgRegisterNode> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -522,7 +514,7 @@ export const MsgRegisterNode = {
     message.networkRps !== undefined && (obj.networkRps = message.networkRps);
     message.usingRelay !== undefined && (obj.usingRelay = message.usingRelay);
     if (message.nextPings) {
-      obj.nextPings = message.nextPings.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+      obj.nextPings = message.nextPings.map(e => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.nextPings = [];
     }
@@ -541,9 +533,9 @@ export const MsgRegisterNode = {
     }
     message.networkRps = object.networkRps ?? 0;
     message.usingRelay = object.usingRelay ?? false;
-    message.nextPings = object.nextPings?.map((e) => e) || [];
+    message.nextPings = object.nextPings?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterNodeResponse(): MsgRegisterNodeResponse {
   return {};
@@ -571,19 +563,19 @@ export const MsgRegisterNodeResponse = {
     const obj = createBaseMsgRegisterNodeResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterNodeResponse): unknown {
+  toJSON(_: MsgRegisterNodeResponse): JsonSafe<MsgRegisterNodeResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgRegisterNodeResponse>, I>>(_: I): MsgRegisterNodeResponse {
     const message = createBaseMsgRegisterNodeResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteNode(): MsgDeleteNode {
   return {
     creator: "",
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const MsgDeleteNode = {
@@ -623,7 +615,7 @@ export const MsgDeleteNode = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: MsgDeleteNode): unknown {
+  toJSON(message: MsgDeleteNode): JsonSafe<MsgDeleteNode> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -634,7 +626,7 @@ export const MsgDeleteNode = {
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteNodeResponse(): MsgDeleteNodeResponse {
   return {};
@@ -662,14 +654,14 @@ export const MsgDeleteNodeResponse = {
     const obj = createBaseMsgDeleteNodeResponse();
     return obj;
   },
-  toJSON(_: MsgDeleteNodeResponse): unknown {
+  toJSON(_: MsgDeleteNodeResponse): JsonSafe<MsgDeleteNodeResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgDeleteNodeResponse>, I>>(_: I): MsgDeleteNodeResponse {
     const message = createBaseMsgDeleteNodeResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterMiner(): MsgRegisterMiner {
   return {
@@ -682,7 +674,7 @@ function createBaseMsgRegisterMiner(): MsgRegisterMiner {
     quantType: "",
     cacheTokensLeft: Long.UZERO,
     inferenceRps: 0,
-    modelName: "",
+    modelName: ""
   };
 }
 export const MsgRegisterMiner = {
@@ -787,21 +779,20 @@ export const MsgRegisterMiner = {
     if (isSet(object.modelName)) obj.modelName = String(object.modelName);
     return obj;
   },
-  toJSON(message: MsgRegisterMiner): unknown {
+  toJSON(message: MsgRegisterMiner): JsonSafe<MsgRegisterMiner> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.startBlock !== undefined && (obj.startBlock = (message.startBlock || Long.UZERO).toString());
     message.endBlock !== undefined && (obj.endBlock = (message.endBlock || Long.UZERO).toString());
     if (message.blockIds) {
-      obj.blockIds = message.blockIds.map((e) => Math.round(e));
+      obj.blockIds = message.blockIds.map(e => Math.round(e));
     } else {
       obj.blockIds = [];
     }
     message.torchDtype !== undefined && (obj.torchDtype = message.torchDtype);
     message.quantType !== undefined && (obj.quantType = message.quantType);
-    message.cacheTokensLeft !== undefined &&
-      (obj.cacheTokensLeft = (message.cacheTokensLeft || Long.UZERO).toString());
+    message.cacheTokensLeft !== undefined && (obj.cacheTokensLeft = (message.cacheTokensLeft || Long.UZERO).toString());
     message.inferenceRps !== undefined && (obj.inferenceRps = message.inferenceRps);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     return obj;
@@ -816,7 +807,7 @@ export const MsgRegisterMiner = {
     if (object.endBlock !== undefined && object.endBlock !== null) {
       message.endBlock = Long.fromValue(object.endBlock);
     }
-    message.blockIds = object.blockIds?.map((e) => e) || [];
+    message.blockIds = object.blockIds?.map(e => e) || [];
     message.torchDtype = object.torchDtype ?? "";
     message.quantType = object.quantType ?? "";
     if (object.cacheTokensLeft !== undefined && object.cacheTokensLeft !== null) {
@@ -825,7 +816,7 @@ export const MsgRegisterMiner = {
     message.inferenceRps = object.inferenceRps ?? 0;
     message.modelName = object.modelName ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterMinerResponse(): MsgRegisterMinerResponse {
   return {};
@@ -853,19 +844,19 @@ export const MsgRegisterMinerResponse = {
     const obj = createBaseMsgRegisterMinerResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterMinerResponse): unknown {
+  toJSON(_: MsgRegisterMinerResponse): JsonSafe<MsgRegisterMinerResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgRegisterMinerResponse>, I>>(_: I): MsgRegisterMinerResponse {
     const message = createBaseMsgRegisterMinerResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteMiner(): MsgDeleteMiner {
   return {
     creator: "",
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const MsgDeleteMiner = {
@@ -905,7 +896,7 @@ export const MsgDeleteMiner = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: MsgDeleteMiner): unknown {
+  toJSON(message: MsgDeleteMiner): JsonSafe<MsgDeleteMiner> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -916,7 +907,7 @@ export const MsgDeleteMiner = {
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteMinerResponse(): MsgDeleteMinerResponse {
   return {};
@@ -944,14 +935,14 @@ export const MsgDeleteMinerResponse = {
     const obj = createBaseMsgDeleteMinerResponse();
     return obj;
   },
-  toJSON(_: MsgDeleteMinerResponse): unknown {
+  toJSON(_: MsgDeleteMinerResponse): JsonSafe<MsgDeleteMinerResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgDeleteMinerResponse>, I>>(_: I): MsgDeleteMinerResponse {
     const message = createBaseMsgDeleteMinerResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterOrchestrator(): MsgRegisterOrchestrator {
   return {
@@ -961,7 +952,7 @@ function createBaseMsgRegisterOrchestrator(): MsgRegisterOrchestrator {
     blockCount: [],
     minerIds: [],
     inferenceType: 0,
-    modelName: "",
+    modelName: ""
   };
 }
 export const MsgRegisterOrchestrator = {
@@ -1039,25 +1030,24 @@ export const MsgRegisterOrchestrator = {
     if (isSet(object.creator)) obj.creator = String(object.creator);
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     if (isSet(object.status)) obj.status = availabilityFromJSON(object.status);
-    if (Array.isArray(object?.blockCount))
-      obj.blockCount = object.blockCount.map((e: any) => Long.fromValue(e));
+    if (Array.isArray(object?.blockCount)) obj.blockCount = object.blockCount.map((e: any) => Long.fromValue(e));
     if (Array.isArray(object?.minerIds)) obj.minerIds = object.minerIds.map((e: any) => String(e));
     if (isSet(object.inferenceType)) obj.inferenceType = inferenceTypeFromJSON(object.inferenceType);
     if (isSet(object.modelName)) obj.modelName = String(object.modelName);
     return obj;
   },
-  toJSON(message: MsgRegisterOrchestrator): unknown {
+  toJSON(message: MsgRegisterOrchestrator): JsonSafe<MsgRegisterOrchestrator> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.status !== undefined && (obj.status = availabilityToJSON(message.status));
     if (message.blockCount) {
-      obj.blockCount = message.blockCount.map((e) => (e || Long.UZERO).toString());
+      obj.blockCount = message.blockCount.map(e => (e || Long.UZERO).toString());
     } else {
       obj.blockCount = [];
     }
     if (message.minerIds) {
-      obj.minerIds = message.minerIds.map((e) => e);
+      obj.minerIds = message.minerIds.map(e => e);
     } else {
       obj.minerIds = [];
     }
@@ -1070,12 +1060,12 @@ export const MsgRegisterOrchestrator = {
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     message.status = object.status ?? 0;
-    message.blockCount = object.blockCount?.map((e) => Long.fromValue(e)) || [];
-    message.minerIds = object.minerIds?.map((e) => e) || [];
+    message.blockCount = object.blockCount?.map(e => Long.fromValue(e)) || [];
+    message.minerIds = object.minerIds?.map(e => e) || [];
     message.inferenceType = object.inferenceType ?? 0;
     message.modelName = object.modelName ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgRegisterOrchestratorResponse(): MsgRegisterOrchestratorResponse {
   return {};
@@ -1103,21 +1093,19 @@ export const MsgRegisterOrchestratorResponse = {
     const obj = createBaseMsgRegisterOrchestratorResponse();
     return obj;
   },
-  toJSON(_: MsgRegisterOrchestratorResponse): unknown {
+  toJSON(_: MsgRegisterOrchestratorResponse): JsonSafe<MsgRegisterOrchestratorResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterOrchestratorResponse>, I>>(
-    _: I,
-  ): MsgRegisterOrchestratorResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterOrchestratorResponse>, I>>(_: I): MsgRegisterOrchestratorResponse {
     const message = createBaseMsgRegisterOrchestratorResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteOrchestrator(): MsgDeleteOrchestrator {
   return {
     creator: "",
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const MsgDeleteOrchestrator = {
@@ -1157,7 +1145,7 @@ export const MsgDeleteOrchestrator = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: MsgDeleteOrchestrator): unknown {
+  toJSON(message: MsgDeleteOrchestrator): JsonSafe<MsgDeleteOrchestrator> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -1168,7 +1156,7 @@ export const MsgDeleteOrchestrator = {
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgDeleteOrchestratorResponse(): MsgDeleteOrchestratorResponse {
   return {};
@@ -1196,21 +1184,19 @@ export const MsgDeleteOrchestratorResponse = {
     const obj = createBaseMsgDeleteOrchestratorResponse();
     return obj;
   },
-  toJSON(_: MsgDeleteOrchestratorResponse): unknown {
+  toJSON(_: MsgDeleteOrchestratorResponse): JsonSafe<MsgDeleteOrchestratorResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgDeleteOrchestratorResponse>, I>>(
-    _: I,
-  ): MsgDeleteOrchestratorResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgDeleteOrchestratorResponse>, I>>(_: I): MsgDeleteOrchestratorResponse {
     const message = createBaseMsgDeleteOrchestratorResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgOrchestratorHeartbeat(): MsgOrchestratorHeartbeat {
   return {
     creator: "",
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const MsgOrchestratorHeartbeat = {
@@ -1250,20 +1236,18 @@ export const MsgOrchestratorHeartbeat = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: MsgOrchestratorHeartbeat): unknown {
+  toJSON(message: MsgOrchestratorHeartbeat): JsonSafe<MsgOrchestratorHeartbeat> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgOrchestratorHeartbeat>, I>>(
-    object: I,
-  ): MsgOrchestratorHeartbeat {
+  fromPartial<I extends Exact<DeepPartial<MsgOrchestratorHeartbeat>, I>>(object: I): MsgOrchestratorHeartbeat {
     const message = createBaseMsgOrchestratorHeartbeat();
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgOrchestratorHeartbeatResponse(): MsgOrchestratorHeartbeatResponse {
   return {};
@@ -1291,21 +1275,19 @@ export const MsgOrchestratorHeartbeatResponse = {
     const obj = createBaseMsgOrchestratorHeartbeatResponse();
     return obj;
   },
-  toJSON(_: MsgOrchestratorHeartbeatResponse): unknown {
+  toJSON(_: MsgOrchestratorHeartbeatResponse): JsonSafe<MsgOrchestratorHeartbeatResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgOrchestratorHeartbeatResponse>, I>>(
-    _: I,
-  ): MsgOrchestratorHeartbeatResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgOrchestratorHeartbeatResponse>, I>>(_: I): MsgOrchestratorHeartbeatResponse {
     const message = createBaseMsgOrchestratorHeartbeatResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgMinerHeartbeat(): MsgMinerHeartbeat {
   return {
     creator: "",
-    nodeId: "",
+    nodeId: ""
   };
 }
 export const MsgMinerHeartbeat = {
@@ -1345,7 +1327,7 @@ export const MsgMinerHeartbeat = {
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
     return obj;
   },
-  toJSON(message: MsgMinerHeartbeat): unknown {
+  toJSON(message: MsgMinerHeartbeat): JsonSafe<MsgMinerHeartbeat> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -1356,7 +1338,7 @@ export const MsgMinerHeartbeat = {
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgMinerHeartbeatResponse(): MsgMinerHeartbeatResponse {
   return {};
@@ -1384,20 +1366,20 @@ export const MsgMinerHeartbeatResponse = {
     const obj = createBaseMsgMinerHeartbeatResponse();
     return obj;
   },
-  toJSON(_: MsgMinerHeartbeatResponse): unknown {
+  toJSON(_: MsgMinerHeartbeatResponse): JsonSafe<MsgMinerHeartbeatResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgMinerHeartbeatResponse>, I>>(_: I): MsgMinerHeartbeatResponse {
     const message = createBaseMsgMinerHeartbeatResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgAddMinerDeposit(): MsgAddMinerDeposit {
   return {
     depositor: "",
     nodeId: "",
-    amount: Coin.fromPartial({}),
+    amount: Coin.fromPartial({})
   };
 }
 export const MsgAddMinerDeposit = {
@@ -1444,7 +1426,7 @@ export const MsgAddMinerDeposit = {
     if (isSet(object.amount)) obj.amount = Coin.fromJSON(object.amount);
     return obj;
   },
-  toJSON(message: MsgAddMinerDeposit): unknown {
+  toJSON(message: MsgAddMinerDeposit): JsonSafe<MsgAddMinerDeposit> {
     const obj: any = {};
     message.depositor !== undefined && (obj.depositor = message.depositor);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -1459,7 +1441,7 @@ export const MsgAddMinerDeposit = {
       message.amount = Coin.fromPartial(object.amount);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgAddMinerDepositResponse(): MsgAddMinerDepositResponse {
   return {};
@@ -1487,21 +1469,21 @@ export const MsgAddMinerDepositResponse = {
     const obj = createBaseMsgAddMinerDepositResponse();
     return obj;
   },
-  toJSON(_: MsgAddMinerDepositResponse): unknown {
+  toJSON(_: MsgAddMinerDepositResponse): JsonSafe<MsgAddMinerDepositResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgAddMinerDepositResponse>, I>>(_: I): MsgAddMinerDepositResponse {
     const message = createBaseMsgAddMinerDepositResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgWithdrawMiner(): MsgWithdrawMiner {
   return {
     depositor: "",
     nodeId: "",
     amount: Coin.fromPartial({}),
-    receiver: "",
+    receiver: ""
   };
 }
 export const MsgWithdrawMiner = {
@@ -1555,7 +1537,7 @@ export const MsgWithdrawMiner = {
     if (isSet(object.receiver)) obj.receiver = String(object.receiver);
     return obj;
   },
-  toJSON(message: MsgWithdrawMiner): unknown {
+  toJSON(message: MsgWithdrawMiner): JsonSafe<MsgWithdrawMiner> {
     const obj: any = {};
     message.depositor !== undefined && (obj.depositor = message.depositor);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -1572,7 +1554,7 @@ export const MsgWithdrawMiner = {
     }
     message.receiver = object.receiver ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgWithdrawMinerResponse(): MsgWithdrawMinerResponse {
   return {};
@@ -1600,20 +1582,20 @@ export const MsgWithdrawMinerResponse = {
     const obj = createBaseMsgWithdrawMinerResponse();
     return obj;
   },
-  toJSON(_: MsgWithdrawMinerResponse): unknown {
+  toJSON(_: MsgWithdrawMinerResponse): JsonSafe<MsgWithdrawMinerResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgWithdrawMinerResponse>, I>>(_: I): MsgWithdrawMinerResponse {
     const message = createBaseMsgWithdrawMinerResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgAddOrchestratorDeposit(): MsgAddOrchestratorDeposit {
   return {
     depositor: "",
     nodeId: "",
-    amount: Coin.fromPartial({}),
+    amount: Coin.fromPartial({})
   };
 }
 export const MsgAddOrchestratorDeposit = {
@@ -1660,16 +1642,14 @@ export const MsgAddOrchestratorDeposit = {
     if (isSet(object.amount)) obj.amount = Coin.fromJSON(object.amount);
     return obj;
   },
-  toJSON(message: MsgAddOrchestratorDeposit): unknown {
+  toJSON(message: MsgAddOrchestratorDeposit): JsonSafe<MsgAddOrchestratorDeposit> {
     const obj: any = {};
     message.depositor !== undefined && (obj.depositor = message.depositor);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgAddOrchestratorDeposit>, I>>(
-    object: I,
-  ): MsgAddOrchestratorDeposit {
+  fromPartial<I extends Exact<DeepPartial<MsgAddOrchestratorDeposit>, I>>(object: I): MsgAddOrchestratorDeposit {
     const message = createBaseMsgAddOrchestratorDeposit();
     message.depositor = object.depositor ?? "";
     message.nodeId = object.nodeId ?? "";
@@ -1677,7 +1657,7 @@ export const MsgAddOrchestratorDeposit = {
       message.amount = Coin.fromPartial(object.amount);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgAddOrchestratorDepositResponse(): MsgAddOrchestratorDepositResponse {
   return {};
@@ -1705,23 +1685,21 @@ export const MsgAddOrchestratorDepositResponse = {
     const obj = createBaseMsgAddOrchestratorDepositResponse();
     return obj;
   },
-  toJSON(_: MsgAddOrchestratorDepositResponse): unknown {
+  toJSON(_: MsgAddOrchestratorDepositResponse): JsonSafe<MsgAddOrchestratorDepositResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgAddOrchestratorDepositResponse>, I>>(
-    _: I,
-  ): MsgAddOrchestratorDepositResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgAddOrchestratorDepositResponse>, I>>(_: I): MsgAddOrchestratorDepositResponse {
     const message = createBaseMsgAddOrchestratorDepositResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgWithdrawOrchestrator(): MsgWithdrawOrchestrator {
   return {
     depositor: "",
     nodeId: "",
     amount: Coin.fromPartial({}),
-    receiver: "",
+    receiver: ""
   };
 }
 export const MsgWithdrawOrchestrator = {
@@ -1775,7 +1753,7 @@ export const MsgWithdrawOrchestrator = {
     if (isSet(object.receiver)) obj.receiver = String(object.receiver);
     return obj;
   },
-  toJSON(message: MsgWithdrawOrchestrator): unknown {
+  toJSON(message: MsgWithdrawOrchestrator): JsonSafe<MsgWithdrawOrchestrator> {
     const obj: any = {};
     message.depositor !== undefined && (obj.depositor = message.depositor);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
@@ -1792,7 +1770,7 @@ export const MsgWithdrawOrchestrator = {
     }
     message.receiver = object.receiver ?? "";
     return message;
-  },
+  }
 };
 function createBaseMsgWithdrawOrchestratorResponse(): MsgWithdrawOrchestratorResponse {
   return {};
@@ -1820,22 +1798,20 @@ export const MsgWithdrawOrchestratorResponse = {
     const obj = createBaseMsgWithdrawOrchestratorResponse();
     return obj;
   },
-  toJSON(_: MsgWithdrawOrchestratorResponse): unknown {
+  toJSON(_: MsgWithdrawOrchestratorResponse): JsonSafe<MsgWithdrawOrchestratorResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgWithdrawOrchestratorResponse>, I>>(
-    _: I,
-  ): MsgWithdrawOrchestratorResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgWithdrawOrchestratorResponse>, I>>(_: I): MsgWithdrawOrchestratorResponse {
     const message = createBaseMsgWithdrawOrchestratorResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateNodeLabel(): MsgUpdateNodeLabel {
   return {
     creator: "",
     nodeId: "",
-    labels: [],
+    labels: []
   };
 }
 export const MsgUpdateNodeLabel = {
@@ -1882,12 +1858,12 @@ export const MsgUpdateNodeLabel = {
     if (Array.isArray(object?.labels)) obj.labels = object.labels.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: MsgUpdateNodeLabel): unknown {
+  toJSON(message: MsgUpdateNodeLabel): JsonSafe<MsgUpdateNodeLabel> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     if (message.labels) {
-      obj.labels = message.labels.map((e) => e);
+      obj.labels = message.labels.map(e => e);
     } else {
       obj.labels = [];
     }
@@ -1897,9 +1873,9 @@ export const MsgUpdateNodeLabel = {
     const message = createBaseMsgUpdateNodeLabel();
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
-    message.labels = object.labels?.map((e) => e) || [];
+    message.labels = object.labels?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateNodeLabelResponse(): MsgUpdateNodeLabelResponse {
   return {};
@@ -1927,21 +1903,21 @@ export const MsgUpdateNodeLabelResponse = {
     const obj = createBaseMsgUpdateNodeLabelResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateNodeLabelResponse): unknown {
+  toJSON(_: MsgUpdateNodeLabelResponse): JsonSafe<MsgUpdateNodeLabelResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgUpdateNodeLabelResponse>, I>>(_: I): MsgUpdateNodeLabelResponse {
     const message = createBaseMsgUpdateNodeLabelResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateModel(): MsgUpdateModel {
   return {
     account: "",
     modelName: "",
     allowList: [],
-    tokenPrice: TokenPrice.fromPartial({}),
+    tokenPrice: TokenPrice.fromPartial({})
   };
 }
 export const MsgUpdateModel = {
@@ -1995,29 +1971,28 @@ export const MsgUpdateModel = {
     if (isSet(object.tokenPrice)) obj.tokenPrice = TokenPrice.fromJSON(object.tokenPrice);
     return obj;
   },
-  toJSON(message: MsgUpdateModel): unknown {
+  toJSON(message: MsgUpdateModel): JsonSafe<MsgUpdateModel> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     message.modelName !== undefined && (obj.modelName = message.modelName);
     if (message.allowList) {
-      obj.allowList = message.allowList.map((e) => e);
+      obj.allowList = message.allowList.map(e => e);
     } else {
       obj.allowList = [];
     }
-    message.tokenPrice !== undefined &&
-      (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
+    message.tokenPrice !== undefined && (obj.tokenPrice = message.tokenPrice ? TokenPrice.toJSON(message.tokenPrice) : undefined);
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgUpdateModel>, I>>(object: I): MsgUpdateModel {
     const message = createBaseMsgUpdateModel();
     message.account = object.account ?? "";
     message.modelName = object.modelName ?? "";
-    message.allowList = object.allowList?.map((e) => e) || [];
+    message.allowList = object.allowList?.map(e => e) || [];
     if (object.tokenPrice !== undefined && object.tokenPrice !== null) {
       message.tokenPrice = TokenPrice.fromPartial(object.tokenPrice);
     }
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateModelResponse(): MsgUpdateModelResponse {
   return {};
@@ -2045,19 +2020,19 @@ export const MsgUpdateModelResponse = {
     const obj = createBaseMsgUpdateModelResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateModelResponse): unknown {
+  toJSON(_: MsgUpdateModelResponse): JsonSafe<MsgUpdateModelResponse> {
     const obj: any = {};
     return obj;
   },
   fromPartial<I extends Exact<DeepPartial<MsgUpdateModelResponse>, I>>(_: I): MsgUpdateModelResponse {
     const message = createBaseMsgUpdateModelResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateModelCreatorAllowList(): MsgUpdateModelCreatorAllowList {
   return {
     account: "",
-    modelCreators: [],
+    modelCreators: []
   };
 }
 export const MsgUpdateModelCreatorAllowList = {
@@ -2094,28 +2069,25 @@ export const MsgUpdateModelCreatorAllowList = {
   fromJSON(object: any): MsgUpdateModelCreatorAllowList {
     const obj = createBaseMsgUpdateModelCreatorAllowList();
     if (isSet(object.account)) obj.account = String(object.account);
-    if (Array.isArray(object?.modelCreators))
-      obj.modelCreators = object.modelCreators.map((e: any) => String(e));
+    if (Array.isArray(object?.modelCreators)) obj.modelCreators = object.modelCreators.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: MsgUpdateModelCreatorAllowList): unknown {
+  toJSON(message: MsgUpdateModelCreatorAllowList): JsonSafe<MsgUpdateModelCreatorAllowList> {
     const obj: any = {};
     message.account !== undefined && (obj.account = message.account);
     if (message.modelCreators) {
-      obj.modelCreators = message.modelCreators.map((e) => e);
+      obj.modelCreators = message.modelCreators.map(e => e);
     } else {
       obj.modelCreators = [];
     }
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateModelCreatorAllowList>, I>>(
-    object: I,
-  ): MsgUpdateModelCreatorAllowList {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateModelCreatorAllowList>, I>>(object: I): MsgUpdateModelCreatorAllowList {
     const message = createBaseMsgUpdateModelCreatorAllowList();
     message.account = object.account ?? "";
-    message.modelCreators = object.modelCreators?.map((e) => e) || [];
+    message.modelCreators = object.modelCreators?.map(e => e) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgModelCreatorAllowListResponse(): MsgModelCreatorAllowListResponse {
   return {};
@@ -2143,22 +2115,20 @@ export const MsgModelCreatorAllowListResponse = {
     const obj = createBaseMsgModelCreatorAllowListResponse();
     return obj;
   },
-  toJSON(_: MsgModelCreatorAllowListResponse): unknown {
+  toJSON(_: MsgModelCreatorAllowListResponse): JsonSafe<MsgModelCreatorAllowListResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgModelCreatorAllowListResponse>, I>>(
-    _: I,
-  ): MsgModelCreatorAllowListResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgModelCreatorAllowListResponse>, I>>(_: I): MsgModelCreatorAllowListResponse {
     const message = createBaseMsgModelCreatorAllowListResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateMinerReputation(): MsgUpdateMinerReputation {
   return {
     creator: "",
     nodeId: "",
-    reputations: [],
+    reputations: []
   };
 }
 export const MsgUpdateMinerReputation = {
@@ -2202,30 +2172,27 @@ export const MsgUpdateMinerReputation = {
     const obj = createBaseMsgUpdateMinerReputation();
     if (isSet(object.creator)) obj.creator = String(object.creator);
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
-    if (Array.isArray(object?.reputations))
-      obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
+    if (Array.isArray(object?.reputations)) obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
     return obj;
   },
-  toJSON(message: MsgUpdateMinerReputation): unknown {
+  toJSON(message: MsgUpdateMinerReputation): JsonSafe<MsgUpdateMinerReputation> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     if (message.reputations) {
-      obj.reputations = message.reputations.map((e) => (e ? Reputation.toJSON(e) : undefined));
+      obj.reputations = message.reputations.map(e => e ? Reputation.toJSON(e) : undefined);
     } else {
       obj.reputations = [];
     }
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateMinerReputation>, I>>(
-    object: I,
-  ): MsgUpdateMinerReputation {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateMinerReputation>, I>>(object: I): MsgUpdateMinerReputation {
     const message = createBaseMsgUpdateMinerReputation();
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
-    message.reputations = object.reputations?.map((e) => Reputation.fromPartial(e)) || [];
+    message.reputations = object.reputations?.map(e => Reputation.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateMinerReputationResponse(): MsgUpdateMinerReputationResponse {
   return {};
@@ -2253,22 +2220,20 @@ export const MsgUpdateMinerReputationResponse = {
     const obj = createBaseMsgUpdateMinerReputationResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateMinerReputationResponse): unknown {
+  toJSON(_: MsgUpdateMinerReputationResponse): JsonSafe<MsgUpdateMinerReputationResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateMinerReputationResponse>, I>>(
-    _: I,
-  ): MsgUpdateMinerReputationResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateMinerReputationResponse>, I>>(_: I): MsgUpdateMinerReputationResponse {
     const message = createBaseMsgUpdateMinerReputationResponse();
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateOrchestratorReputation(): MsgUpdateOrchestratorReputation {
   return {
     creator: "",
     nodeId: "",
-    reputations: [],
+    reputations: []
   };
 }
 export const MsgUpdateOrchestratorReputation = {
@@ -2312,30 +2277,27 @@ export const MsgUpdateOrchestratorReputation = {
     const obj = createBaseMsgUpdateOrchestratorReputation();
     if (isSet(object.creator)) obj.creator = String(object.creator);
     if (isSet(object.nodeId)) obj.nodeId = String(object.nodeId);
-    if (Array.isArray(object?.reputations))
-      obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
+    if (Array.isArray(object?.reputations)) obj.reputations = object.reputations.map((e: any) => Reputation.fromJSON(e));
     return obj;
   },
-  toJSON(message: MsgUpdateOrchestratorReputation): unknown {
+  toJSON(message: MsgUpdateOrchestratorReputation): JsonSafe<MsgUpdateOrchestratorReputation> {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.nodeId !== undefined && (obj.nodeId = message.nodeId);
     if (message.reputations) {
-      obj.reputations = message.reputations.map((e) => (e ? Reputation.toJSON(e) : undefined));
+      obj.reputations = message.reputations.map(e => e ? Reputation.toJSON(e) : undefined);
     } else {
       obj.reputations = [];
     }
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateOrchestratorReputation>, I>>(
-    object: I,
-  ): MsgUpdateOrchestratorReputation {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateOrchestratorReputation>, I>>(object: I): MsgUpdateOrchestratorReputation {
     const message = createBaseMsgUpdateOrchestratorReputation();
     message.creator = object.creator ?? "";
     message.nodeId = object.nodeId ?? "";
-    message.reputations = object.reputations?.map((e) => Reputation.fromPartial(e)) || [];
+    message.reputations = object.reputations?.map(e => Reputation.fromPartial(e)) || [];
     return message;
-  },
+  }
 };
 function createBaseMsgUpdateOrchestratorReputationResponse(): MsgUpdateOrchestratorReputationResponse {
   return {};
@@ -2363,16 +2325,14 @@ export const MsgUpdateOrchestratorReputationResponse = {
     const obj = createBaseMsgUpdateOrchestratorReputationResponse();
     return obj;
   },
-  toJSON(_: MsgUpdateOrchestratorReputationResponse): unknown {
+  toJSON(_: MsgUpdateOrchestratorReputationResponse): JsonSafe<MsgUpdateOrchestratorReputationResponse> {
     const obj: any = {};
     return obj;
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateOrchestratorReputationResponse>, I>>(
-    _: I,
-  ): MsgUpdateOrchestratorReputationResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateOrchestratorReputationResponse>, I>>(_: I): MsgUpdateOrchestratorReputationResponse {
     const message = createBaseMsgUpdateOrchestratorReputationResponse();
     return message;
-  },
+  }
 };
 /** Msg defines the Msg service. */
 export interface Msg {
@@ -2381,9 +2341,7 @@ export interface Msg {
    * parameters. The authority defaults to the x/gov module account.
    */
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
-  UpdateModelCreatorAllowList(
-    request: MsgUpdateModelCreatorAllowList,
-  ): Promise<MsgModelCreatorAllowListResponse>;
+  UpdateModelCreatorAllowList(request: MsgUpdateModelCreatorAllowList): Promise<MsgModelCreatorAllowListResponse>;
   RegisterModel(request: MsgRegisterModel): Promise<MsgRegisterModelResponse>;
   UpdateModel(request: MsgUpdateModel): Promise<MsgUpdateModelResponse>;
   /** rpc DeleteModel(MsgDeleteModel) returns (MsgDeleteModelResponse); */
@@ -2411,9 +2369,7 @@ export interface Msg {
   /** UpdateMinerReputation defines a method for updating the miner reputation. */
   UpdateMinerReputation(request: MsgUpdateMinerReputation): Promise<MsgUpdateMinerReputationResponse>;
   /** UpdateOrchestratorReputation defines a method for updating the orchestrator reputation. */
-  UpdateOrchestratorReputation(
-    request: MsgUpdateOrchestratorReputation,
-  ): Promise<MsgUpdateOrchestratorReputationResponse>;
+  UpdateOrchestratorReputation(request: MsgUpdateOrchestratorReputation): Promise<MsgUpdateOrchestratorReputationResponse>;
 }
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
@@ -2442,100 +2398,96 @@ export class MsgClientImpl implements Msg {
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
     const data = MsgUpdateParams.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateParams", data);
-    return promise.then((data) => MsgUpdateParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateParamsResponse.decode(new _m0.Reader(data)));
   }
-  UpdateModelCreatorAllowList(
-    request: MsgUpdateModelCreatorAllowList,
-  ): Promise<MsgModelCreatorAllowListResponse> {
+  UpdateModelCreatorAllowList(request: MsgUpdateModelCreatorAllowList): Promise<MsgModelCreatorAllowListResponse> {
     const data = MsgUpdateModelCreatorAllowList.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateModelCreatorAllowList", data);
-    return promise.then((data) => MsgModelCreatorAllowListResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgModelCreatorAllowListResponse.decode(new _m0.Reader(data)));
   }
   RegisterModel(request: MsgRegisterModel): Promise<MsgRegisterModelResponse> {
     const data = MsgRegisterModel.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "RegisterModel", data);
-    return promise.then((data) => MsgRegisterModelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterModelResponse.decode(new _m0.Reader(data)));
   }
   UpdateModel(request: MsgUpdateModel): Promise<MsgUpdateModelResponse> {
     const data = MsgUpdateModel.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateModel", data);
-    return promise.then((data) => MsgUpdateModelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateModelResponse.decode(new _m0.Reader(data)));
   }
   RegisterNode(request: MsgRegisterNode): Promise<MsgRegisterNodeResponse> {
     const data = MsgRegisterNode.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "RegisterNode", data);
-    return promise.then((data) => MsgRegisterNodeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterNodeResponse.decode(new _m0.Reader(data)));
   }
   DeleteNode(request: MsgDeleteNode): Promise<MsgDeleteNodeResponse> {
     const data = MsgDeleteNode.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "DeleteNode", data);
-    return promise.then((data) => MsgDeleteNodeResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDeleteNodeResponse.decode(new _m0.Reader(data)));
   }
   RegisterMiner(request: MsgRegisterMiner): Promise<MsgRegisterMinerResponse> {
     const data = MsgRegisterMiner.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "RegisterMiner", data);
-    return promise.then((data) => MsgRegisterMinerResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterMinerResponse.decode(new _m0.Reader(data)));
   }
   DeleteMiner(request: MsgDeleteMiner): Promise<MsgDeleteMinerResponse> {
     const data = MsgDeleteMiner.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "DeleteMiner", data);
-    return promise.then((data) => MsgDeleteMinerResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDeleteMinerResponse.decode(new _m0.Reader(data)));
   }
   RegisterOrchestrator(request: MsgRegisterOrchestrator): Promise<MsgRegisterOrchestratorResponse> {
     const data = MsgRegisterOrchestrator.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "RegisterOrchestrator", data);
-    return promise.then((data) => MsgRegisterOrchestratorResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgRegisterOrchestratorResponse.decode(new _m0.Reader(data)));
   }
   DeleteOrchestrator(request: MsgDeleteOrchestrator): Promise<MsgDeleteOrchestratorResponse> {
     const data = MsgDeleteOrchestrator.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "DeleteOrchestrator", data);
-    return promise.then((data) => MsgDeleteOrchestratorResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgDeleteOrchestratorResponse.decode(new _m0.Reader(data)));
   }
   OrchestratorHeartbeat(request: MsgOrchestratorHeartbeat): Promise<MsgOrchestratorHeartbeatResponse> {
     const data = MsgOrchestratorHeartbeat.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "OrchestratorHeartbeat", data);
-    return promise.then((data) => MsgOrchestratorHeartbeatResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgOrchestratorHeartbeatResponse.decode(new _m0.Reader(data)));
   }
   MinerHeartbeat(request: MsgMinerHeartbeat): Promise<MsgMinerHeartbeatResponse> {
     const data = MsgMinerHeartbeat.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "MinerHeartbeat", data);
-    return promise.then((data) => MsgMinerHeartbeatResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgMinerHeartbeatResponse.decode(new _m0.Reader(data)));
   }
   AddMinerDeposit(request: MsgAddMinerDeposit): Promise<MsgAddMinerDepositResponse> {
     const data = MsgAddMinerDeposit.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "AddMinerDeposit", data);
-    return promise.then((data) => MsgAddMinerDepositResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgAddMinerDepositResponse.decode(new _m0.Reader(data)));
   }
   WithdrawMiner(request: MsgWithdrawMiner): Promise<MsgWithdrawMinerResponse> {
     const data = MsgWithdrawMiner.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "WithdrawMiner", data);
-    return promise.then((data) => MsgWithdrawMinerResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgWithdrawMinerResponse.decode(new _m0.Reader(data)));
   }
   AddOrchestratorDeposit(request: MsgAddOrchestratorDeposit): Promise<MsgAddOrchestratorDepositResponse> {
     const data = MsgAddOrchestratorDeposit.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "AddOrchestratorDeposit", data);
-    return promise.then((data) => MsgAddOrchestratorDepositResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgAddOrchestratorDepositResponse.decode(new _m0.Reader(data)));
   }
   WithdrawOrchestrator(request: MsgWithdrawOrchestrator): Promise<MsgWithdrawOrchestratorResponse> {
     const data = MsgWithdrawOrchestrator.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "WithdrawOrchestrator", data);
-    return promise.then((data) => MsgWithdrawOrchestratorResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgWithdrawOrchestratorResponse.decode(new _m0.Reader(data)));
   }
   UpdateNodeLabel(request: MsgUpdateNodeLabel): Promise<MsgUpdateNodeLabelResponse> {
     const data = MsgUpdateNodeLabel.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateNodeLabel", data);
-    return promise.then((data) => MsgUpdateNodeLabelResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateNodeLabelResponse.decode(new _m0.Reader(data)));
   }
   UpdateMinerReputation(request: MsgUpdateMinerReputation): Promise<MsgUpdateMinerReputationResponse> {
     const data = MsgUpdateMinerReputation.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateMinerReputation", data);
-    return promise.then((data) => MsgUpdateMinerReputationResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateMinerReputationResponse.decode(new _m0.Reader(data)));
   }
-  UpdateOrchestratorReputation(
-    request: MsgUpdateOrchestratorReputation,
-  ): Promise<MsgUpdateOrchestratorReputationResponse> {
+  UpdateOrchestratorReputation(request: MsgUpdateOrchestratorReputation): Promise<MsgUpdateOrchestratorReputationResponse> {
     const data = MsgUpdateOrchestratorReputation.encode(request).finish();
     const promise = this.rpc.request("dht.v1.Msg", "UpdateOrchestratorReputation", data);
-    return promise.then((data) => MsgUpdateOrchestratorReputationResponse.decode(new _m0.Reader(data)));
+    return promise.then(data => MsgUpdateOrchestratorReputationResponse.decode(new _m0.Reader(data)));
   }
 }

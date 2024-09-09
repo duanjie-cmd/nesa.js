@@ -1,10 +1,11 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../../helpers";
+import { JsonSafe } from "../../../json-safe";
 export const protobufPackage = "cosmos.base.v1beta1";
 /**
  * Coin defines a token with a denomination and an amount.
- *
+ * 
  * NOTE: The amount field is an Int which implements the custom method
  * signatures required by gogoproto.
  */
@@ -14,7 +15,7 @@ export interface Coin {
 }
 /**
  * DecCoin defines a token with a denomination and a decimal amount.
- *
+ * 
  * NOTE: The amount field is an Dec which implements the custom method
  * signatures required by gogoproto.
  */
@@ -25,7 +26,7 @@ export interface DecCoin {
 function createBaseCoin(): Coin {
   return {
     denom: "",
-    amount: "",
+    amount: ""
   };
 }
 export const Coin = {
@@ -65,7 +66,7 @@ export const Coin = {
     if (isSet(object.amount)) obj.amount = String(object.amount);
     return obj;
   },
-  toJSON(message: Coin): unknown {
+  toJSON(message: Coin): JsonSafe<Coin> {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     message.amount !== undefined && (obj.amount = message.amount);
@@ -76,12 +77,12 @@ export const Coin = {
     message.denom = object.denom ?? "";
     message.amount = object.amount ?? "";
     return message;
-  },
+  }
 };
 function createBaseDecCoin(): DecCoin {
   return {
     denom: "",
-    amount: "",
+    amount: ""
   };
 }
 export const DecCoin = {
@@ -121,7 +122,7 @@ export const DecCoin = {
     if (isSet(object.amount)) obj.amount = String(object.amount);
     return obj;
   },
-  toJSON(message: DecCoin): unknown {
+  toJSON(message: DecCoin): JsonSafe<DecCoin> {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     message.amount !== undefined && (obj.amount = message.amount);
@@ -132,5 +133,5 @@ export const DecCoin = {
     message.denom = object.denom ?? "";
     message.amount = object.amount ?? "";
     return message;
-  },
+  }
 };

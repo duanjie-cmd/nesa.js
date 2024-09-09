@@ -8,6 +8,7 @@ import { ModelBlock } from "./model_block";
 import { UnbondingEntry } from "./deposit";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, DeepPartial, Exact } from "../../helpers";
+import { JsonSafe } from "../../json-safe";
 export const protobufPackage = "dht.v1";
 /** OrchestratorMiner defines an association between an orchestrator and a miner. */
 export interface OrchestratorMiner {
@@ -26,13 +27,13 @@ export interface GenesisState {
   modelBlock: ModelBlock[];
   minerUnbonding: UnbondingEntry[];
   orchestratorUnbonding: UnbondingEntry[];
-  ModelCreators: string[];
-  ModelAllowList: string[];
+  modelCreators: string[];
+  modelAllowList: string[];
 }
 function createBaseOrchestratorMiner(): OrchestratorMiner {
   return {
     orchestratorId: "",
-    minerId: "",
+    minerId: ""
   };
 }
 export const OrchestratorMiner = {
@@ -72,7 +73,7 @@ export const OrchestratorMiner = {
     if (isSet(object.minerId)) obj.minerId = String(object.minerId);
     return obj;
   },
-  toJSON(message: OrchestratorMiner): unknown {
+  toJSON(message: OrchestratorMiner): JsonSafe<OrchestratorMiner> {
     const obj: any = {};
     message.orchestratorId !== undefined && (obj.orchestratorId = message.orchestratorId);
     message.minerId !== undefined && (obj.minerId = message.minerId);
@@ -83,7 +84,7 @@ export const OrchestratorMiner = {
     message.orchestratorId = object.orchestratorId ?? "";
     message.minerId = object.minerId ?? "";
     return message;
-  },
+  }
 };
 function createBaseGenesisState(): GenesisState {
   return {
@@ -96,8 +97,8 @@ function createBaseGenesisState(): GenesisState {
     modelBlock: [],
     minerUnbonding: [],
     orchestratorUnbonding: [],
-    ModelCreators: [],
-    ModelAllowList: [],
+    modelCreators: [],
+    modelAllowList: []
   };
 }
 export const GenesisState = {
@@ -130,10 +131,10 @@ export const GenesisState = {
     for (const v of message.orchestratorUnbonding) {
       UnbondingEntry.encode(v!, writer.uint32(74).fork()).ldelim();
     }
-    for (const v of message.ModelCreators) {
+    for (const v of message.modelCreators) {
       writer.uint32(82).string(v!);
     }
-    for (const v of message.ModelAllowList) {
+    for (const v of message.modelAllowList) {
       writer.uint32(90).string(v!);
     }
     return writer;
@@ -173,10 +174,10 @@ export const GenesisState = {
           message.orchestratorUnbonding.push(UnbondingEntry.decode(reader, reader.uint32()));
           break;
         case 10:
-          message.ModelCreators.push(reader.string());
+          message.modelCreators.push(reader.string());
           break;
         case 11:
-          message.ModelAllowList.push(reader.string());
+          message.modelAllowList.push(reader.string());
           break;
         default:
           reader.skipType(tag & 7);
@@ -191,78 +192,67 @@ export const GenesisState = {
     if (Array.isArray(object?.model)) obj.model = object.model.map((e: any) => Model.fromJSON(e));
     if (Array.isArray(object?.node)) obj.node = object.node.map((e: any) => Node.fromJSON(e));
     if (Array.isArray(object?.miner)) obj.miner = object.miner.map((e: any) => Miner.fromJSON(e));
-    if (Array.isArray(object?.orchestrator))
-      obj.orchestrator = object.orchestrator.map((e: any) => Orchestrator.fromJSON(e));
-    if (Array.isArray(object?.orchestratorMiner))
-      obj.orchestratorMiner = object.orchestratorMiner.map((e: any) => OrchestratorMiner.fromJSON(e));
-    if (Array.isArray(object?.modelBlock))
-      obj.modelBlock = object.modelBlock.map((e: any) => ModelBlock.fromJSON(e));
-    if (Array.isArray(object?.minerUnbonding))
-      obj.minerUnbonding = object.minerUnbonding.map((e: any) => UnbondingEntry.fromJSON(e));
-    if (Array.isArray(object?.orchestratorUnbonding))
-      obj.orchestratorUnbonding = object.orchestratorUnbonding.map((e: any) => UnbondingEntry.fromJSON(e));
-    if (Array.isArray(object?.ModelCreators))
-      obj.ModelCreators = object.ModelCreators.map((e: any) => String(e));
-    if (Array.isArray(object?.ModelAllowList))
-      obj.ModelAllowList = object.ModelAllowList.map((e: any) => String(e));
+    if (Array.isArray(object?.orchestrator)) obj.orchestrator = object.orchestrator.map((e: any) => Orchestrator.fromJSON(e));
+    if (Array.isArray(object?.orchestratorMiner)) obj.orchestratorMiner = object.orchestratorMiner.map((e: any) => OrchestratorMiner.fromJSON(e));
+    if (Array.isArray(object?.modelBlock)) obj.modelBlock = object.modelBlock.map((e: any) => ModelBlock.fromJSON(e));
+    if (Array.isArray(object?.minerUnbonding)) obj.minerUnbonding = object.minerUnbonding.map((e: any) => UnbondingEntry.fromJSON(e));
+    if (Array.isArray(object?.orchestratorUnbonding)) obj.orchestratorUnbonding = object.orchestratorUnbonding.map((e: any) => UnbondingEntry.fromJSON(e));
+    if (Array.isArray(object?.modelCreators)) obj.modelCreators = object.modelCreators.map((e: any) => String(e));
+    if (Array.isArray(object?.modelAllowList)) obj.modelAllowList = object.modelAllowList.map((e: any) => String(e));
     return obj;
   },
-  toJSON(message: GenesisState): unknown {
+  toJSON(message: GenesisState): JsonSafe<GenesisState> {
     const obj: any = {};
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     if (message.model) {
-      obj.model = message.model.map((e) => (e ? Model.toJSON(e) : undefined));
+      obj.model = message.model.map(e => e ? Model.toJSON(e) : undefined);
     } else {
       obj.model = [];
     }
     if (message.node) {
-      obj.node = message.node.map((e) => (e ? Node.toJSON(e) : undefined));
+      obj.node = message.node.map(e => e ? Node.toJSON(e) : undefined);
     } else {
       obj.node = [];
     }
     if (message.miner) {
-      obj.miner = message.miner.map((e) => (e ? Miner.toJSON(e) : undefined));
+      obj.miner = message.miner.map(e => e ? Miner.toJSON(e) : undefined);
     } else {
       obj.miner = [];
     }
     if (message.orchestrator) {
-      obj.orchestrator = message.orchestrator.map((e) => (e ? Orchestrator.toJSON(e) : undefined));
+      obj.orchestrator = message.orchestrator.map(e => e ? Orchestrator.toJSON(e) : undefined);
     } else {
       obj.orchestrator = [];
     }
     if (message.orchestratorMiner) {
-      obj.orchestratorMiner = message.orchestratorMiner.map((e) =>
-        e ? OrchestratorMiner.toJSON(e) : undefined,
-      );
+      obj.orchestratorMiner = message.orchestratorMiner.map(e => e ? OrchestratorMiner.toJSON(e) : undefined);
     } else {
       obj.orchestratorMiner = [];
     }
     if (message.modelBlock) {
-      obj.modelBlock = message.modelBlock.map((e) => (e ? ModelBlock.toJSON(e) : undefined));
+      obj.modelBlock = message.modelBlock.map(e => e ? ModelBlock.toJSON(e) : undefined);
     } else {
       obj.modelBlock = [];
     }
     if (message.minerUnbonding) {
-      obj.minerUnbonding = message.minerUnbonding.map((e) => (e ? UnbondingEntry.toJSON(e) : undefined));
+      obj.minerUnbonding = message.minerUnbonding.map(e => e ? UnbondingEntry.toJSON(e) : undefined);
     } else {
       obj.minerUnbonding = [];
     }
     if (message.orchestratorUnbonding) {
-      obj.orchestratorUnbonding = message.orchestratorUnbonding.map((e) =>
-        e ? UnbondingEntry.toJSON(e) : undefined,
-      );
+      obj.orchestratorUnbonding = message.orchestratorUnbonding.map(e => e ? UnbondingEntry.toJSON(e) : undefined);
     } else {
       obj.orchestratorUnbonding = [];
     }
-    if (message.ModelCreators) {
-      obj.ModelCreators = message.ModelCreators.map((e) => e);
+    if (message.modelCreators) {
+      obj.modelCreators = message.modelCreators.map(e => e);
     } else {
-      obj.ModelCreators = [];
+      obj.modelCreators = [];
     }
-    if (message.ModelAllowList) {
-      obj.ModelAllowList = message.ModelAllowList.map((e) => e);
+    if (message.modelAllowList) {
+      obj.modelAllowList = message.modelAllowList.map(e => e);
     } else {
-      obj.ModelAllowList = [];
+      obj.modelAllowList = [];
     }
     return obj;
   },
@@ -271,17 +261,16 @@ export const GenesisState = {
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     }
-    message.model = object.model?.map((e) => Model.fromPartial(e)) || [];
-    message.node = object.node?.map((e) => Node.fromPartial(e)) || [];
-    message.miner = object.miner?.map((e) => Miner.fromPartial(e)) || [];
-    message.orchestrator = object.orchestrator?.map((e) => Orchestrator.fromPartial(e)) || [];
-    message.orchestratorMiner = object.orchestratorMiner?.map((e) => OrchestratorMiner.fromPartial(e)) || [];
-    message.modelBlock = object.modelBlock?.map((e) => ModelBlock.fromPartial(e)) || [];
-    message.minerUnbonding = object.minerUnbonding?.map((e) => UnbondingEntry.fromPartial(e)) || [];
-    message.orchestratorUnbonding =
-      object.orchestratorUnbonding?.map((e) => UnbondingEntry.fromPartial(e)) || [];
-    message.ModelCreators = object.ModelCreators?.map((e) => e) || [];
-    message.ModelAllowList = object.ModelAllowList?.map((e) => e) || [];
+    message.model = object.model?.map(e => Model.fromPartial(e)) || [];
+    message.node = object.node?.map(e => Node.fromPartial(e)) || [];
+    message.miner = object.miner?.map(e => Miner.fromPartial(e)) || [];
+    message.orchestrator = object.orchestrator?.map(e => Orchestrator.fromPartial(e)) || [];
+    message.orchestratorMiner = object.orchestratorMiner?.map(e => OrchestratorMiner.fromPartial(e)) || [];
+    message.modelBlock = object.modelBlock?.map(e => ModelBlock.fromPartial(e)) || [];
+    message.minerUnbonding = object.minerUnbonding?.map(e => UnbondingEntry.fromPartial(e)) || [];
+    message.orchestratorUnbonding = object.orchestratorUnbonding?.map(e => UnbondingEntry.fromPartial(e)) || [];
+    message.modelCreators = object.modelCreators?.map(e => e) || [];
+    message.modelAllowList = object.modelAllowList?.map(e => e) || [];
     return message;
-  },
+  }
 };
