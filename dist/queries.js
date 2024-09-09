@@ -1,23 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupAgentExtension = void 0;
+exports.setupDHTExtension = exports.setupAgentExtension = void 0;
 const stargate_1 = require("@cosmjs/stargate");
 const query_1 = require("./codec/agent/v1/query");
-// public async getSessionByAgent(account: string, status: SessionStatus, limit: Long, orderDesc: boolean, key: Uint8Array, expireTime?: Date): Promise<QuerySessionByAgentResponse> {
-//   const result = await this.query.agent.sessionByAgentRequest(account, status, expireTime, limit, orderDesc, key);
-//   return result;
-// }
+const helpers_1 = require("./codec/helpers");
+const query_2 = require("./codec/dht/v1/query");
 function setupAgentExtension(base) {
     const rpc = (0, stargate_1.createProtobufRpcClient)(base);
     const agentQueryService = new query_1.QueryClientImpl(rpc);
     return {
         agent: {
-            // modelRequest: async (name: string) => {
-            //   return await agentQueryService.ModelRequest({ name });
-            // },
-            // modelRequestAll: async (key: Uint8Array, offset: Long, limit: Long, countTotal: boolean, reverse: boolean) => {
-            //   return await agentQueryService.ModelRequestAll({pagination: {key, offset, limit, countTotal, reverse}});
-            // },
+            agentQueryService,
             params: async () => {
                 return await agentQueryService.Params({});
             },
@@ -27,8 +20,8 @@ function setupAgentExtension(base) {
             sessionRequest: async (id) => {
                 return await agentQueryService.SessionRequest({ id });
             },
-            sessionByAgentRequest: async (account, status, limit, orderDesc, key, expireTime) => {
-                return await agentQueryService.SessionByAgentRequest({ account, status, expireTime, limit, orderDesc, key });
+            sessionByAgentRequest: async (account, status, expireTime, limit, orderDesc, key) => {
+                return await agentQueryService.SessionByAgentRequest({ account, status, expireTime: (0, helpers_1.toTimestamp)(expireTime), limit, orderDesc, key });
             },
             VRFSeedRequest: async (account) => {
                 return await agentQueryService.VRFSeedRequest({ account });
@@ -37,4 +30,19 @@ function setupAgentExtension(base) {
     };
 }
 exports.setupAgentExtension = setupAgentExtension;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicXVlcmllcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3NyYy9xdWVyaWVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLCtDQUcwQjtBQUMxQixrREFVZ0M7QUFrQmhDLHNMQUFzTDtBQUN0TCxxSEFBcUg7QUFDckgsbUJBQW1CO0FBQ25CLElBQUk7QUFDSixTQUFnQixtQkFBbUIsQ0FBQyxJQUFpQjtJQUNuRCxNQUFNLEdBQUcsR0FBRyxJQUFBLGtDQUF1QixFQUFDLElBQUksQ0FBQyxDQUFDO0lBQzFDLE1BQU0saUJBQWlCLEdBQUcsSUFBSSx1QkFBVyxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBRS9DLE9BQU87UUFDTCxLQUFLLEVBQUU7WUFDTCwwQ0FBMEM7WUFDMUMsMkRBQTJEO1lBQzNELEtBQUs7WUFDTCxrSEFBa0g7WUFDbEgsNkdBQTZHO1lBQzdHLEtBQUs7WUFDTCxNQUFNLEVBQUUsS0FBSyxJQUFJLEVBQUU7Z0JBQ2pCLE9BQU8sTUFBTSxpQkFBaUIsQ0FBQyxNQUFNLENBQUMsRUFBRSxDQUFDLENBQUM7WUFDNUMsQ0FBQztZQUNELHFCQUFxQixFQUFFLEtBQUssRUFBRSxPQUFlLEVBQUUsU0FBaUIsRUFBRSxLQUFXLEVBQUUsR0FBZSxFQUFFLEVBQUU7Z0JBQ2hHLE9BQU8sTUFBTSxpQkFBaUIsQ0FBQyxxQkFBcUIsQ0FBQyxFQUFFLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLEdBQUcsRUFBRSxDQUFDLENBQUM7WUFDM0YsQ0FBQztZQUNELGNBQWMsRUFBRSxLQUFLLEVBQUUsRUFBVSxFQUFFLEVBQUU7Z0JBQ25DLE9BQU8sTUFBTSxpQkFBaUIsQ0FBQyxjQUFjLENBQUMsRUFBRSxFQUFFLEVBQUUsQ0FBQyxDQUFDO1lBQ3hELENBQUM7WUFDRCxxQkFBcUIsRUFBRSxLQUFLLEVBQUUsT0FBZSxFQUFFLE1BQXFCLEVBQUUsS0FBVyxFQUFFLFNBQWtCLEVBQUUsR0FBZSxFQUFFLFVBQWlCLEVBQUUsRUFBRTtnQkFDM0ksT0FBTyxNQUFNLGlCQUFpQixDQUFDLHFCQUFxQixDQUFDLEVBQUUsT0FBTyxFQUFFLE1BQU0sRUFBRSxVQUFVLEVBQUUsS0FBSyxFQUFFLFNBQVMsRUFBRSxHQUFHLEVBQUUsQ0FBQyxDQUFDO1lBQy9HLENBQUM7WUFDRCxjQUFjLEVBQUUsS0FBSyxFQUFFLE9BQWUsRUFBRSxFQUFFO2dCQUN4QyxPQUFPLE1BQU0saUJBQWlCLENBQUMsY0FBYyxDQUFDLEVBQUUsT0FBTyxFQUFFLENBQUMsQ0FBQztZQUM3RCxDQUFDO1NBQ0Y7S0FDRixDQUFBO0FBQ0gsQ0FBQztBQTdCRCxrREE2QkMifQ==
+function setupDHTExtension(base) {
+    const rpc = (0, stargate_1.createProtobufRpcClient)(base);
+    const dhtQueryService = new query_2.QueryClientImpl(rpc);
+    return {
+        dht: {
+            dhtQueryService,
+            getModel: async (modelName) => {
+                return await dhtQueryService.GetModel({
+                    modelName
+                });
+            },
+        }
+    };
+}
+exports.setupDHTExtension = setupDHTExtension;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicXVlcmllcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3NyYy9xdWVyaWVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLCtDQUcwQjtBQUMxQixrREFFZ0M7QUFFaEMsNkNBQThDO0FBQzlDLGdEQUU4QjtBQUc5QixTQUFnQixtQkFBbUIsQ0FBQyxJQUFpQjtJQUNuRCxNQUFNLEdBQUcsR0FBRyxJQUFBLGtDQUF1QixFQUFDLElBQUksQ0FBQyxDQUFDO0lBQzFDLE1BQU0saUJBQWlCLEdBQUcsSUFBSSx1QkFBVyxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBRS9DLE9BQU87UUFDTCxLQUFLLEVBQUU7WUFDTCxpQkFBaUI7WUFDakIsTUFBTSxFQUFFLEtBQUssSUFBSSxFQUFFO2dCQUNqQixPQUFPLE1BQU0saUJBQWlCLENBQUMsTUFBTSxDQUFDLEVBQUUsQ0FBQyxDQUFDO1lBQzVDLENBQUM7WUFDRCxxQkFBcUIsRUFBRSxLQUFLLEVBQUUsT0FBZSxFQUFFLFNBQWlCLEVBQUUsS0FBVyxFQUFFLEdBQWUsRUFBRSxFQUFFO2dCQUNoRyxPQUFPLE1BQU0saUJBQWlCLENBQUMscUJBQXFCLENBQUMsRUFBRSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxHQUFHLEVBQUUsQ0FBQyxDQUFDO1lBQzNGLENBQUM7WUFDRCxjQUFjLEVBQUUsS0FBSyxFQUFFLEVBQVUsRUFBRSxFQUFFO2dCQUNuQyxPQUFPLE1BQU0saUJBQWlCLENBQUMsY0FBYyxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsQ0FBQztZQUN4RCxDQUFDO1lBQ0QscUJBQXFCLEVBQUUsS0FBSyxFQUFFLE9BQWUsRUFBRSxNQUFpQyxFQUFDLFVBQWdCLEVBQUUsS0FBVyxFQUFFLFNBQWtCLEVBQUUsR0FBZSxFQUFFLEVBQUU7Z0JBQ3JKLE9BQU8sTUFBTSxpQkFBaUIsQ0FBQyxxQkFBcUIsQ0FBQyxFQUFFLE9BQU8sRUFBRSxNQUFNLEVBQUUsVUFBVSxFQUFFLElBQUEscUJBQVcsRUFBQyxVQUFVLENBQUMsRUFBRSxLQUFLLEVBQUUsU0FBUyxFQUFFLEdBQUcsRUFBRSxDQUFDLENBQUM7WUFDeEksQ0FBQztZQUNELGNBQWMsRUFBRSxLQUFLLEVBQUUsT0FBZSxFQUFFLEVBQUU7Z0JBQ3hDLE9BQU8sTUFBTSxpQkFBaUIsQ0FBQyxjQUFjLENBQUMsRUFBRSxPQUFPLEVBQUUsQ0FBQyxDQUFDO1lBQzdELENBQUM7U0FDRjtLQUNGLENBQUE7QUFDSCxDQUFDO0FBeEJELGtEQXdCQztBQUVELFNBQWdCLGlCQUFpQixDQUFDLElBQWlCO0lBQ2pELE1BQU0sR0FBRyxHQUFHLElBQUEsa0NBQXVCLEVBQUMsSUFBSSxDQUFDLENBQUM7SUFDMUMsTUFBTSxlQUFlLEdBQUcsSUFBSSx1QkFBYyxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBRWhELE9BQU87UUFDTCxHQUFHLEVBQUU7WUFDSCxlQUFlO1lBQ2YsUUFBUSxFQUFFLEtBQUssRUFBRSxTQUFpQixFQUFFLEVBQUU7Z0JBQ3BDLE9BQU8sTUFBTSxlQUFlLENBQUMsUUFBUSxDQUFDO29CQUNwQyxTQUFTO2lCQUNWLENBQUMsQ0FBQztZQUNMLENBQUM7U0FDRjtLQUNGLENBQUE7QUFDSCxDQUFDO0FBZEQsOENBY0MifQ==

@@ -4,11 +4,12 @@ import { SigningStargateClient, SigningStargateClientOptions, GasPrice, Event, Q
 import { CometClient } from "@cosmjs/tendermint-rpc";
 import { Logger } from './logger';
 import { VRF } from './codec/agent/v1/tx';
-import { Payment, Params, SessionStatus } from "./codec/agent/v1/agent";
+import { Payment, Params, SessionStatus, TokenPrice } from "./codec/agent/v1/agent";
 import { Coin } from "./codec/cosmos/base/v1beta1/coin";
-import { AgentExtension } from './queries';
+import { setupAgentExtension, setupDHTExtension } from './queries';
 import { QueryParamsResponse, QueryInferenceAgentResponse, QuerySessionResponse, QueryVRFSeedResponse, QuerySessionByAgentResponse } from "./codec/agent/v1/query";
 import { StdFee } from "@cosmjs/amino";
+import { QueryGetModelResponse } from "./codec/dht/v1/query";
 export type NesaClientOptions = SigningStargateClientOptions & {
     logger?: Logger;
     gasPrice: GasPrice;
@@ -28,7 +29,7 @@ export type RegisterSessionResult = MsgResult & {
 export declare class NesaClient {
     readonly gasPrice: GasPrice;
     readonly sign: SigningStargateClient;
-    readonly query: QueryClient & AgentExtension;
+    readonly query: QueryClient & ReturnType<typeof setupAgentExtension> & ReturnType<typeof setupDHTExtension>;
     readonly tm: CometClient;
     readonly senderAddress: string;
     readonly logger: Logger;
@@ -42,12 +43,15 @@ export declare class NesaClient {
     updateParams(authority: string, params: Params): Promise<MsgResult>;
     registerInferenceAgent(url: string, version: Long): Promise<MsgResult>;
     broadcastRegisterSession(): any;
-    signRegisterSession(sessionId: string, modelName: string, fee: StdFee, lockBalance?: Coin, vrf?: VRF): Promise<any>;
+    signRegisterSession(sessionId: string, modelName: string, fee: StdFee, lockBalance: Coin, vrf: VRF, tokenPrice: TokenPrice): Promise<any>;
     registerSession(sessionId: string, modelName: string, lockBalance?: Coin, vrf?: VRF): Promise<RegisterSessionResult>;
     submitPayment(sessionId: string, signature: Uint8Array, payment?: Payment): Promise<MsgResult>;
+    registerModel(creator: string, modelName: string, blockCids: string[], allowList: string[], tokenPrice?: TokenPrice): Promise<MsgResult>;
+    updateModel(modelName: string, allowList: string[], tokenPrice: TokenPrice): Promise<MsgResult>;
     getParams(): Promise<QueryParamsResponse>;
     getInferenceAgent(account: string, modelName: string, limit: Long, key: Uint8Array): Promise<QueryInferenceAgentResponse>;
     getSession(sessionId: string): Promise<QuerySessionResponse>;
-    getSessionByAgent(account: string, status: SessionStatus, limit: Long, orderDesc: boolean, key: Uint8Array, expireTime?: Date): Promise<QuerySessionByAgentResponse>;
+    getSessionByAgent(account: string, status: SessionStatus | undefined, expireTime: Date, limit: Long, orderDesc: boolean, key: Uint8Array): Promise<QuerySessionByAgentResponse>;
     getVRFSeed(account: string): Promise<QueryVRFSeedResponse>;
+    getModel(modelName: string): Promise<QueryGetModelResponse>;
 }
